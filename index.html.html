@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Loja Virtual</title>
+    <style>
+        /* Estilos Gerais */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        header {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        main {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Grade de Produtos */
+        .produtos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        .produto-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .produto-imagem {
+            width: 100%;
+            height: 200px;
+            background-color: #ddd;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .produto-titulo {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        .produto-preco {
+            font-size: 1.4rem;
+            color: #2ecc71;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* Botões */
+        .btn-comprar {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+            text-decoration: none;
+            display: block;
+        }
+        .btn-comprar:hover {
+            background-color: #2980b9;
+        }
+        .btn-pagar {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
+        }
+        .btn-pagar:hover {
+            background-color: #27ae60;
+        }
+
+        /* Seção de Pagamento */
+        .secao-pagamento {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 30px;
+            text-align: center;
+            margin-top: 50px;
+            scroll-margin-top: 20px; /* Espaço ao rolar a página */
+        }
+        .formulario-pagamento {
+            max-width: 400px;
+            margin: 20px auto;
+            text-align: left;
+        }
+        .campo-grupo {
+            margin-bottom: 15px;
+        }
+        .campo-grupo label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .campo-grupo input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Minha Loja Virtual</h1>
+        <p>Os melhores produtos com os melhores preços</p>
+    </header>
+
+    <main>
+        <!-- Vitrine de Produtos -->
+        <section class="produtos-grid">
+            
+            <!-- Produto 1 -->
+            <div class="produto-card">
+                <div class="produto-imagem">Smartphone XT</div>
+                <h2 class="produto-titulo">Smartphone Top de Linha</h2>
+                <p class="produto-preco">R$ 2.499,00</p>
+                <!-- O link abaixo aponta para o ID da seção de pagamento -->
+                <a href="#checkout" class="btn-comprar">Comprar Agora</a>
+            </div>
+
+            <!-- Produto 2 -->
+            <div class="produto-card">
+                <div class="produto-imagem">Fone Bluetooth Pro</div>
+                <h2 class="produto-titulo">Fone de Ouvido Sem Fio</h2>
+                <p class="produto-preco">R$ 349,00</p>
+                <a href="#checkout" class="btn-comprar">Comprar Agora</a>
+            </div>
+
+            <!-- Produto 3 -->
+            <div class="produto-card">
+                <div class="produto-imagem">Smartwatch Fit</div>
+                <h2 class="produto-titulo">Relógio Inteligente Esportivo</h2>
+                <p class="produto-preco">R$ 599,00</p>
+                <a href="#checkout" class="btn-comprar">Comprar Agora</a>
+            </div>
+
+        </section>
+
+        <!-- Seção de Pagamento (ID configurado para receber o clique) -->
+        <section id="checkout" class="secao-pagamento">
+            <h2>Finalizar Pagamento</h2>
+            <p>Insira seus dados para concluir a compra de forma segura.</p>
+
+            <form class="formulario-pagamento" onsubmit="event.preventDefault(); alert('Pagamento simulado com sucesso!');">
+                <div class="campo-grupo">
+                    <label for="nome">Nome Completo</label>
+                    <input type="text" id="nome" required placeholder="Ex: João Silva">
+                </div>
+                <div class="campo-grupo">
+                    <label for="cartao">Número do Cartão</label>
+                    <input type="text" id="cartao" required placeholder="0000 0000 0000 0000">
+                </div>
+                <div class="campo-grupo" style="display: flex; gap: 10px;">
+                    <div style="flex: 1;">
+                        <label for="validade">Validade</label>
+                        <input type="text" id="validade" required placeholder="MM/AA">
+                    </div>
+                    <div style="flex: 1;">
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" required placeholder="123">
+                    </div>
+                </div>
+                
+                <!-- BOTÃO DE PAGAMENTO -->
+                <button type="submit" class="btn-pagar">Efetuar Pagamento</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        &copy; 2026 Minha Loja Virtual - Todos os direitos reservados.
+    </footer>
+
+</body>
+</html>
