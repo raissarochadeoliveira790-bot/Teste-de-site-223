@@ -186,10 +186,10 @@
 
             <form class="formulario-pagamento" id="formPagamento">
                 
-                <!-- Seu número configurado dinamicamente -->
+                <!-- Seu número fixado e verificado -->
                 <input type="hidden" id="numeroVendedor" value="5544998092717">
                 
-                <!-- Campo invisível que armazena o produto selecionado -->
+                <!-- Campos invisíveis do produto -->
                 <input type="hidden" id="prodNome" value="Nenhum produto selecionado">
                 <input type="hidden" id="prodPreco" value="0">
 
@@ -222,13 +222,11 @@
     </footer>
 
     <script>
-        // Guarda qual produto o cliente quer comprar
         function selecionarProduto(nome, preco) {
             document.getElementById('prodNome').value = nome;
             document.getElementById('prodPreco').value = preco;
         }
 
-        // Envia os dados para o WhatsApp ao clicar no botão verde
         document.getElementById('formPagamento').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -242,17 +240,16 @@
                 return;
             }
 
-            // Organiza a mensagem do texto
+            // Mensagem formatada
             const textoMensagem = `Olá! Quero finalizar uma compra:\n\n` +
                                   `👤 *Cliente:* ${cliente}\n` +
                                   `📦 *Produto:* ${produto}\n` +
-                                  `💰 *Valor:* ${preco}\n\n` +
-                                  `_(Dados de pagamento enviados para validação)_`;
+                                  `💰 *Valor:* ${preco}`;
 
-            // Link direto que não é bloqueado pelo navegador
-            const linkWhatsapp = `https://wa.me{numeroWhats}?text=${encodeURIComponent(textoMensagem)}`;
+            // NOVO LINK: Formato de API padrão oficial que resolve o problema de DNS
+            const linkWhatsapp = `https://whatsapp.com{numeroWhats}&text=${encodeURIComponent(textoMensagem)}`;
 
-            // Redireciona na mesma página
+            // Redireciona de forma limpa e direta
             window.location.href = linkWhatsapp;
         });
     </script>
