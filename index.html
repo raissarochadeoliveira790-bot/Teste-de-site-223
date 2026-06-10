@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minha Loja Virtual</title>
     <style>
+        /* Estilos Gerais */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -26,6 +27,8 @@
             margin: 30px auto;
             padding: 0 20px;
         }
+
+        /* Grade de Produtos */
         .produtos-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -65,6 +68,8 @@
             font-weight: bold;
             margin-bottom: 15px;
         }
+
+        /* Botões */
         .btn-comprar {
             background-color: #3498db;
             color: white;
@@ -98,6 +103,8 @@
         .btn-pagar:hover {
             background-color: #27ae60;
         }
+
+        /* Seção de Pagamento */
         .secao-pagamento {
             background: white;
             border-radius: 8px;
@@ -143,7 +150,10 @@
     </header>
 
     <main>
+        <!-- Vitrine de Produtos -->
         <section class="produtos-grid">
+            
+            <!-- Produto 1 -->
             <div class="produto-card">
                 <div class="produto-imagem">Smartphone XT</div>
                 <h2 class="produto-titulo">Smartphone Top de Linha</h2>
@@ -151,6 +161,7 @@
                 <a href="#checkout" class="btn-comprar" onclick="selecionarProduto('Smartphone Top de Linha', 'R$ 2.499,00')">Comprar Agora</a>
             </div>
 
+            <!-- Produto 2 -->
             <div class="produto-card">
                 <div class="produto-imagem">Fone Bluetooth Pro</div>
                 <h2 class="produto-titulo">Fone de Ouvido Sem Fio</h2>
@@ -158,20 +169,24 @@
                 <a href="#checkout" class="btn-comprar" onclick="selecionarProduto('Fone de Ouvido Sem Fio', 'R$ 349,00')">Comprar Agora</a>
             </div>
 
+            <!-- Produto 3 -->
             <div class="produto-card">
                 <div class="produto-imagem">Smartwatch Fit</div>
                 <h2 class="produto-titulo">Relógio Inteligente Esportivo</h2>
                 <p class="produto-preco">R$ 599,00</p>
                 <a href="#checkout" class="btn-comprar" onclick="selecionarProduto('Relógio Inteligente Esportivo', 'R$ 599,00')">Comprar Agora</a>
             </div>
+
         </section>
 
+        <!-- Seção de Pagamento -->
         <section id="checkout" class="secao-pagamento">
             <h2>Finalizar Pagamento</h2>
             <p>Insira seus dados para concluir a compra de forma segura.</p>
 
             <form class="formulario-pagamento" id="formPagamento">
-                <input type="hidden" id="numeroVendedor" value="5544998092717">
+                
+                <!-- Campos ocultos para salvar os dados temporariamente -->
                 <input type="hidden" id="prodNome" value="Nenhum produto selecionado">
                 <input type="hidden" id="prodPreco" value="0">
 
@@ -212,7 +227,6 @@
         document.getElementById('formPagamento').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const numeroWhats = document.getElementById('numeroVendedor').value;
             const produto = document.getElementById('prodNome').value;
             const preco = document.getElementById('prodPreco').value;
             const cliente = document.getElementById('nome').value;
@@ -222,13 +236,15 @@
                 return;
             }
 
+            // Formatação do texto do pedido
             const textoMensagem = `Olá! Quero finalizar uma compra:\n\n👤 *Cliente:* ${cliente}\n📦 *Produto:* ${produto}\n💰 *Valor:* ${preco}`;
-<!DOCTYPE html>
-            const linkWhatsapp = {5544998092717}&text=${encodeURIComponent(textoMensagem)}`;
 
-            window.location.href = linkWhatsapp;
+            // Utiliza o link exatamente no formato solicitado com as informações inclusas
+            const linkComTexto = `https://wa.me{encodeURIComponent(textoMensagem)}`;
+
+            // Redireciona o usuário para o link final
+            window.location.href = linkComTexto;
         });
     </script>
 </body>
 </html>
-
