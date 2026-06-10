@@ -79,9 +79,9 @@
             font-size: 1rem;
             cursor: pointer;
             font-weight: bold;
+            transition: background 0.2s;
             text-decoration: none;
             display: block;
-            transition: background 0.2s;
         }
         .btn-comprar:hover {
             background-color: #2980b9;
@@ -127,7 +127,7 @@
             margin-bottom: 5px;
             font-weight: bold;
         }
-        .campo-grupo input, .campo-grupo select {
+        .campo-grupo input {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
@@ -150,7 +150,7 @@
     </header>
 
     <main>
-        <!-- Vitrine de Produtos (Visual Antigo) -->
+        <!-- Vitrine de Produtos -->
         <section class="produtos-grid">
             
             <!-- Produto 1 -->
@@ -179,36 +179,40 @@
 
         </section>
 
-        <!-- Seção de Fechamento de Pedido -->
+        <!-- Seção de Pagamento -->
         <section id="checkout" class="secao-pagamento">
-            <h2>Finalizar Pedido</h2>
-            <p>Insira seus dados para enviar o pedido direto ao vendedor.</p>
+            <h2>Finalizar Pagamento</h2>
+            <p>Insira seus dados para concluir a compra de forma segura.</p>
 
             <form class="formulario-pagamento" id="formPagamento">
                 
-                <!-- Seu número de WhatsApp já configurado de forma oculta -->
+                <!-- Seu número configurado dinamicamente -->
                 <input type="hidden" id="numeroVendedor" value="5544998092717">
+                
+                <!-- Campo invisível que armazena o produto selecionado -->
+                <input type="hidden" id="prodNome" value="Nenhum produto selecionado">
+                <input type="hidden" id="prodPreco" value="0">
 
-                <div class="campo-grupo">
-                    <label>Produto Selecionado</label>
-                    <input type="text" id="prodNome" readonly value="Nenhum produto selecionado" style="background-color: #e9ecef; font-weight: bold;">
-                    <input type="hidden" id="prodPreco" value="0">
-                </div>
                 <div class="campo-grupo">
                     <label for="nome">Nome Completo</label>
                     <input type="text" id="nome" required placeholder="Ex: João Silva">
                 </div>
                 <div class="campo-grupo">
-                    <label for="forma">Forma de Pagamento Desejada</label>
-                    <select id="forma" required>
-                        <option value="Pix">Pix</option>
-                        <option value="Cartão de Crédito">Cartão de Crédito</option>
-                        <option value="Boleto Bancário">Boleto Bancário</option>
-                    </select>
+                    <label for="cartao">Número do Cartão</label>
+                    <input type="text" id="cartao" required placeholder="0000 0000 0000 0000">
+                </div>
+                <div class="campo-grupo" style="display: flex; gap: 10px;">
+                    <div style="flex: 1;">
+                        <label for="validade">Validade</label>
+                        <input type="text" id="validade" required placeholder="MM/AA">
+                    </div>
+                    <div style="flex: 1;">
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" required placeholder="123">
+                    </div>
                 </div>
                 
-                <!-- BOTÃO QUE DIRECIONA PRO WHATSAPP -->
-                <button type="submit" class="btn-pagar">Enviar Pedido por WhatsApp</button>
+                <button type="submit" class="btn-pagar">Efetuar Pagamento</button>
             </form>
         </section>
     </main>
@@ -218,13 +222,13 @@
     </footer>
 
     <script>
-        // Função para preencher automaticamente o produto clicado
+        // Guarda qual produto o cliente quer comprar
         function selecionarProduto(nome, preco) {
             document.getElementById('prodNome').value = nome;
             document.getElementById('prodPreco').value = preco;
         }
 
-        // Processamento do envio do formulário
+        // Envia os dados para o WhatsApp ao clicar no botão verde
         document.getElementById('formPagamento').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -232,37 +236,23 @@
             const produto = document.getElementById('prodNome').value;
             const preco = document.getElementById('prodPreco').value;
             const cliente = document.getElementById('nome').value;
-            const pagamento = document.getElementById('forma').value;
 
             if (produto === "Nenhum produto selecionado") {
                 alert("Por favor, selecione um produto primeiro clicando em 'Comprar Agora'.");
                 return;
             }
 
-            // Monta o texto limpo para a mensagem de WhatsApp
-            const textoMensagem = `Olá! Novo pedido realizado no site:\n\n` +
+            // Organiza a mensagem do texto
+            const textoMensagem = `Olá! Quero finalizar uma compra:\n\n` +
                                   `👤 *Cliente:* ${cliente}\n` +
                                   `📦 *Produto:* ${produto}\n` +
-                                  `💰 *Valor:* ${preco}\n` +
-                                  `💳 *Forma de Pagamento:* ${pagamento}`;
+                                  `💰 *Valor:* ${preco}\n\n` +
+                                  `_(Dados de pagamento enviados para validação)_`;
 
-            // Link universal estável (wa.me)
+            // Link direto que não é bloqueado pelo navegador
             const linkWhatsapp = `https://wa.me{numeroWhats}?text=${encodeURIComponent(textoMensagem)}`;
 
-            // Histórico local para o painel do vendedor funcionar
-            const novaVenda = {
-                id: Math.floor(Math.random() * 100000),
-                cliente: cliente,
-                produto: produto,
-                valor: preco.replace("R$ ", "").replace(".", "").replace(",", "."),
-                pagamento: pagamento,
-                data: new Date().toLocaleTimeString('pt-BR')
-            };
-            let vendas = JSON.parse(localStorage.getItem('vendasDoSite')) || [];
-            vendas.push(novaVenda);
-            localStorage.setItem('vendasDoSite', JSON.stringify(vendas));
-
-            // Redireciona na mesma aba (evita bloqueador de pop-ups)
+            // Redireciona na mesma página
             window.location.href = linkWhatsapp;
         });
     </script>
