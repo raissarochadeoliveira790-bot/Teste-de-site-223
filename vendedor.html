@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Vendedor - Gerenciador de Vendas</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #2c3e50; color: #333; padding: 20px; }
+        .painel { max-width: 1000px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        h1 { color: #2c3e50; margin-bottom: 20px; border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center;}
+        .btn-limpar { background-color: #e74c3c; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .btn-limpar:hover { background-color: #c0392b; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #34495e; color: white; }
+        tr:hover { background-color: #f5f5f5; }
+        .status-badge { background-color: #2ecc71; color: white; padding: 5px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; }
+        .sem-vendas { text-align: center; padding: 40px; color: #7f8c8d; font-style: italic; }
+    </style>
+</head>
+<body>
+
+    <div class="painel">
+        <h1>
+            🛒 Painel do Vendedor - Pedidos Recebidos
+            <button class="btn-limpar" onclick="limparHistorico()">Limpar Histórico</button>
+        </h1>
+        
+        <p>Abaixo estão listadas as compras feitas pelos clientes no seu site em tempo real.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Pedido</th>
+                    <th>Hora</th>
+                    <th>Cliente</th>
+                    <th>Produto Comprado</th>
+                    <th>Valor</th>
+                    <th>Forma de Pagamento</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="listaVendas">
+                <!-- As vendas vão aparecer aqui via Javascript -->
+            </tbody>
+        </table>
+        
+        <div id="mensagemVazia" class="sem-vendas" style="display: none;">
+            Nenhum pedido recebido até o momento.
+        </div>
+    </div>
+
+    <script>
+        function carregarVendas() {
+            const tabela = document.getElementById('listaVendas');
+            const msgVazia = document.getElementById('mensagemVazia');
+            
+            // Puxa as vendas salvas no sistema
+            const vendas = JSON.parse(localStorage.getItem('vendasDoSite')) || [];
+
+            tabela.innerHTML = "";
+
+            if (vendas.length === 0) {
+                msgVazia.style.display = "block";
+                return;
+            } else {
+                msgVazia.style.display = "none";
+            }
+
+            // Adiciona cada venda como uma linha na tabela (mostrando as mais recentes primeiro)
+            vendas.reverse().forEach(venda => {
+                const linha = document.createElement('tr');
+                linha.innerHTML = `
+                    <td>#${venda.id}</td>
+                    <td>${venda.data}</td>
+                    <td><strong>${venda.cliente}</strong></td>
+                    <td>${venda.produto}</td>
+                    <td style="color: #2ecc71; font-weight: bold;">R$ ${parseFloat(venda.valor).toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td>
+                    <td>${venda.pagamento}</td>
+                    <td><span class="status-badge">Aprovado</span></td>
+                `;
+                tabela.appendChild(linha);
+            });
+        }
+
+        function limparHistorico() {
+            if(confirm("Tem certeza que deseja apagar todos os pedidos recebidos?")) {
+                localStorage.removeItem('vendasDoSite');
+                carregarVendas();
+            }
+        }
+
+        // Atualiza a tela automaticamente a cada 2 segundos para checar se há novas vendas
+        setInterval(carregarVendas, 2000);
+        
+        // Carrega logo ao abrir a página
+        carregarVendas();
+    </script>
+</body>
+</html>
