@@ -44,7 +44,7 @@
 
     <main>
         <section class="produtos-grid">
-            <!-- Produto 1 com foto real descritiva -->
+            <!-- Produto 1 -->
             <div class="produto-card">
                 <img src="https://unsplash.com" alt="Smartphone" class="produto-imagem">
                 <h2 class="produto-titulo">Smartphone Premium XT</h2>
@@ -52,7 +52,7 @@
                 <a href="#checkout" class="btn-comprar" onclick="selecionarProduto('Smartphone Premium XT', 'R$ 2.499,00')">Comprar Agora</a>
             </div>
 
-            <!-- Produto 2 com foto real descritiva -->
+            <!-- Produto 2 -->
             <div class="produto-card">
                 <img src="https://unsplash.com" alt="Fone de Ouvido" class="produto-imagem">
                 <h2 class="produto-titulo">Fone de Ouvido Bluetooth Pro</h2>
@@ -65,8 +65,8 @@
             <h2>Finalizar Pedido</h2>
             <form class="formulario-pagamento" id="formPagamento">
                 
-                <!-- IMPORTANTE: Altere o número abaixo para o SEU WhatsApp (Código do país + DDD + Número) -->
-                <input type="hidden" id="numeroVendedor" value="44998092717">
+                <!-- SEU NÚMERO ATUALIZADO NA LINHA 54 -->
+                <input type="hidden" id="numeroVendedor" value="5544998092717">
 
                 <div class="subtitulo-form">Item Escolhido</div>
                 <div class="campo-grupo">
@@ -101,7 +101,7 @@
                 <div class="linha-dupla">
                     <div class="campo-grupo">
                         <label for="cidade">Cidade</label>
-                        <input type="text" id="cidade" required placeholder="Ex: São Paulo">
+                        <input type="text" id="cidade" required placeholder="Ex: Maringá">
                     </div>
                     <div class="campo-grupo">
                         <label for="cep">CEP</label>
@@ -149,7 +149,6 @@
                 return;
             }
 
-            // Monta o texto completo e organizado para o WhatsApp
             const textoMensagem = `Novo Pedido Recebido!\n\n` +
                                   `📦 *PRODUTO:* ${produto}\n` +
                                   `💰 *VALOR:* ${preco}\n\n` +
@@ -161,10 +160,8 @@
                                   `• CEP: ${cep}\n\n` +
                                   `💳 *FORMA DE PAGAMENTO:* ${pagamento}`;
 
-            // Link de direcionamento do WhatsApp
             const linkWhatsapp = `https://whatsapp.com{numeroWhats}&text=${encodeURIComponent(textoMensagem)}`;
 
-            // Salva no LocalStorage para continuar alimentando o seu painel do vendedor (vendedor.html)
             const novaVenda = {
                 id: Math.floor(Math.random() * 100000),
                 cliente: cliente,
@@ -177,6 +174,8 @@
             vendas.push(novaVenda);
             localStorage.setItem('vendasDoSite', JSON.stringify(vendas));
 
-            // Abre o WhatsApp
             window.open(linkWhatsapp, '_blank');
         });
+    </script>
+</body>
+</html>
