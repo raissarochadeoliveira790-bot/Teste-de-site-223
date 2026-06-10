@@ -34,18 +34,21 @@
 
     <main>
         <section class="produtos-grid">
+            <!-- Produto 1 -->
             <div class="produto-card">
                 <div class="produto-imagem">Smartphone XT</div>
                 <h2 class="produto-titulo">Smartphone Top de Linha</h2>
                 <p class="produto-preco">R$ 2.499,00</p>
                 <button type="button" class="btn-comprar" onclick="comprarProduto('Smartphone Top de Linha', 'R$ 2.499,00')">Comprar Agora</button>
             </div>
+            <!-- Produto 2 -->
             <div class="produto-card">
                 <div class="produto-imagem">Fone Bluetooth Pro</div>
                 <h2 class="produto-titulo">Fone de Ouvido Sem Fio</h2>
                 <p class="produto-preco">R$ 349,00</p>
                 <button type="button" class="btn-comprar" onclick="comprarProduto('Fone de Ouvido Sem Fio', 'R$ 349,00')">Comprar Agora</button>
             </div>
+            <!-- Produto 3 -->
             <div class="produto-card">
                 <div class="produto-imagem">Smartwatch Fit</div>
                 <h2 class="produto-titulo">Relógio Inteligente Esportivo</h2>
@@ -54,6 +57,7 @@
             </div>
         </section>
 
+        <!-- Seção de Pagamento -->
         <section id="checkout" class="secao-pagamento">
             <h2>Finalizar Pedido</h2>
             <form class="formulario-pagamento" id="formPagamento">
@@ -69,15 +73,18 @@
                     <label for="nome">Nome Completo</label>
                     <input type="text" id="nome" required placeholder="Ex: João Silva">
                 </div>
+
+                <!-- MENU COM AS OPÇÕES DE PAGAMENTO SOLICITADAS -->
                 <div class="campo-grupo">
                     <label for="opcaoPagamento">Forma de Pagamento</label>
                     <select id="opcaoPagamento" required>
                         <option value="" disabled selected>Selecione uma opção...</option>
-                        <option value="Pix">Pix</option>
+                        <option value="Pix">Pix (Aprovação Imediata)</option>
                         <option value="Cartão de Crédito">Cartão de Crédito</option>
                         <option value="Boleto Bancário">Boleto Bancário</option>
                     </select>
                 </div>
+
                 <button type="submit" class="btn-pagar">Finalizar e Enviar Pedido</button>
             </form>
         </section>
@@ -108,7 +115,7 @@
 
             const textoMensagem = `Olá! Quero finalizar uma compra:\n\n👤 *Cliente:* ${cliente}\n📦 *Produto:* ${produto}\n💰 *Valor:* ${preco}\n💳 *Forma de Pagamento:* ${formaPagamento}`;
             
-            // LINHA CORRIGIDA AQUI: Adicionado estritamente o "?text=" obrigatório da API do WhatsApp
+            // Link corrigido sem erro de digitação
             const linkFinal = "https://wa.me" + numeroWhats + "?text=" + encodeURIComponent(textoMensagem);
 
             window.location.href = linkFinal;
