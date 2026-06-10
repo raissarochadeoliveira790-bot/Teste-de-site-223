@@ -7,104 +7,176 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
         body { background-color: #f4f7f6; color: #333; }
-        header { background-color: #1a1a1a; color: white; padding: 20px; text-align: center; }
+        header { background-color: #1a1a1a; color: white; padding: 25px; text-align: center; }
         main { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+        
+        /* Grade de Produtos */
         .produtos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 50px; }
         .produto-card { background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 20px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; }
-        .produto-imagem { width: 100%; height: 200px; background-color: #ddd; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #666; margin-bottom: 15px; }
-        .produto-titulo { font-size: 1.2rem; margin-bottom: 10px; }
+        
+        /* Ajuste para Fotos Reais */
+        .produto-imagem { width: 100%; height: 220px; object-fit: cover; border-radius: 6px; margin-bottom: 15px; }
+        
+        .produto-titulo { font-size: 1.2rem; margin-bottom: 10px; color: #2c3e50; }
         .produto-preco { font-size: 1.4rem; color: #2ecc71; font-weight: bold; margin-bottom: 15px; }
-        .btn-comprar { background-color: #3498db; color: white; border: none; padding: 12px; border-radius: 5px; font-size: 1rem; cursor: pointer; font-weight: bold; text-decoration: none; display: block; }
+        .btn-comprar { background-color: #3498db; color: white; border: none; padding: 12px; border-radius: 5px; font-size: 1rem; cursor: pointer; font-weight: bold; text-decoration: none; display: block; transition: background 0.2s; }
         .btn-comprar:hover { background-color: #2980b9; }
-        .btn-pagar { background-color: #2ecc71; color: white; border: none; padding: 15px 40px; border-radius: 5px; font-size: 1.2rem; cursor: pointer; font-weight: bold; width: 100%; max-width: 400px; margin-top: 20px; }
+        .btn-pagar { background-color: #2ecc71; color: white; border: none; padding: 15px 40px; border-radius: 5px; font-size: 1.2rem; cursor: pointer; font-weight: bold; width: 100%; max-width: 400px; margin-top: 20px; transition: background 0.2s; }
         .btn-pagar:hover { background-color: #27ae60; }
+        
+        /* Seção de Pagamento e Formulário */
         .secao-pagamento { background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 30px; text-align: center; margin-top: 50px; scroll-margin-top: 20px; }
-        .formulario-pagamento { max-width: 400px; margin: 20px auto; text-align: left; }
+        .formulario-pagamento { max-width: 500px; margin: 20px auto; text-align: left; }
+        .subtitulo-form { margin: 20px 0 10px 0; padding-bottom: 5px; border-bottom: 1px solid #ddd; color: #7f8c8d; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; }
         .campo-grupo { margin-bottom: 15px; }
-        .campo-grupo label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .campo-grupo label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; }
         .campo-grupo input, .campo-grupo select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; }
+        .linha-dupla { display: flex; gap: 15px; }
+        .linha-dupla .campo-grupo { flex: 1; }
     </style>
 </head>
 <body>
 
     <header>
         <h1>Minha Loja Virtual</h1>
-        <p>Área do Cliente</p>
+        <p>Escolha seus produtos e finalize o pedido</p>
     </header>
 
     <main>
         <section class="produtos-grid">
+            <!-- Produto 1 com foto real descritiva -->
             <div class="produto-card">
-                <div class="produto-imagem">Smartphone XT</div>
-                <h2 class="produto-titulo">Smartphone Top de Linha</h2>
+                <img src="https://unsplash.com" alt="Smartphone" class="produto-imagem">
+                <h2 class="produto-titulo">Smartphone Premium XT</h2>
                 <p class="produto-preco">R$ 2.499,00</p>
-                <a href="#checkout" class="btn-comprar" onclick="selecionarProduto('Smartphone Top de Linha', '2499.00')">Comprar Agora</a>
+                <a href="#checkout" class="btn-comprar" onclick="selecionarProduto('Smartphone Premium XT', 'R$ 2.499,00')">Comprar Agora</a>
             </div>
 
+            <!-- Produto 2 com foto real descritiva -->
             <div class="produto-card">
-                <div class="produto-imagem">Fone Bluetooth Pro</div>
-                <h2 class="produto-titulo">Fone de Ouvido Sem Fio</h2>
+                <img src="https://unsplash.com" alt="Fone de Ouvido" class="produto-imagem">
+                <h2 class="produto-titulo">Fone de Ouvido Bluetooth Pro</h2>
                 <p class="produto-preco">R$ 349,00</p>
-                <a href="#checkout" class="btn-comprar" onclick="selecionarProduto('Fone de Ouvido Sem Fio', '349.00')">Comprar Agora</a>
+                <a href="#checkout" class="btn-comprar" onclick="selecionarProduto('Fone de Ouvido Bluetooth Pro', 'R$ 349,00')">Comprar Agora</a>
             </div>
         </section>
 
         <section id="checkout" class="secao-pagamento">
-            <h2>Finalizar Pagamento</h2>
+            <h2>Finalizar Pedido</h2>
             <form class="formulario-pagamento" id="formPagamento">
+                
+                <!-- IMPORTANTE: Altere o número abaixo para o SEU WhatsApp (Código do país + DDD + Número) -->
+                <input type="hidden" id="numeroVendedor" value="5511999999999">
+
+                <div class="subtitulo-form">Item Escolhido</div>
                 <div class="campo-grupo">
                     <label>Produto Selecionado</label>
-                    <input type="text" id="prodNome" readonly value="Nenhum produto selecionado">
+                    <input type="text" id="prodNome" readonly value="Nenhum produto selecionado" style="background-color: #e9ecef; font-weight: bold;">
                     <input type="hidden" id="prodPreco" value="0">
                 </div>
+
+                <div class="subtitulo-form">Dados Pessoais</div>
                 <div class="campo-grupo">
-                    <label for="nome">Seu Nome Completo</label>
+                    <label for="nome">Nome Completo</label>
                     <input type="text" id="nome" required placeholder="Ex: João Silva">
                 </div>
+
+                <div class="subtitulo-form">Endereço de Entrega</div>
                 <div class="campo-grupo">
-                    <label for="forma">Forma de Pagamento</label>
+                    <label for="rua">Rua / Avenida</label>
+                    <input type="text" id="rua" required placeholder="Ex: Rua das Flores">
+                </div>
+                
+                <div class="linha-dupla">
+                    <div class="campo-grupo">
+                        <label for="numero">Número</label>
+                        <input type="text" id="numero" required placeholder="Ex: 123">
+                    </div>
+                    <div class="campo-grupo">
+                        <label for="bairro">Bairro</label>
+                        <input type="text" id="bairro" required placeholder="Ex: Centro">
+                    </div>
+                </div>
+
+                <div class="linha-dupla">
+                    <div class="campo-grupo">
+                        <label for="cidade">Cidade</label>
+                        <input type="text" id="cidade" required placeholder="Ex: São Paulo">
+                    </div>
+                    <div class="campo-grupo">
+                        <label for="cep">CEP</label>
+                        <input type="text" id="cep" required placeholder="00000-000">
+                    </div>
+                </div>
+
+                <div class="subtitulo-form">Pagamento</div>
+                <div class="campo-grupo">
+                    <label for="forma">Forma de Pagamento Desejada</label>
                     <select id="forma" required>
-                        <option value="Cartão de Crédito">Cartão de Crédito</option>
                         <option value="Pix">Pix</option>
-                        <option value="Boleto">Boleto Bancário</option>
+                        <option value="Cartão de Crédito">Cartão de Crédito</option>
+                        <option value="Boleto Bancário">Boleto Bancário</option>
                     </select>
                 </div>
-                <button type="submit" class="btn-pagar">Efetuar Pagamento</button>
+                
+                <button type="submit" class="btn-pagar">Enviar Pedido por WhatsApp</button>
             </form>
         </section>
     </main>
 
     <script>
-        // Função para preencher automaticamente o produto clicado no formulário
         function selecionarProduto(nome, preco) {
             document.getElementById('prodNome').value = nome;
             document.getElementById('prodPreco').value = preco;
         }
 
-        // Envia os dados da venda para o Painel do Vendedor
         document.getElementById('formPagamento').addEventListener('submit', function(e) {
             e.preventDefault();
             
+            const numeroWhats = document.getElementById('numeroVendedor').value;
+            const produto = document.getElementById('prodNome').value;
+            const preco = document.getElementById('prodPreco').value;
+            const cliente = document.getElementById('nome').value;
+            const rua = document.getElementById('rua').value;
+            const numero = document.getElementById('numero').value;
+            const bairro = document.getElementById('bairro').value;
+            const cidade = document.getElementById('cidade').value;
+            const cep = document.getElementById('cep').value;
+            const pagamento = document.getElementById('forma').value;
+
+            if (produto === "Nenhum produto selecionado") {
+                alert("Por favor, selecione um produto primeiro clicando em 'Comprar Agora'.");
+                return;
+            }
+
+            // Monta o texto completo e organizado para o WhatsApp
+            const textoMensagem = `Novo Pedido Recebido!\n\n` +
+                                  `📦 *PRODUTO:* ${produto}\n` +
+                                  `💰 *VALOR:* ${preco}\n\n` +
+                                  `👤 *CLIENTE:* ${cliente}\n\n` +
+                                  `📍 *ENDEREÇO DE ENTREGA:*\n` +
+                                  `• Rua: ${rua}, Nº ${numero}\n` +
+                                  `• Bairro: ${bairro}\n` +
+                                  `• Cidade: ${cidade}\n` +
+                                  `• CEP: ${cep}\n\n` +
+                                  `💳 *FORMA DE PAGAMENTO:* ${pagamento}`;
+
+            // Link de direcionamento do WhatsApp
+            const linkWhatsapp = `https://whatsapp.com{numeroWhats}&text=${encodeURIComponent(textoMensagem)}`;
+
+            // Salva no LocalStorage para continuar alimentando o seu painel do vendedor (vendedor.html)
             const novaVenda = {
                 id: Math.floor(Math.random() * 100000),
-                cliente: document.getElementById('nome').value,
-                produto: document.getElementById('prodNome').value,
-                valor: document.getElementById('prodPreco').value,
-                pagamento: document.getElementById('forma').value,
+                cliente: cliente,
+                produto: produto,
+                valor: preco.replace("R$ ", "").replace(".", "").replace(",", "."),
+                pagamento: pagamento,
                 data: new Date().toLocaleTimeString('pt-BR')
             };
-
-            // Pega as vendas antigas salvas ou cria uma lista vazia
             let vendas = JSON.parse(localStorage.getItem('vendasDoSite')) || [];
             vendas.push(novaVenda);
-            
-            // Salva a nova lista atualizada
             localStorage.setItem('vendasDoSite', JSON.stringify(vendas));
 
-            alert('Sucesso! Seu pedido foi enviado ao vendedor.');
-            this.reset();
-            document.getElementById('prodNome').value = "Nenhum produto selecionado";
+            // Abre o WhatsApp
+            window.open(linkWhatsapp, '_blank');
         });
-    </script>
-</body>
-</html>
