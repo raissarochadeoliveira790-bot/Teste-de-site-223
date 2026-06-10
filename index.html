@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LOJAS ELETRIC</title>
+<title>LOJA XARÉU</title>
 
 <style>
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial, sans-serif;
+    font-family:Arial,sans-serif;
 }
 
 body{
@@ -19,17 +19,38 @@ body{
 
 header{
     background:#0d1117;
-    color:white;
+    padding:20px;
+}
+
+.logo-container{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.logo{
+    width:120px;
+    height:120px;
+    object-fit:contain;
+    border-radius:10px;
+    background:white;
+    padding:5px;
+}
+
+.titulo{
     text-align:center;
-    padding:30px;
 }
 
-header h1{
-    font-size:2rem;
+.titulo h1{
+    color:white;
+    font-size:2.2rem;
 }
 
-header p{
-    margin-top:10px;
+.titulo p{
+    color:#ccc;
+    margin-top:5px;
 }
 
 .produtos{
@@ -41,24 +62,25 @@ header p{
 .card{
     background:white;
     border-radius:12px;
-    box-shadow:0 4px 12px rgba(0,0,0,.1);
     overflow:hidden;
-    max-width:400px;
+    box-shadow:0 4px 15px rgba(0,0,0,.1);
+    max-width:450px;
     margin:auto;
 }
 
 .card img{
     width:100%;
-    height:350px;
+    height:400px;
     object-fit:contain;
     background:white;
 }
 
-.conteudo{
+.info{
     padding:20px;
 }
 
-.conteudo h2{
+.info h2{
+    color:#222;
     margin-bottom:10px;
 }
 
@@ -69,60 +91,60 @@ header p{
 }
 
 .beneficios{
+    list-style:none;
     margin-bottom:20px;
 }
 
 .beneficios li{
-    list-style:none;
     margin-bottom:8px;
 }
 
 .preco{
-    font-size:32px;
     color:#0066ff;
+    font-size:38px;
     font-weight:bold;
     margin-bottom:15px;
 }
 
 .btn{
     width:100%;
-    background:#0066ff;
+    background:#00a651;
     color:white;
     border:none;
     padding:15px;
     border-radius:8px;
+    font-size:18px;
     cursor:pointer;
-    font-size:16px;
     font-weight:bold;
 }
 
 .btn:hover{
-    background:#004ecc;
+    background:#008944;
 }
 
 .carrinho{
-    max-width:800px;
+    max-width:900px;
     margin:30px auto;
     background:white;
-    padding:20px;
+    padding:25px;
     border-radius:12px;
-    box-shadow:0 4px 12px rgba(0,0,0,.1);
+    box-shadow:0 4px 15px rgba(0,0,0,.1);
 }
 
 .carrinho h2{
-    margin-bottom:15px;
+    margin-bottom:20px;
 }
 
 .item{
     display:flex;
     justify-content:space-between;
-    padding:10px 0;
     border-bottom:1px solid #ddd;
+    padding:10px 0;
 }
 
 .total{
     margin-top:20px;
-    font-size:24px;
+    font-size:28px;
     font-weight:bold;
     color:#0066ff;
 }
@@ -142,7 +164,7 @@ header p{
 
 .finalizar{
     width:100%;
-    background:#28a745;
+    background:#0066ff;
     color:white;
     border:none;
     padding:15px;
@@ -152,13 +174,13 @@ header p{
 }
 
 .finalizar:hover{
-    background:#218838;
+    background:#004ecc;
 }
 
 footer{
     text-align:center;
-    padding:20px;
-    color:#777;
+    padding:30px;
+    color:#666;
 }
 </style>
 </head>
@@ -166,47 +188,56 @@ footer{
 <body>
 
 <header>
-    <h1>LOJAS ELETRIC</h1>
-    <p>Produtos de qualidade com os melhores preços</p>
+
+<div class="logo-container">
+
+<img src="xareu-logo.jpg" alt="Xaréu" class="logo">
+
+<div class="titulo">
+<h1>LOJA XARÉU</h1>
+<p>Produtos de limpeza com os melhores preços</p>
+</div>
+
+</div>
+
 </header>
 
 <section class="produtos">
 
 <div class="card">
 
-    <!-- TROQUE PELO CAMINHO DA SUA FOTO -->
-    <img src="deoline.jpg" alt="Deoline Lava-Roupas 5L">
+<img src="deoline.jpg" alt="Deoline Lava-Roupas">
 
-    <div class="conteudo">
+<div class="info">
 
-        <h2>Deoline Lava-Roupas Líquido Concentrado 5L</h2>
+<h2>Deoline Lava-Roupas Líquido Concentrado 5L</h2>
 
-        <p class="descricao">
-            O Deoline Lava-Roupas Líquido Concentrado possui alto poder de remoção de sujeira.
-            Desenvolvido para proporcionar praticidade e economia na lavagem das roupas,
-            tanto à mão quanto na máquina. Não agride os tecidos e deixa suas roupas limpas
-            e agradavelmente perfumadas.
-        </p>
+<p class="descricao">
+O Deoline Lava-Roupas Líquido Concentrado tem um alto poder de remoção da sujeira em suas roupas.
 
-        <ul class="beneficios">
-            <li>✅ Alto poder de remoção de sujeira</li>
-            <li>✅ Não agride os tecidos</li>
-            <li>✅ Fórmula concentrada</li>
-            <li>✅ Ideal para lavagem manual e em máquina</li>
-            <li>✅ Perfume agradável e duradouro</li>
-            <li>✅ Embalagem econômica de 5 Litros</li>
-        </ul>
+Especialmente desenvolvido para dar maior praticidade e economia na lavagem das roupas, seja à mão ou na máquina.
 
-        <div class="preco">
-            R$ 51,00
-        </div>
+Não agride os tecidos, deixando suas roupas limpas e agradavelmente perfumadas.
 
-        <button class="btn"
-        onclick="adicionar('Deoline Lava-Roupas Líquido Concentrado 5L',51)">
-            Adicionar ao Carrinho
-        </button>
+Para uma limpeza perfeita e com muito mais perfume use-o associado ao Deoline Amaciante de sua preferência.
+</p>
 
-    </div>
+<ul class="beneficios">
+<li>✅ Alto poder de remoção de sujeira</li>
+<li>✅ Não agride os tecidos</li>
+<li>✅ Fórmula concentrada</li>
+<li>✅ Embalagem profissional 5L</li>
+</ul>
+
+<div class="preco">
+R$ 51,00
+</div>
+
+<button class="btn" onclick="adicionar('Deoline Lava-Roupas Líquido Concentrado 5L',51)">
+Adicionar ao Carrinho
+</button>
+
+</div>
 
 </div>
 
@@ -224,18 +255,18 @@ Total: R$ <span id="total">0.00</span>
 
 <div class="formulario">
 
-<input type="text" placeholder="Nome Completo" id="nome">
+<input type="text" id="nome" placeholder="Nome Completo">
 
-<input type="text" placeholder="Telefone" id="telefone">
+<input type="tel" id="telefone" placeholder="Telefone">
 
-<input type="text" placeholder="Endereço de Entrega" id="endereco">
+<input type="text" id="endereco" placeholder="Endereço">
 
 <select id="pagamento">
-    <option value="">Forma de Pagamento</option>
-    <option>PIX</option>
-    <option>Cartão de Crédito</option>
-    <option>Cartão de Débito</option>
-    <option>Boleto Bancário</option>
+<option value="">Forma de pagamento</option>
+<option>PIX</option>
+<option>Cartão de Crédito</option>
+<option>Cartão de Débito</option>
+<option>Boleto Bancário</option>
 </select>
 
 <button class="finalizar" onclick="finalizarPedido()">
@@ -247,7 +278,7 @@ Finalizar Pedido
 </section>
 
 <footer>
-© 2026 LOJAS ELETRIC
+© 2026 Loja Xaréu
 </footer>
 
 <script>
@@ -283,8 +314,7 @@ function atualizarCarrinho(){
         `;
     });
 
-    document.getElementById("total").innerText=
-    total.toFixed(2);
+    document.getElementById("total").innerText=total.toFixed(2);
 }
 
 function finalizarPedido(){
@@ -301,7 +331,7 @@ function finalizarPedido(){
         return;
     }
 
-    alert("Pedido realizado com sucesso! Em seguida você poderá integrar Firebase, Mercado Pago e notificações automáticas.");
+    alert("Pedido realizado com sucesso!");
 }
 
 </script>
