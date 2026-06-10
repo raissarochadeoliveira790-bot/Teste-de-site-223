@@ -10,7 +10,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body {
             background-color: #f4f7f6;
@@ -69,22 +69,71 @@
             margin-bottom: 15px;
         }
 
-        /* Botão de Pagamento Verde */
-        .btn-pagar {
-            background-color: #2ecc71;
+        /* Botões */
+        .btn-comprar {
+            background-color: #3498db;
             color: white;
             border: none;
             padding: 12px;
             border-radius: 5px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             cursor: pointer;
             font-weight: bold;
             text-decoration: none;
             display: block;
+            text-align: center;
+        }
+        .btn-comprar:hover {
+            background-color: #2980b9;
+        }
+        .btn-pagar {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-weight: bold;
             transition: background 0.2s;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
         }
         .btn-pagar:hover {
             background-color: #27ae60;
+        }
+
+        /* Seção de Pagamento */
+        .secao-pagamento {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 30px;
+            text-align: center;
+            margin-top: 50px;
+            scroll-margin-top: 20px;
+        }
+        .formulario-pagamento {
+            max-width: 400px;
+            margin: 20px auto;
+            text-align: left;
+        }
+        .campo-grupo {
+            margin-bottom: 15px;
+        }
+        .campo-grupo label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .campo-grupo input, .campo-grupo select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            background-color: white;
         }
         footer {
             text-align: center;
@@ -110,8 +159,7 @@
                 <div class="produto-imagem">Smartphone XT</div>
                 <h2 class="produto-titulo">Smartphone Top de Linha</h2>
                 <p class="produto-preco">R$ 2.499,00</p>
-                <!-- Link corrigido com a barra obrigatória '/' após o wa.me -->
-                <a href="https://wa.me" class="btn-pagar">Efetuar Pagamento</a>
+                <button type="button" class="btn-comprar" onclick="comprarProduto('Smartphone Top de Linha', 'R$ 2.499,00')">Comprar Agora</button>
             </div>
 
             <!-- Produto 2 -->
@@ -119,8 +167,7 @@
                 <div class="produto-imagem">Fone Bluetooth Pro</div>
                 <h2 class="produto-titulo">Fone de Ouvido Sem Fio</h2>
                 <p class="produto-preco">R$ 349,00</p>
-                <!-- Link corrigido com a barra obrigatória '/' após o wa.me -->
-                <a href="https://wa.me" class="btn-pagar">Efetuar Pagamento</a>
+                <button type="button" class="btn-comprar" onclick="comprarProduto('Fone de Ouvido Sem Fio', 'R$ 349,00')">Comprar Agora</button>
             </div>
 
             <!-- Produto 3 -->
@@ -128,10 +175,43 @@
                 <div class="produto-imagem">Smartwatch Fit</div>
                 <h2 class="produto-titulo">Relógio Inteligente Esportivo</h2>
                 <p class="produto-preco">R$ 599,00</p>
-                <!-- Link corrigido com a barra obrigatória '/' após o wa.me -->
-                <a href="https://wa.me" class="btn-pagar">Efetuar Pagamento</a>
+                <button type="button" class="btn-comprar" onclick="comprarProduto('Relógio Inteligente Esportivo', 'R$ 599,00')">Comprar Agora</button>
             </div>
 
+        </section>
+
+        <!-- Seção de Pagamento -->
+        <section id="checkout" class="secao-pagamento">
+            <h2>Finalizar Pedido</h2>
+            <p>Insira seus dados, escolha o pagamento e envie o pedido ao vendedor.</p>
+
+            <form class="formulario-pagamento" id="formPagamento">
+                
+                <!-- Dados armazenados do produto clicado -->
+                <div class="campo-grupo">
+                    <label>Produto Selecionado</label>
+                    <input type="text" id="prodNome" readonly value="Clique em 'Comprar Agora' acima" style="background-color: #e9ecef; font-weight: bold; color: #555;">
+                    <input type="hidden" id="prodPreco" value="0">
+                </div>
+
+                <div class="campo-grupo">
+                    <label for="nome">Nome Completo</label>
+                    <input type="text" id="nome" required placeholder="Ex: João Silva">
+                </div>
+
+                <!-- CAMPO PARA O CLIENTE ESCOLHER O PAGAMENTO -->
+                <div class="campo-grupo">
+                    <label for="opcaoPagamento">Forma de Pagamento</label>
+                    <select id="opcaoPagamento" required>
+                        <option value="" disabled selected>Selecione uma opção...</option>
+                        <option value="Pix">Pix (Aprovação na hora)</option>
+                        <option value="Cartão de Crédito">Cartão de Crédito</option>
+                        <option value="Boleto Bancário">Boleto Bancário</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn-pagar">Enviar Pedido por WhatsApp</button>
+            </form>
         </section>
     </main>
 
@@ -139,5 +219,41 @@
         &copy; 2026 Minha Loja Virtual - Todos os direitos reservados.
     </footer>
 
+    <script>
+        // Função que memoriza o produto e rola a tela até o formulário
+        function comprarProduto(nome, preco) {
+            document.getElementById('prodNome').value = nome;
+            document.getElementById('prodPreco').value = preco;
+            document.getElementById('checkout').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Script de envio seguro sem quebrar o link
+        document.getElementById('formPagamento').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const produto = document.getElementById('prodNome').value;
+            const preco = document.getElementById('prodPreco').value;
+            const cliente = document.getElementById('nome').value;
+            const formaPagamento = document.getElementById('opcaoPagamento').value;
+
+            if (produto === "Clique em 'Comprar Agora' acima") {
+                alert("Por favor, selecione um produto primeiro clicando no botão azul 'Comprar Agora'.");
+                return;
+            }
+
+            // Monta o texto limpo com as quebras de linha certas
+            const textoMensagem = "Olá! Quero finalizar uma compra:\n\n" +
+                                  "👤 *Cliente:* " + cliente + "\n" +
+                                  "📦 *Produto:* " + produto + "\n" +
+                                  "💰 *Valor:* " + preco + "\n" +
+                                  "💳 *Forma de Pagamento:* " + formaPagamento;
+
+            // Cria o link final perfeitamente estruturado com a barra '/' obrigatória
+            const linkFinal = "https://wa.me" + encodeURIComponent(textoMensagem);
+
+            // Redireciona o usuário
+            window.location.href = linkFinal;
+        });
+    </script>
 </body>
 </html>
