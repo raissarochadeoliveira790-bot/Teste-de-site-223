@@ -28,6 +28,7 @@ body{
 .topo img{
     width:100%;
     height:400px;
+    object-fit:cover;
     display:block;
 }
 
@@ -154,7 +155,7 @@ footer{
 
 <body>
 
-<!-- CABEÇALHO ÚNICO -->
+<!-- CABEÇALHO -->
 <header class="topo">
     <img src="xareu-banner.png" alt="Xaréu Produtos de Limpeza">
 </header>
@@ -181,7 +182,7 @@ footer{
 
             <div class="preco">R$ 51,00</div>
 
-            <button class="btn" onclick="adicionar('Deoline Lava-Roupas 5L',51)">
+            <button class="btn" onclick="adicionar('Deoline Lava-Roupas 5L', 51)">
                 Adicionar ao Carrinho
             </button>
         </div>
@@ -205,87 +206,85 @@ footer{
 
             <div class="preco">R$ 3,00</div>
 
-            <button class="btn" onclick="adicionar('Deoline Lava-Louças 500ml',3)">
+            <button class="btn" onclick="adicionar('Deoline Lava-Louças 500ml', 3)">
                 Adicionar ao Carrinho
             </button>
         </div>
     </div>
-  <div class="card">
+
+    <div class="card">
         <img src="alvejantedeoline.png">
 
         <div class="info">
             <h2>Alvejante sem cloro 5L</h2>
 
             <p class="descricao">
-                O Deoline Alvejante Sem Cloro deixa suas roupas limpas e não danifica os tecidos e as cores. Indicado para roupas brancas e coloridas, deixa sua lavagem mais segura e eficaz trazendo um excelente custo benefício
+                Remove sujeiras sem danificar tecidos e cores.
             </p>
 
             <ul class="beneficios">
                 <li>✅ Biodegradável</li>
-                <li>✅ Não danifica os tecidos e as cores</li>
+                <li>✅ Não danifica tecidos</li>
                 <li>✅ Fórmula concentrada</li>
-                <li>✅ Suas roupas mais brancas</li>
+                <li>✅ Roupas mais brancas</li>
             </ul>
 
             <div class="preco">R$ 40,00</div>
 
-            <button class="btn" onclick="adicionar('Deoline Alvejante 5L',40)">
+            <button class="btn" onclick="adicionar('Deoline Alvejante 5L', 40)">
                 Adicionar ao Carrinho
             </button>
         </div>
     </div>
 
-  <div class="card">
+    <div class="card">
         <img src="deoline-limpainox.png">
 
         <div class="info">
             <h2>Limpa inox 750ml</h2>
 
             <p class="descricao">
-              O Deoline Limpa Inox é ideal para limpeza de superfícies e utensílios em inox
+                Ideal para limpeza de superfícies em inox.
             </p>
 
             <ul class="beneficios">
-                <li>✅ Limpeza perfeita com muito menos esforço</li>
+                <li>✅ Limpeza eficiente</li>
                 <li>✅ Ação desincrustante</li>
-                <li>✅ Poder Abrilhantador</li>
-                
-              </ul>
+                <li>✅ Poder abrilhantador</li>
+            </ul>
 
-            <div class="preco">R$ 12,80 </div>
+            <div class="preco">R$ 12,80</div>
 
-            <button class="btn" onclick="adicionar('Deoline Limpa inox',12,80)">
+            <button class="btn" onclick="adicionar('Limpa inox 750ml', 12.80)">
                 Adicionar ao Carrinho
             </button>
         </div>
-   </ul>
-      
-  <div class="card">
+    </div>
+
+    <div class="card">
         <img src="deoline-limpaaluminio.png">
 
         <div class="info">
-            <h2>Limpa aluminio 750ml</h2>
+            <h2>Limpa alumínio 750ml</h2>
 
             <p class="descricao">
-         O Deoline Limpa Alumínio – Pronto Uso é ideal para limpeza de superfícies de alumínio em utensílios de cozinha em geral
+                Ideal para superfícies de alumínio.
             </p>
 
             <ul class="beneficios">
-                <li>✅Promove brilho e durabilidade</li>
-                <li>✅ Poder da limpeza perfeita</li>
+                <li>✅ Brilho e durabilidade</li>
+                <li>✅ Limpeza profunda</li>
                 <li>✅ Abrilhantador</li>
-                
-              </ul>
+            </ul>
 
-            <div class="preco">R$ 8,00 </div>
+            <div class="preco">R$ 8,00</div>
 
-            <button class="btn" onclick="adicionar('Limpa aluminio 750ml',8)">
+            <button class="btn" onclick="adicionar('Limpa alumínio 750ml', 8)">
                 Adicionar ao Carrinho
             </button>
         </div>
-     </ul>
-    
-    
+    </div>
+
 </section>
 
 <!-- CARRINHO -->
@@ -325,7 +324,7 @@ footer{
 let carrinho = [];
 
 function adicionar(nome, preco){
-    carrinho.push({nome, preco});
+    carrinho.push({nome, preco: Number(preco)});
     atualizar();
 }
 
