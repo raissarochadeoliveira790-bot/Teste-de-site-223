@@ -374,7 +374,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 let carrinho = [];
-function adicionar(nome, preco){
+window.adicionar = function(nome, preco){
     carrinho.push({
         nome,
         preco:Number(preco)
