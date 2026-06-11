@@ -343,19 +343,53 @@ footer{
     © 2026 Xaréu - Produtos de Limpeza
 </footer>
 
-<script>
-let carrinho = [];
+<script type="module">
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+const firebaseConfig = {
+
+ apiKey: "AIzaSyDVDnZ-GWHE8_4gLd4zRPTJGuwIMsyIK0Q",
+
+ authDomain: "vendedor-html.firebaseapp.com",
+
+ projectId: "vendedor-html",
+
+ storageBucket: "vendedor-html.firebasestorage.app",
+
+ messagingSenderId: "649120787576",
+
+ appId: "1:649120787576:web:7967250e4f0175b5d9518d"
+
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+let carrinho = [];
 function adicionar(nome, preco){
-    carrinho.push({nome, preco: Number(preco)});
+    carrinho.push({
+        nome,
+        preco:Number(preco)
+    });
+
     atualizar();
 }
 
 function atualizar(){
+
     let total = 0;
     let html = '';
 
     carrinho.forEach(item => {
+
         total += item.preco;
 
         html += `
@@ -370,7 +404,8 @@ function atualizar(){
     document.getElementById('total').innerText = total.toFixed(2);
 }
 
-function finalizarPedido(){
+window.finalizarPedido = async function(){
+
     if(carrinho.length === 0){
         alert('Carrinho vazio!');
         return;
@@ -385,7 +420,37 @@ function finalizarPedido(){
         return;
     }
 
-    alert('Pedido registrado com sucesso!');
+    try{
+
+        await addDoc(
+            collection(db,"pedidos"),
+            {
+                cliente:nome,
+                telefone:telefone,
+                endereco:endereco,
+                itens:carrinho,
+                status:"Pendente",
+                criadoEm:new Date()
+            }
+        );
+
+        alert('Pedido enviado com sucesso!');
+
+        carrinho = [];
+
+        atualizar();
+
+        document.getElementById('nome').value='';
+        document.getElementById('telefone').value='';
+        document.getElementById('endereco').value='';
+
+    }catch(error){
+
+        console.error(error);
+
+        alert('Erro ao enviar pedido');
+
+    }
 }
 </script>
 
