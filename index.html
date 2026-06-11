@@ -38,7 +38,7 @@ body{
     margin:30px auto;
     padding:20px;
     display:grid;
-   grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap:25px;
 }
 
@@ -149,6 +149,59 @@ footer{
     text-align:center;
     padding:30px;
     color:#666;
+}
+
+/* ===== RESPONSIVO MOBILE ===== */
+@media (max-width: 768px){
+
+    body{
+        padding:10px;
+    }
+
+    .produtos{
+        grid-template-columns: 1fr;
+        padding:10px;
+        gap:15px;
+    }
+
+    .card img{
+        height:220px;
+    }
+
+    .preco{
+        font-size:24px;
+    }
+
+    .info{
+        padding:12px;
+    }
+
+    .topo img{
+        height:180px;
+    }
+
+    .carrinho{
+        margin:20px 10px;
+        padding:15px;
+    }
+
+    .item{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:5px;
+    }
+
+    .finalizar{
+        font-size:16px;
+    }
+
+    input, select{
+        font-size:16px;
+    }
+}
+
+img{
+    max-width:100%;
 }
 </style>
 </head>
@@ -284,30 +337,31 @@ footer{
             </button>
         </div>
     </div>
+
     <div class="card">
         <img src="limparejunte.png">
 
         <div class="info">
-            <h2>Limpa rejunte 500ml </h2>
+            <h2>Limpa rejunte 500ml</h2>
 
             <p class="descricao">
-              O Deoline Limpa Rejunte é eficaz na limpeza de rejuntes sujos. O produto remove mofos e gorduras e não agride superfícies próximas.
+                Remove mofos e gorduras sem danificar superfícies.
             </p>
 
             <ul class="beneficios">
-                <li>✅Facilita a limpeza de rejuntes</li>
-                <li>✅Remove mofos e gorduras</li>
-                <li>✅Facilidade de aplicação</li>
+                <li>✅ Fácil aplicação</li>
+                <li>✅ Remove mofos e gorduras</li>
+                <li>✅ Uso doméstico</li>
             </ul>
 
-            <div class="preco">R$ 11,85 </div>
+            <div class="preco">R$ 11,85</div>
 
-            <button class="btn" onclick="adicionar('Limpa rejunte 500ml',11.85)">
+            <button class="btn" onclick="adicionar('Limpa rejunte 500ml', 11.85)">
                 Adicionar ao Carrinho
             </button>
         </div>
     </div>
-    
+
 </section>
 
 <!-- CARRINHO -->
@@ -355,31 +409,21 @@ push
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
 
 const firebaseConfig = {
-
  apiKey: "AIzaSyDVDnZ-GWHE8_4gLd4zRPTJGuwIMsyIK0Q",
-
  authDomain: "vendedor-html.firebaseapp.com",
-
  projectId: "vendedor-html",
-
  storageBucket: "vendedor-html.firebasestorage.app",
-
  messagingSenderId: "649120787576",
-
  appId: "1:649120787576:web:7967250e4f0175b5d9518d"
-
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 let carrinho = [];
-window.adicionar = function(nome, preco){
-    carrinho.push({
-        nome,
-        preco:Number(preco)
-    });
 
+window.adicionar = function(nome, preco){
+    carrinho.push({ nome, preco: Number(preco) });
     atualizar();
 }
 
@@ -389,7 +433,6 @@ function atualizar(){
     let html = '';
 
     carrinho.forEach(item => {
-
         total += item.preco;
 
         html += `
@@ -420,37 +463,25 @@ window.finalizarPedido = async function(){
         return;
     }
 
-    try{
+    await push(ref(db, "pedidos"), {
+        cliente: nome,
+        telefone: telefone,
+        endereco: endereco,
+        itens: carrinho,
+        status: "Pendente",
+        criadoEm: new Date().toISOString()
+    });
 
-        await push(
-            ref(db, "pedidos"),
-            {
-                cliente: nome,
-                telefone: telefone,
-                endereco: endereco,
-                itens: carrinho,
-                status: "Pendente",
-                criadoEm: new Date().toISOString()
-            }
-        );
+    alert("Pedido enviado!");
 
-        alert("Pedido enviado com sucesso!");
+    carrinho = [];
+    atualizar();
 
-        carrinho = [];
-        atualizar();
-
-        document.getElementById('nome').value = '';
-        document.getElementById('telefone').value = '';
-        document.getElementById('endereco').value = '';
-
-    }catch(error){
-
-        console.error(error);
-
-        alert("Erro ao enviar pedido");
-
-    }
+    document.getElementById('nome').value = '';
+    document.getElementById('telefone').value = '';
+    document.getElementById('endereco').value = '';
 }
+
 </script>
 
 </body>
