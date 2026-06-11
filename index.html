@@ -348,11 +348,11 @@ footer{
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
 import {
-getFirestore,
-collection,
-addDoc
+getDatabase,
+ref,
+push
 }
-from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
 
 const firebaseConfig = {
 
@@ -371,7 +371,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const db = getDatabase(app);
 
 let carrinho = [];
 window.adicionar = function(nome, preco){
@@ -422,33 +422,34 @@ window.finalizarPedido = async function(){
 
     try{
 
-        await addDoc(
-            collection(db,"pedidos"),
+        await push(
+            ref(db, "pedidos"),
             {
-                cliente:nome,
-                telefone:telefone,
-                endereco:endereco,
-                itens:carrinho,
-                status:"Pendente",
-                criadoEm:new Date()
+                cliente: nome,
+                telefone: telefone,
+                endereco: endereco,
+                itens: carrinho,
+                status: "Pendente",
+                criadoEm: new Date().toISOString()
             }
         );
 
-        alert('Pedido enviado com sucesso!');
+        alert("Pedido enviado com sucesso!");
 
         carrinho = [];
-
         atualizar();
 
-        document.getElementById('nome').value='';
-        document.getElementById('telefone').value='';
-        document.getElementById('endereco').value='';
+        document.getElementById('nome').value = '';
+        document.getElementById('telefone').value = '';
+        document.getElementById('endereco').value = '';
 
     }catch(error){
 
         console.error(error);
 
-        alert('Erro ao enviar pedido');
+        alert("Erro ao enviar pedido");
+    }
+}
 
     }
 }
