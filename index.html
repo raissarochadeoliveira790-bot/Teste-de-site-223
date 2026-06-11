@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<header class="topo">
-    <img src="xareu-banner.png" alt="Xaréu Produtos de Limpeza">
-</header>
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -18,12 +16,13 @@ body{
     background:#f5f5f5;
 }
 
+/* CABEÇALHO */
 .topo{
     width:100%;
     background:#fff;
     display:flex;
     justify-content:center;
-    padding:15px 0;
+    padding:20px 0;
 }
 
 .topo img{
@@ -92,7 +91,6 @@ body{
     color:#fff;
     font-weight:bold;
     cursor:pointer;
-    transition:.3s;
 }
 
 .btn:hover{
@@ -157,10 +155,12 @@ footer{
 
 <body>
 
-<header>
-    <img src="xareu-banner.png" alt="Xaréu Produtos de Limpeza" class="logo-banner">
+<!-- CABEÇALHO ÚNICO -->
+<header class="topo">
+    <img src="xareu-banner.png" alt="Xaréu Produtos de Limpeza">
 </header>
 
+<!-- PRODUTOS -->
 <section class="produtos">
 
     <div class="card">
@@ -214,6 +214,7 @@ footer{
 
 </section>
 
+<!-- CARRINHO -->
 <section class="carrinho">
 
     <h2>🛒 Carrinho</h2>
