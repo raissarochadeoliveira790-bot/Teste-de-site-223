@@ -5,8 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:#f5f5f5}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial;
+}
+
+body{
+    background:#f5f5f5;
+}
 
 /* HEADER */
 .topo{
@@ -16,13 +24,17 @@ body{background:#f5f5f5}
     padding:10px 20px;
     background:#fff;
 }
-.topo img{width:130px}
+
+.topo img{
+    width:130px;
+}
 
 .carrinho-icone{
     position:relative;
     font-size:26px;
     cursor:pointer;
 }
+
 #contadorCarrinho{
     position:absolute;
     top:-6px;
@@ -30,21 +42,43 @@ body{background:#f5f5f5}
     background:red;
     color:#fff;
     font-size:12px;
-    width:18px;height:18px;
+    width:18px;
+    height:18px;
     display:flex;
     align-items:center;
     justify-content:center;
     border-radius:50%;
 }
 
-/* PRODUTOS (SHOPEE STYLE) */
+/* GRID PRODUTOS */
 .produtos{
     max-width:1200px;
     margin:20px auto;
     padding:10px;
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    grid-template-columns:repeat(4,1fr);
     gap:12px;
+}
+
+/* TABLET */
+@media (max-width:1024px){
+    .produtos{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+/* CELULAR */
+@media (max-width:768px){
+    .produtos{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+/* CELULAR PEQUENO */
+@media (max-width:420px){
+    .produtos{
+        grid-template-columns:repeat(2,1fr);
+    }
 }
 
 .card{
@@ -59,7 +93,6 @@ body{background:#f5f5f5}
     height:150px;
     object-fit:contain;
     padding:8px;
-    background:#fff;
 }
 
 .info{
@@ -105,7 +138,9 @@ body{background:#f5f5f5}
     z-index:9999;
 }
 
-.carrinho-lateral.ativo{right:0}
+.carrinho-lateral.ativo{
+    right:0;
+}
 
 .item{
     display:flex;
@@ -128,6 +163,7 @@ body{background:#f5f5f5}
     color:#fff;
     border:none;
     margin-top:10px;
+    cursor:pointer;
 }
 </style>
 </head>
@@ -147,75 +183,69 @@ body{background:#f5f5f5}
 <!-- PRODUTOS -->
 <section class="produtos">
 
-    <!-- 1 -->
     <div class="card">
         <a href="produto.html?prod=lava-roupas" target="_blank">
             <img src="deoline-lava-roupas-5l.jpg">
         </a>
         <div class="info">
-            <h2>Deoline Lava-Roupas 5L</h2>
+            <h2>Lava-Roupas 5L</h2>
             <div class="preco">R$ 51,00</div>
             <button class="btn" onclick="adicionar('Lava-Roupas 5L',51)">Adicionar</button>
         </div>
     </div>
 
-    <!-- 2 -->
     <div class="card">
         <a href="produto.html?prod=lava-loucas" target="_blank">
             <img src="deoline-lava-loucas-500ml.jpg">
         </a>
         <div class="info">
-            <h2>Lava-Louças Glicerinado 500ml</h2>
+            <h2>Lava-Louças 500ml</h2>
             <div class="preco">R$ 3,00</div>
             <button class="btn" onclick="adicionar('Lava-Louças',3)">Adicionar</button>
         </div>
     </div>
 
-    <!-- 3 -->
     <div class="card">
         <a href="produto.html?prod=alvejante" target="_blank">
             <img src="alvejantedeoline.png">
         </a>
         <div class="info">
-            <h2>Alvejante sem cloro 5L</h2>
+            <h2>Alvejante 5L</h2>
             <div class="preco">R$ 40,00</div>
             <button class="btn" onclick="adicionar('Alvejante',40)">Adicionar</button>
         </div>
     </div>
 
-    <!-- 4 -->
     <div class="card">
         <a href="produto.html?prod=limpa-inox" target="_blank">
             <img src="deoline-limpainox.png">
         </a>
         <div class="info">
-            <h2>Limpa inox 750ml</h2>
+            <h2>Limpa Inox 750ml</h2>
             <div class="preco">R$ 12,80</div>
-            <button class="btn" onclick="adicionar('Limpa inox',12.80)">Adicionar</button>
+            <button class="btn" onclick="adicionar('Limpa Inox',12.80)">Adicionar</button>
         </div>
     </div>
 
-    <!-- 5 -->
     <div class="card">
         <a href="produto.html?prod=limpa-aluminio" target="_blank">
             <img src="deoline-limpaaluminio.png">
         </a>
         <div class="info">
-            <h2>Limpa alumínio 750ml</h2>
+            <h2>Limpa Alumínio</h2>
             <div class="preco">R$ 8,00</div>
-            <button class="btn" onclick="adicionar('Limpa aluminio',8)">Adicionar</button>
+            <button class="btn" onclick="adicionar('Limpa Alumínio',8)">Adicionar</button>
         </div>
     </div>
 
-    <!-- 6 -->
     <div class="card">
         <a href="produto.html?prod=limpa-rejunte" target="_blank">
             <img src="limparejunte.png">
         </a>
         <div class="info">
-            <h2>Limpa rejunte 500ml</h2>
+            <h2>Limpa Rejunte</h2>
             <div class="preco">R$ 11,85</div>
-            <button class="btn" onclick="adicionar('Limpa rejunte',11.85)">Adicionar</button>
+            <button class="btn" onclick="adicionar('Limpa Rejunte',11.85)">Adicionar</button>
         </div>
     </div>
 
@@ -225,11 +255,14 @@ body{background:#f5f5f5}
 <div id="carrinhoLateral" class="carrinho-lateral">
 
     <h2>🛒 Carrinho</h2>
+
     <div id="listaCarrinho"></div>
 
     <div class="total">Total: R$ <span id="total">0</span></div>
 
-    <button class="finalizar">Finalizar Pedido</button>
+    <button class="finalizar" onclick="finalizarPedido()">
+        Finalizar Pedido
+    </button>
 </div>
 
 <script>
@@ -265,6 +298,29 @@ function adicionar(nome,preco){
 
 function abrirCarrinho(){
     document.getElementById("carrinhoLateral").classList.add("ativo");
+}
+
+function finalizarPedido(){
+
+    if(carrinho.length === 0){
+        alert("Carrinho vazio!");
+        return;
+    }
+
+    let mensagem = "🛒 NOVO PEDIDO%0A%0A";
+
+    let total = 0;
+
+    carrinho.forEach(item=>{
+        mensagem += `• ${item.nome} - R$ ${item.preco.toFixed(2)}%0A`;
+        total += item.preco;
+    });
+
+    mensagem += `%0A💰 TOTAL: R$ ${total.toFixed(2)}`;
+
+    let url = `https://wa.me/55SEUNUMERO?text=${mensagem}`;
+
+    window.open(url, "_blank");
 }
 
 atualizar();
