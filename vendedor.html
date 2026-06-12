@@ -11,10 +11,6 @@ body{
     padding:20px;
 }
 
-h1{
-    text-align:center;
-}
-
 .pedido{
     background:#fff;
     padding:15px;
@@ -22,9 +18,29 @@ h1{
     border-radius:10px;
 }
 
+.item{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    margin:8px 0;
+}
+
+.item img{
+    width:60px;
+    height:60px;
+    object-fit:contain;
+    border-radius:6px;
+    background:#eee;
+}
+
+.status{
+    padding:5px;
+    margin-top:10px;
+}
+
 button{
-    padding:10px;
-    margin:5px;
+    padding:6px 10px;
+    margin:3px;
     cursor:pointer;
 }
 </style>
@@ -32,44 +48,64 @@ button{
 
 <body>
 
-<h1>📦 Pedidos do Sistema</h1>
-
-<button onclick="carregar()">🔄 Atualizar pedidos</button>
-<button onclick="limpar()">🗑 Limpar pedidos</button>
+<h1>📦 Painel de Pedidos</h1>
 
 <div id="pedidos"></div>
 
 <script>
 
-function carregar(){
-    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
 
-    if(pedidos.length === 0){
-        document.getElementById("pedidos").innerHTML = "<p>Nenhum pedido ainda.</p>";
-        return;
-    }
+function salvar(){
+    localStorage.setItem("pedidos", JSON.stringify(pedidos));
+}
+
+function mudarStatus(id, status){
+    let pedido = pedidos.find(p => p.id === id);
+    pedido.status = status;
+    salvar();
+    render();
+}
+
+function render(){
 
     let html = "";
 
-    pedidos.forEach((p,i)=>{
+    pedidos.forEach(p=>{
+
         html += `
         <div class="pedido">
-            <h3>Pedido #${i+1}</h3>
-            <pre>${p}</pre>
-        </div>`;
+            <h3>Pedido #${p.id}</h3>
+            <strong>Status: ${p.status}</strong>
+
+            <div class="status">
+                <button onclick="mudarStatus(${p.id},'Pendente')">Pendente</button>
+                <button onclick="mudarStatus(${p.id},'Preparando')">Preparando</button>
+                <button onclick="mudarStatus(${p.id},'Enviado')">Enviado</button>
+                <button onclick="mudarStatus(${p.id},'Entregue')">Entregue</button>
+            </div>
+
+            <hr>
+
+            ${p.itens.map(i=>`
+                <div class="item">
+                    <img src="${i.img}">
+                    <div>
+                        <div><strong>${i.nome}</strong></div>
+                        <div>${i.qtd}x R$ ${i.preco}</div>
+                    </div>
+                </div>
+            `).join("")}
+
+            <h4>Total: R$ ${p.total.toFixed(2)}</h4>
+        </div>
+        `;
     });
 
     document.getElementById("pedidos").innerHTML = html;
 }
 
-function limpar(){
-    if(confirm("Apagar todos os pedidos?")){
-        localStorage.removeItem("pedidos");
-        carregar();
-    }
-}
-
-carregar();
+render();
 
 </script>
 
