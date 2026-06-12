@@ -11,6 +11,10 @@ body{
     padding:20px;
 }
 
+h1{
+    text-align:center;
+}
+
 .pedido{
     background:#fff;
     padding:15px;
@@ -33,11 +37,6 @@ body{
     background:#eee;
 }
 
-.status{
-    padding:5px;
-    margin-top:10px;
-}
-
 button{
     padding:6px 10px;
     margin:3px;
@@ -50,6 +49,9 @@ button{
 
 <h1>📦 Painel de Pedidos</h1>
 
+<button onclick="render()">🔄 Atualizar</button>
+<button onclick="limpar()">🗑 Limpar Tudo</button>
+
 <div id="pedidos"></div>
 
 <script>
@@ -61,13 +63,34 @@ function salvar(){
 }
 
 function mudarStatus(id, status){
+
     let pedido = pedidos.find(p => p.id === id);
+
+    if(!pedido) return;
+
     pedido.status = status;
+
     salvar();
     render();
 }
 
+function limpar(){
+    if(confirm("Apagar todos os pedidos?")){
+        localStorage.removeItem("pedidos");
+        pedidos = [];
+        render();
+    }
+}
+
 function render(){
+
+    pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+
+    if(pedidos.length === 0){
+        document.getElementById("pedidos").innerHTML =
+        "<p>Nenhum pedido encontrado.</p>";
+        return;
+    }
 
     let html = "";
 
@@ -76,9 +99,9 @@ function render(){
         html += `
         <div class="pedido">
             <h3>Pedido #${p.id}</h3>
-            <strong>Status: ${p.status}</strong>
+            <strong>Status: ${p.status || "Pendente"}</strong>
 
-            <div class="status">
+            <div>
                 <button onclick="mudarStatus(${p.id},'Pendente')">Pendente</button>
                 <button onclick="mudarStatus(${p.id},'Preparando')">Preparando</button>
                 <button onclick="mudarStatus(${p.id},'Enviado')">Enviado</button>
@@ -87,17 +110,17 @@ function render(){
 
             <hr>
 
-            ${p.itens.map(i=>`
+            ${(p.itens || []).map(i=>`
                 <div class="item">
-                    <img src="${i.img}">
+                    <img src="${i.img || ''}">
                     <div>
-                        <div><strong>${i.nome}</strong></div>
-                        <div>${i.qtd}x R$ ${i.preco}</div>
+                        <strong>${i.nome}</strong><br>
+                        ${i.qtd}x R$ ${i.preco}
                     </div>
                 </div>
             `).join("")}
 
-            <h4>Total: R$ ${p.total.toFixed(2)}</h4>
+            <h4>Total: R$ ${(p.total || 0).toFixed(2)}</h4>
         </div>
         `;
     });
