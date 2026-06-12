@@ -5,212 +5,78 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#f5f5f5}
 
-body{
-    background:#f5f5f5;
-}
-
-/* CABEÇALHO */
+/* HEADER */
 .topo{
-    width:100%;
-    background:#fff;
     display:flex;
-    justify-content:flex-start;
+    justify-content:space-between;
     align-items:center;
     padding:10px 20px;
+    background:#fff;
 }
+.topo img{width:130px}
 
-.topo img{
-    width:160px;
-    height:auto;
-    object-fit:contain;
+.carrinho-icone{
+    position:relative;
+    font-size:26px;
+    cursor:pointer;
+}
+#contadorCarrinho{
+    position:absolute;
+    top:-6px;
+    right:-10px;
+    background:red;
+    color:#fff;
+    font-size:12px;
+    width:18px;height:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
 }
 
 /* PRODUTOS */
 .produtos{
     max-width:1200px;
-    margin:30px auto;
-    padding:20px;
+    margin:20px auto;
+    padding:10px;
     display:grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap:25px;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
 }
-
 .card{
     background:#fff;
-    border-radius:12px;
+    border-radius:10px;
     overflow:hidden;
-    box-shadow:0 4px 15px rgba(0,0,0,.1);
+    box-shadow:0 3px 10px rgba(0,0,0,.1);
 }
-
-.card img{
-    width:100%;
-    height:380px;
-    object-fit:contain;
-    background:#fff;
-}
-
-.info{
-    padding:20px;
-}
-
-.info h2{
-    font-size:16px;
-    margin-bottom:8px;
-}
-
-.descricao{
-    color:#555;
-    line-height:1.5;
-    margin:10px 0;
-}
-
-.beneficios{
-    list-style:none;
-    margin:15px 0;
-}
-
-.beneficios li{
-    margin-bottom:6px;
-}
-
-.preco{
-    font-size:36px;
-    color:#0066ff;
-    font-weight:bold;
-    margin:15px 0;
-}
-
-.btn{
-    width:100%;
-    padding:14px;
-    border:none;
-    border-radius:8px;
-    background:#00a651;
-    color:#fff;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.btn:hover{
-    background:#008f45;
-}
+.card img{width:100%;height:250px;object-fit:contain;padding:10px}
+.info{padding:10px}
+.preco{font-size:20px;color:#0066ff;font-weight:bold;margin:10px 0}
+.btn{width:100%;padding:10px;background:#00a651;color:#fff;border:none;border-radius:6px}
 
 /* CARRINHO */
-.carrinho{
-    max-width:900px;
-    margin:30px auto;
+.carrinho-lateral{
+    position:fixed;
+    top:0;right:-100%;
+    width:340px;height:100%;
     background:#fff;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 4px 15px rgba(0,0,0,.1);
+    box-shadow:-5px 0 15px rgba(0,0,0,.2);
+    padding:15px;
+    transition:.3s;
+    overflow:auto;
 }
+.carrinho-lateral.ativo{right:0}
+.item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee}
+.total{margin-top:15px;font-size:18px;font-weight:bold;color:#00a651}
+.finalizar{width:100%;padding:12px;background:#0066ff;color:#fff;border:none;margin-top:10px}
 
-.item{
-    display:flex;
-    justify-content:space-between;
-    padding:8px 0;
-    border-bottom:1px solid #ddd;
-}
-
-.total{
-    font-size:28px;
-    font-weight:bold;
-    color:#0066ff;
-    margin-top:15px;
-}
-
-.formulario input,
-.formulario select{
-    width:100%;
-    padding:12px;
-    margin-top:10px;
-    border:1px solid #ccc;
-    border-radius:8px;
-}
-
-.finalizar{
-    margin-top:10px;
-    width:100%;
-    padding:14px;
-    background:#0066ff;
-    color:#fff;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-}
-
-.finalizar:hover{
-    background:#0052cc;
-}
-
-footer{
-    text-align:center;
-    padding:30px;
-    color:#666;
-}
-
-/* ===================== */
-/* 📱 MOBILE SHOPEE STYLE */
-/* ===================== */
-@media (max-width: 768px){
-
+/* MOBILE */
+@media(max-width:768px){
     .produtos{
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        padding:10px;
-        gap:10px;
-    }
-
-    .card{
-        border-radius:10px;
-    }
-
-    .card img{
-        height:140px;
-        padding:8px;
-        object-fit:contain;
-    }
-
-    .info{
-        padding:10px;
-    }
-
-    .info h2{
-        font-size:13px;
-        line-height:1.2;
-        height:34px;
-        overflow:hidden;
-    }
-
-    .descricao,
-    .beneficios{
-        display:none;
-    }
-
-    .preco{
-        font-size:16px;
-        margin:8px 0;
-    }
-
-    .btn{
-        padding:10px;
-        font-size:12px;
-        border-radius:6px;
-    }
-
-    .topo img{
-        width:110px;
-    }
-
-    .carrinho{
-        margin:15px;
-        padding:15px;
+        grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
     }
 }
 </style>
@@ -218,112 +84,61 @@ footer{
 
 <body>
 
-<!-- CABEÇALHO -->
 <header class="topo">
-    <img src="xareu-banner.png" alt="Xaréu Produtos de Limpeza">
+    <img src="xareu-banner.png">
+
+    <div class="carrinho-icone" onclick="abrirCarrinho()">
+        🛒
+        <span id="contadorCarrinho">0</span>
+    </div>
 </header>
 
-<!-- PRODUTOS -->
 <section class="produtos">
 
     <div class="card">
-<a href="produto.html?prod=lava-roupas" target="_blank">
-    <img src="deoline-lava-roupas-5l.jpg">
-</a>
+        <img src="deoline-lava-roupas-5l.jpg">
         <div class="info">
-            <h2>Deoline Lava-Roupas 5L</h2>
+            <h3>Lava-Roupas 5L</h3>
             <div class="preco">R$ 51,00</div>
-            <button class="btn" onclick="adicionar('Deoline Lava-Roupas 5L', 51)">Adicionar</button>
+            <button class="btn" onclick="adicionar('Lava-Roupas 5L',51)">Adicionar</button>
         </div>
     </div>
 
     <div class="card">
-     <a href="produto.html?prod=lava-loucas" target="_blank">
-    <img src="deoline-lava-loucas-500ml.jpg">
-</a>
+        <img src="deoline-lava-loucas-500ml.jpg">
         <div class="info">
-            <h2>Lava-Louças 500ml</h2>
+            <h3>Lava-Louças</h3>
             <div class="preco">R$ 3,00</div>
-            <button class="btn" onclick="adicionar('Lava-Louças 500ml', 3)">Adicionar</button>
-        </div>
-    </div>
-
-    <div class="card">
-      <a href="produto.html?prod=alvejante" target="_blank">
-    <img src="alvejantedeoline.png">
-</a>
-        <div class="info">
-            <h2>Alvejante 5L</h2>
-            <div class="preco">R$ 40,00</div>
-            <button class="btn" onclick="adicionar('Alvejante 5L', 40)">Adicionar</button>
-        </div>
-    </div>
-
-    <div class="card">
-    <a href="produto.html?prod=limpa-inox" target="_blank">
-    <img src="deoline-limpainox.png">
-</a>
-        <div class="info">
-            <h2>Limpa Inox 750ml</h2>
-            <div class="preco">R$ 12,80</div>
-            <button class="btn" onclick="adicionar('Limpa Inox 750ml', 12.80)">Adicionar</button>
-        </div>
-    </div>
-
-    <div class="card">
-     <a href="produto.html?prod=limpa-aluminio" target="_blank">
-    <img src="deoline-limpaaluminio.png">
-</a>
-        <div class="info">
-            <h2>Limpa Alumínio 750ml</h2>
-            <div class="preco">R$ 8,00</div>
-            <button class="btn" onclick="adicionar('Limpa Alumínio 750ml', 8)">Adicionar</button>
-        </div>
-    </div>
-
-    <div class="card">
-      <a href="produto.html?prod=limpa-rejunte" target="_blank">
-    <img src="limparejunte.png">
-</a>
-        <div class="info">
-            <h2>Limpa Rejunte 500ml</h2>
-            <div class="preco">R$ 11,85</div>
-            <button class="btn" onclick="adicionar('Limpa Rejunte 500ml', 11.85)">Adicionar</button>
+            <button class="btn" onclick="adicionar('Lava-Louças',3)">Adicionar</button>
         </div>
     </div>
 
 </section>
 
 <!-- CARRINHO -->
-<section class="carrinho">
+<div id="carrinho" class="carrinho-lateral">
 
     <h2>🛒 Carrinho</h2>
 
-    <div id="listaCarrinho"></div>
+    <div id="lista"></div>
 
-    <div class="total">
-        Total: R$ <span id="total">0.00</span>
-    </div>
+    <div class="total">Total: R$ <span id="total">0</span></div>
 
-    <div class="formulario">
-        <input id="nome" placeholder="Nome completo">
-        <input id="telefone" placeholder="Telefone">
-        <input id="endereco" placeholder="Endereço">
+    <hr>
 
-        <select>
-            <option>PIX</option>
-            <option>Cartão</option>
-            <option>Boleto</option>
-        </select>
+    <input id="nome" placeholder="Nome">
+    <input id="telefone" placeholder="Telefone">
+    <input id="endereco" placeholder="Endereço">
 
-        <button class="finalizar" onclick="finalizarPedido()">Finalizar Pedido</button>
-    </div>
+    <select id="pagamento">
+        <option>PIX</option>
+        <option>Cartão</option>
+        <option>Boleto</option>
+    </select>
 
-</section>
+    <button class="finalizar" onclick="finalizarPedido()">Finalizar Pedido</button>
 
-<footer>
-    © 2026 Xaréu - Produtos de Limpeza
-</footer>
+</div>
 
 <script type="module">
 
@@ -331,77 +146,74 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebas
 import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
 
 const firebaseConfig = {
- apiKey: "AIzaSyDVDnZ-GWHE8_4gLd4zRPTJGuwIMsyIK0Q",
- authDomain: "vendedor-html.firebaseapp.com",
- projectId: "vendedor-html",
- storageBucket: "vendedor-html.firebasestorage.app",
- messagingSenderId: "649120787576",
- appId: "1:649120787576:web:7967250e4f0175b5d9518d"
+ apiKey:"AIzaSyDVDnZ-GWHE8_4gLd4zRPTJGuwIMsyIK0Q",
+ authDomain:"vendedor-html.firebaseapp.com",
+ projectId:"vendedor-html",
+ storageBucket:"vendedor-html.firebasestorage.app",
+ messagingSenderId:"649120787576",
+ appId:"1:649120787576:web:7967250e4f0175b5d9518d"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-let carrinho = [];
+let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
-window.adicionar = function(nome, preco){
-    carrinho.push({ nome, preco: Number(preco) });
-    atualizar();
+function salvar(){
+    localStorage.setItem("carrinho",JSON.stringify(carrinho));
 }
 
 function atualizar(){
+
+    salvar();
+
+    document.getElementById("contadorCarrinho").innerText = carrinho.length;
+
     let total = 0;
-    let html = '';
+    let html = "";
 
-    carrinho.forEach(item => {
+    carrinho.forEach(item=>{
         total += item.preco;
-
-        html += `
-            <div class="item">
-                <span>${item.nome}</span>
-                <span>R$ ${item.preco.toFixed(2)}</span>
-            </div>
-        `;
+        html += `<div class="item"><span>${item.nome}</span><span>R$ ${item.preco}</span></div>`;
     });
 
-    document.getElementById('listaCarrinho').innerHTML = html;
-    document.getElementById('total').innerText = total.toFixed(2);
+    document.getElementById("lista").innerHTML = html;
+    document.getElementById("total").innerText = total.toFixed(2);
+}
+
+window.adicionar = function(nome,preco){
+    carrinho.push({nome,preco});
+    atualizar();
+    abrirCarrinho();
+}
+
+window.abrirCarrinho = function(){
+    document.getElementById("carrinho").classList.add("ativo");
 }
 
 window.finalizarPedido = async function(){
 
-    if(carrinho.length === 0){
-        alert('Carrinho vazio!');
-        return;
-    }
+    const pedido = {
+        cliente:document.getElementById("nome").value,
+        telefone:document.getElementById("telefone").value,
+        endereco:document.getElementById("endereco").value,
+        pagamento:document.getElementById("pagamento").value,
+        itens:carrinho,
+        total:carrinho.reduce((a,b)=>a+b.preco,0),
+        status:"Pendente",
+        criadoEm:new Date().toISOString()
+    };
 
-    const nome = document.getElementById('nome').value;
-    const telefone = document.getElementById('telefone').value;
-    const endereco = document.getElementById('endereco').value;
-
-    if(!nome || !telefone || !endereco){
-        alert('Preencha todos os dados!');
-        return;
-    }
-
-    await push(ref(db, "pedidos"), {
-        cliente: nome,
-        telefone: telefone,
-        endereco: endereco,
-        itens: carrinho,
-        status: "Pendente",
-        criadoEm: new Date().toISOString()
-    });
+    await push(ref(db,"pedidos"),pedido);
 
     alert("Pedido enviado!");
 
     carrinho = [];
+    salvar();
     atualizar();
-
-    document.getElementById('nome').value = '';
-    document.getElementById('telefone').value = '';
-    document.getElementById('endereco').value = '';
 }
+
+atualizar();
 
 </script>
 
