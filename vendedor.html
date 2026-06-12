@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Painel</title>
+<title>Painel Vendedor</title>
 
 <style>
 body{font-family:Arial;background:#f5f5f5;padding:20px;}
@@ -18,26 +18,25 @@ border-radius:10px;
 display:flex;
 gap:10px;
 align-items:center;
-margin:8px 0;
+margin:5px 0;
 }
 
 .item img{
-width:60px;
-height:60px;
+width:50px;
+height:50px;
 object-fit:contain;
-background:#eee;
 }
 
 button{
-padding:6px;
 margin:3px;
+padding:6px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>📦 Pedidos em Tempo Real</h1>
+<h1>📦 Pedidos</h1>
 
 <div id="pedidos"></div>
 
@@ -48,33 +47,33 @@ import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/fireb
 
 const firebaseConfig = {
   apiKey: "SUA_API",
-  authDomain: "SEU.firebaseapp.com",
-  databaseURL: "https://SEU.firebaseio.com",
-  projectId: "SEU_PROJECT",
+  authDomain: "vendedor-html.firebaseapp.com",
+  databaseURL: "https://vendedor-html-default-rtdb.firebaseio.com/",
+  projectId: "vendedor-html",
   appId: "SEU_APP"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-onValue(ref(db,"pedidos"),(snap)=>{
+onValue(ref(db,"pedidos"), (snap)=>{
 
 let data = snap.val();
 
 if(!data){
-document.getElementById("pedidos").innerHTML="Sem pedidos";
+document.getElementById("pedidos").innerHTML = "Sem pedidos";
 return;
 }
 
-let pedidos = Object.entries(data).map(([id,v])=>({idFirebase:id,...v}));
-
-pedidos.sort((a,b)=>b.id-a.id);
+let pedidos = Object.entries(data)
+.map(([id,v])=>({idFirebase:id,...v}))
+.reverse();
 
 let html="";
 
 pedidos.forEach(p=>{
 
-html+=`
+html += `
 <div class="pedido">
 <h3>Pedido ${p.id}</h3>
 <strong>${p.status}</strong>
@@ -91,7 +90,7 @@ html+=`
 ${p.itens.map(i=>`
 <div class="item">
 <img src="${i.img}">
-<div>${i.nome} ${i.qtd}x</div>
+${i.nome} x${i.qtd}
 </div>
 `).join("")}
 
@@ -100,14 +99,12 @@ ${p.itens.map(i=>`
 `;
 });
 
-document.getElementById("pedidos").innerHTML=html;
+document.getElementById("pedidos").innerHTML = html;
 
 });
 
-window.status=function(id,status){
-
+window.status = function(id,status){
 update(ref(db,"pedidos/"+id),{status});
-
 }
 
 </script>
