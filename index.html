@@ -37,53 +37,104 @@ body{background:#f5f5f5}
     border-radius:50%;
 }
 
-/* PRODUTOS */
+/* PRODUTOS (SHOPEE STYLE) */
 .produtos{
     max-width:1200px;
     margin:20px auto;
     padding:10px;
     display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:12px;
 }
+
 .card{
     background:#fff;
     border-radius:10px;
     overflow:hidden;
     box-shadow:0 3px 10px rgba(0,0,0,.1);
 }
-.card img{width:100%;height:250px;object-fit:contain;padding:10px}
-.info{padding:10px}
-.preco{font-size:20px;color:#0066ff;font-weight:bold;margin:10px 0}
-.btn{width:100%;padding:10px;background:#00a651;color:#fff;border:none;border-radius:6px}
+
+.card img{
+    width:100%;
+    height:150px;
+    object-fit:contain;
+    padding:8px;
+    background:#fff;
+}
+
+.info{
+    padding:10px;
+}
+
+.info h2{
+    font-size:13px;
+    height:34px;
+    overflow:hidden;
+}
+
+.preco{
+    font-size:16px;
+    color:#0066ff;
+    font-weight:bold;
+    margin:8px 0;
+}
+
+.btn{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:6px;
+    background:#00a651;
+    color:#fff;
+    font-weight:bold;
+    cursor:pointer;
+}
 
 /* CARRINHO */
 .carrinho-lateral{
     position:fixed;
-    top:0;right:-100%;
-    width:340px;height:100%;
+    top:0;
+    right:-100%;
+    width:340px;
+    height:100%;
     background:#fff;
     box-shadow:-5px 0 15px rgba(0,0,0,.2);
     padding:15px;
     transition:.3s;
     overflow:auto;
+    z-index:9999;
 }
-.carrinho-lateral.ativo{right:0}
-.item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee}
-.total{margin-top:15px;font-size:18px;font-weight:bold;color:#00a651}
-.finalizar{width:100%;padding:12px;background:#0066ff;color:#fff;border:none;margin-top:10px}
 
-/* MOBILE */
-@media(max-width:768px){
-    .produtos{
-        grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-    }
+.carrinho-lateral.ativo{right:0}
+
+.item{
+    display:flex;
+    justify-content:space-between;
+    padding:8px 0;
+    border-bottom:1px solid #eee;
+}
+
+.total{
+    margin-top:15px;
+    font-size:18px;
+    font-weight:bold;
+    color:#00a651;
+}
+
+.finalizar{
+    width:100%;
+    padding:12px;
+    background:#0066ff;
+    color:#fff;
+    border:none;
+    margin-top:10px;
 }
 </style>
 </head>
 
 <body>
 
+<!-- HEADER -->
 <header class="topo">
     <img src="xareu-banner.png">
 
@@ -93,70 +144,95 @@ body{background:#f5f5f5}
     </div>
 </header>
 
+<!-- PRODUTOS -->
 <section class="produtos">
 
+    <!-- 1 -->
     <div class="card">
-        <img src="deoline-lava-roupas-5l.jpg">
+        <a href="produto.html?prod=lava-roupas" target="_blank">
+            <img src="deoline-lava-roupas-5l.jpg">
+        </a>
         <div class="info">
-            <h3>Lava-Roupas 5L</h3>
+            <h2>Deoline Lava-Roupas 5L</h2>
             <div class="preco">R$ 51,00</div>
             <button class="btn" onclick="adicionar('Lava-Roupas 5L',51)">Adicionar</button>
         </div>
     </div>
 
+    <!-- 2 -->
     <div class="card">
-        <img src="deoline-lava-loucas-500ml.jpg">
+        <a href="produto.html?prod=lava-loucas" target="_blank">
+            <img src="deoline-lava-loucas-500ml.jpg">
+        </a>
         <div class="info">
-            <h3>Lava-Louças</h3>
+            <h2>Lava-Louças Glicerinado 500ml</h2>
             <div class="preco">R$ 3,00</div>
             <button class="btn" onclick="adicionar('Lava-Louças',3)">Adicionar</button>
+        </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card">
+        <a href="produto.html?prod=alvejante" target="_blank">
+            <img src="alvejantedeoline.png">
+        </a>
+        <div class="info">
+            <h2>Alvejante sem cloro 5L</h2>
+            <div class="preco">R$ 40,00</div>
+            <button class="btn" onclick="adicionar('Alvejante',40)">Adicionar</button>
+        </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card">
+        <a href="produto.html?prod=limpa-inox" target="_blank">
+            <img src="deoline-limpainox.png">
+        </a>
+        <div class="info">
+            <h2>Limpa inox 750ml</h2>
+            <div class="preco">R$ 12,80</div>
+            <button class="btn" onclick="adicionar('Limpa inox',12.80)">Adicionar</button>
+        </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card">
+        <a href="produto.html?prod=limpa-aluminio" target="_blank">
+            <img src="deoline-limpaaluminio.png">
+        </a>
+        <div class="info">
+            <h2>Limpa alumínio 750ml</h2>
+            <div class="preco">R$ 8,00</div>
+            <button class="btn" onclick="adicionar('Limpa aluminio',8)">Adicionar</button>
+        </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="card">
+        <a href="produto.html?prod=limpa-rejunte" target="_blank">
+            <img src="limparejunte.png">
+        </a>
+        <div class="info">
+            <h2>Limpa rejunte 500ml</h2>
+            <div class="preco">R$ 11,85</div>
+            <button class="btn" onclick="adicionar('Limpa rejunte',11.85)">Adicionar</button>
         </div>
     </div>
 
 </section>
 
 <!-- CARRINHO -->
-<div id="carrinho" class="carrinho-lateral">
+<div id="carrinhoLateral" class="carrinho-lateral">
 
     <h2>🛒 Carrinho</h2>
-
-    <div id="lista"></div>
+    <div id="listaCarrinho"></div>
 
     <div class="total">Total: R$ <span id="total">0</span></div>
 
-    <hr>
-
-    <input id="nome" placeholder="Nome">
-    <input id="telefone" placeholder="Telefone">
-    <input id="endereco" placeholder="Endereço">
-
-    <select id="pagamento">
-        <option>PIX</option>
-        <option>Cartão</option>
-        <option>Boleto</option>
-    </select>
-
-    <button class="finalizar" onclick="finalizarPedido()">Finalizar Pedido</button>
-
+    <button class="finalizar">Finalizar Pedido</button>
 </div>
 
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
-
-const firebaseConfig = {
- apiKey:"AIzaSyDVDnZ-GWHE8_4gLd4zRPTJGuwIMsyIK0Q",
- authDomain:"vendedor-html.firebaseapp.com",
- projectId:"vendedor-html",
- storageBucket:"vendedor-html.firebasestorage.app",
- messagingSenderId:"649120787576",
- appId:"1:649120787576:web:7967250e4f0175b5d9518d"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-
+<script>
 let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
 function salvar(){
@@ -174,47 +250,24 @@ function atualizar(){
 
     carrinho.forEach(item=>{
         total += item.preco;
-        html += `<div class="item"><span>${item.nome}</span><span>R$ ${item.preco}</span></div>`;
+        html += `<div class="item"><span>${item.nome}</span><span>R$ ${item.preco.toFixed(2)}</span></div>`;
     });
 
-    document.getElementById("lista").innerHTML = html;
+    document.getElementById("listaCarrinho").innerHTML = html;
     document.getElementById("total").innerText = total.toFixed(2);
 }
 
-window.adicionar = function(nome,preco){
+function adicionar(nome,preco){
     carrinho.push({nome,preco});
     atualizar();
     abrirCarrinho();
 }
 
-window.abrirCarrinho = function(){
-    document.getElementById("carrinho").classList.add("ativo");
-}
-
-window.finalizarPedido = async function(){
-
-    const pedido = {
-        cliente:document.getElementById("nome").value,
-        telefone:document.getElementById("telefone").value,
-        endereco:document.getElementById("endereco").value,
-        pagamento:document.getElementById("pagamento").value,
-        itens:carrinho,
-        total:carrinho.reduce((a,b)=>a+b.preco,0),
-        status:"Pendente",
-        criadoEm:new Date().toISOString()
-    };
-
-    await push(ref(db,"pedidos"),pedido);
-
-    alert("Pedido enviado!");
-
-    carrinho = [];
-    salvar();
-    atualizar();
+function abrirCarrinho(){
+    document.getElementById("carrinhoLateral").classList.add("ativo");
 }
 
 atualizar();
-
 </script>
 
 </body>
