@@ -5,26 +5,72 @@
 <title>Painel do Vendedor</title>
 
 <style>
-body{font-family:Arial;background:#f5f5f5;padding:20px;}
-.pedido{background:#fff;padding:15px;margin:10px 0;border-radius:10px;}
+body{
+    font-family:Arial;
+    background:#f5f5f5;
+    padding:20px;
+}
+
+h1{
+    text-align:center;
+}
+
+.pedido{
+    background:#fff;
+    padding:15px;
+    margin:10px 0;
+    border-radius:10px;
+}
+
+button{
+    padding:10px;
+    margin:5px;
+    cursor:pointer;
+}
 </style>
 </head>
 
 <body>
 
-<h1>📦 Pedidos</h1>
+<h1>📦 Pedidos do Sistema</h1>
+
+<button onclick="carregar()">🔄 Atualizar pedidos</button>
+<button onclick="limpar()">🗑 Limpar pedidos</button>
+
 <div id="pedidos"></div>
 
 <script>
-let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
 
-document.getElementById("pedidos").innerHTML =
-pedidos.map((p,i)=>`
-<div class="pedido">
-<h3>Pedido ${i+1}</h3>
-<pre>${p}</pre>
-</div>
-`).join("");
+function carregar(){
+    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+
+    if(pedidos.length === 0){
+        document.getElementById("pedidos").innerHTML = "<p>Nenhum pedido ainda.</p>";
+        return;
+    }
+
+    let html = "";
+
+    pedidos.forEach((p,i)=>{
+        html += `
+        <div class="pedido">
+            <h3>Pedido #${i+1}</h3>
+            <pre>${p}</pre>
+        </div>`;
+    });
+
+    document.getElementById("pedidos").innerHTML = html;
+}
+
+function limpar(){
+    if(confirm("Apagar todos os pedidos?")){
+        localStorage.removeItem("pedidos");
+        carregar();
+    }
+}
+
+carregar();
+
 </script>
 
 </body>
