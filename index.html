@@ -50,7 +50,7 @@ body{
     border-radius:50%;
 }
 
-/* GRID PRODUTOS */
+/* GRID */
 .produtos{
     max-width:1200px;
     margin:20px auto;
@@ -60,17 +60,8 @@ body{
     gap:12px;
 }
 
-@media (max-width:1024px){
-    .produtos{grid-template-columns:repeat(3,1fr);}
-}
-
-@media (max-width:768px){
-    .produtos{grid-template-columns:repeat(2,1fr);}
-}
-
-@media (max-width:420px){
-    .produtos{grid-template-columns:repeat(2,1fr);}
-}
+@media (max-width:1024px){ .produtos{grid-template-columns:repeat(3,1fr);} }
+@media (max-width:768px){ .produtos{grid-template-columns:repeat(2,1fr);} }
 
 .card{
     background:#fff;
@@ -192,11 +183,11 @@ body{
     <img src="xareu-banner.png">
 
     <div class="carrinho-icone" onclick="abrirCarrinho()">
-        🛒
-        <span id="contadorCarrinho">0</span>
+        🛒 <span id="contadorCarrinho">0</span>
     </div>
 </header>
 
+<!-- ✅ TODOS OS SEUS PRODUTOS -->
 <section class="produtos">
 
     <div class="card">
@@ -213,12 +204,49 @@ body{
         <div class="info">
             <h2>Lava-Louças 500ml</h2>
             <div class="preco">R$ 3,00</div>
-            <button class="btn" onclick="adicionar('Lava-Louças',3)">Adicionar</button>
+            <button class="btn" onclick="adicionar('Lava-Louças 500ml',3)">Adicionar</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="alvejantedeoline.png">
+        <div class="info">
+            <h2>Alvejante 5L</h2>
+            <div class="preco">R$ 40,00</div>
+            <button class="btn" onclick="adicionar('Alvejante 5L',40)">Adicionar</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="deoline-limpainox.png">
+        <div class="info">
+            <h2>Limpa Inox 750ml</h2>
+            <div class="preco">R$ 12,80</div>
+            <button class="btn" onclick="adicionar('Limpa Inox 750ml',12.80)">Adicionar</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="deoline-limpaaluminio.png">
+        <div class="info">
+            <h2>Limpa Alumínio</h2>
+            <div class="preco">R$ 8,00</div>
+            <button class="btn" onclick="adicionar('Limpa Alumínio',8)">Adicionar</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="limparejunte.png">
+        <div class="info">
+            <h2>Limpa Rejunte</h2>
+            <div class="preco">R$ 11,85</div>
+            <button class="btn" onclick="adicionar('Limpa Rejunte',11.85)">Adicionar</button>
         </div>
     </div>
 
 </section>
 
+<!-- CARRINHO -->
 <div id="carrinhoLateral" class="carrinho-lateral">
 
     <h2>🛒 Carrinho</h2>
