@@ -8,133 +8,66 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
 body{background:#f5f5f5;}
 
-/* HEADER */
 .topo{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:10px 20px;
-    background:#fff;
+display:flex;
+justify-content:space-between;
+padding:10px 20px;
+background:#fff;
 }
-.topo img{width:130px;}
 
 .carrinho-icone{
-    position:relative;
-    font-size:26px;
-    cursor:pointer;
+font-size:24px;
+cursor:pointer;
 }
 
-#contadorCarrinho{
-    position:absolute;
-    top:-6px;
-    right:-10px;
-    background:red;
-    color:#fff;
-    font-size:12px;
-    width:18px;
-    height:18px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:50%;
-}
-
-/* PRODUTOS */
 .produtos{
-    max-width:1200px;
-    margin:20px auto;
-    padding:10px;
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-}
-
-@media(max-width:768px){
-.produtos{grid-template-columns:repeat(2,1fr);}
+max-width:1200px;
+margin:20px auto;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
 }
 
 .card{
-    background:#fff;
-    border-radius:10px;
-    box-shadow:0 3px 10px rgba(0,0,0,.1);
-    overflow:hidden;
+background:#fff;
+border-radius:10px;
+padding:10px;
 }
 
 .card img{
-    width:100%;
-    height:150px;
-    object-fit:contain;
-    padding:8px;
+width:100%;
+height:140px;
+object-fit:contain;
+cursor:pointer;
 }
-
-.info{padding:10px;}
-.preco{color:#0066ff;font-weight:bold;}
 
 .btn{
-    width:100%;
-    padding:10px;
-    background:#00a651;
-    color:#fff;
-    border:none;
-    cursor:pointer;
+width:100%;
+padding:10px;
+background:#00a651;
+color:#fff;
+border:none;
+cursor:pointer;
 }
 
-/* CARRINHO */
-.carrinho-lateral{
-    position:fixed;
-    top:0;
-    right:-100%;
-    width:360px;
-    height:100%;
-    background:#fff;
-    box-shadow:-5px 0 15px rgba(0,0,0,.2);
-    padding:15px;
-    transition:.3s;
-    overflow:auto;
-    z-index:9999;
+.carrinho{
+position:fixed;
+right:-100%;
+top:0;
+width:350px;
+height:100%;
+background:#fff;
+transition:.3s;
+padding:10px;
+overflow:auto;
 }
 
-.carrinho-lateral.ativo{right:0;}
-
-.carrinho-topo{
-    display:flex;
-    gap:10px;
-    align-items:center;
-    margin-bottom:10px;
-}
+.carrinho.ativo{right:0;}
 
 .voltar{
-    font-size:20px;
-    background:#eee;
-    padding:5px 10px;
-    border-radius:6px;
-    cursor:pointer;
-}
-
-.item{
-    border-bottom:1px solid #eee;
-    padding:10px 0;
-}
-
-.item img{
-    width:40px;
-    height:40px;
-    object-fit:contain;
-}
-
-.total{
-    font-size:18px;
-    font-weight:bold;
-    color:#00a651;
-}
-
-.finalizar{
-    width:100%;
-    padding:12px;
-    background:#0066ff;
-    color:#fff;
-    border:none;
-    cursor:pointer;
+font-size:20px;
+cursor:pointer;
+margin-bottom:10px;
 }
 </style>
 </head>
@@ -142,85 +75,53 @@ body{background:#f5f5f5;}
 <body>
 
 <header class="topo">
-<img src="xareu-banner.png">
+<img src="xareu-banner.png" width="120">
 
-<div class="carrinho-icone" onclick="abrirCarrinho()">
-🛒 <span id="contadorCarrinho">0</span>
-</div>
+<div class="carrinho-icone" onclick="abrirCarrinho()">🛒</div>
 </header>
 
-<!-- PRODUTOS -->
 <section class="produtos">
 
 <div class="card">
 <img src="deoline-lava-roupas-5l.jpg">
-<div class="info">
-<h2>Lava-Roupas 5L</h2>
-<div class="preco">R$ 51,00</div>
-<button class="btn" onclick="adicionar('Lava-Roupas 5L',51,'deoline-lava-roupas-5l.jpg')">Adicionar</button>
-</div>
+<h3>Lava-Roupas 5L</h3>
+<p>R$ 51,00</p>
+<button class="btn" onclick="add('Lava-Roupas',51,'deoline-lava-roupas-5l.jpg')">Adicionar</button>
 </div>
 
 <div class="card">
 <img src="deoline-lava-loucas-500ml.jpg">
-<div class="info">
-<h2>Lava-Louças 500ml</h2>
-<div class="preco">R$ 3,00</div>
-<button class="btn" onclick="adicionar('Lava-Louças 500ml',3,'deoline-lava-loucas-500ml.jpg')">Adicionar</button>
-</div>
+<h3>Lava-Louças</h3>
+<p>R$ 3,00</p>
+<button class="btn" onclick="add('Lava-Louças',3,'deoline-lava-loucas-500ml.jpg')">Adicionar</button>
 </div>
 
 <div class="card">
 <img src="alvejantedeoline.png">
-<div class="info">
-<h2>Alvejante</h2>
-<div class="preco">R$ 40,00</div>
-<button class="btn" onclick="adicionar('Alvejante',40,'alvejantedeoline.png')">Adicionar</button>
-</div>
+<h3>Alvejante</h3>
+<p>R$ 40,00</p>
+<button class="btn" onclick="add('Alvejante',40,'alvejantedeoline.png')">Adicionar</button>
 </div>
 
 <div class="card">
 <img src="deoline-limpainox.png">
-<div class="info">
-<h2>Limpa Inox</h2>
-<div class="preco">R$ 12,80</div>
-<button class="btn" onclick="adicionar('Limpa Inox',12.8,'deoline-limpainox.png')">Adicionar</button>
-</div>
-</div>
-
-<div class="card">
-<img src="deoline-limpaaluminio.png">
-<div class="info">
-<h2>Limpa Alumínio</h2>
-<div class="preco">R$ 8,00</div>
-<button class="btn" onclick="adicionar('Limpa Alumínio',8,'deoline-limpaaluminio.png')">Adicionar</button>
-</div>
-</div>
-
-<div class="card">
-<img src="limparejunte.png">
-<div class="info">
-<h2>Limpa Rejunte</h2>
-<div class="preco">R$ 11,85</div>
-<button class="btn" onclick="adicionar('Limpa Rejunte',11.85,'limparejunte.png')">Adicionar</button>
-</div>
+<h3>Limpa Inox</h3>
+<p>R$ 12,80</p>
+<button class="btn" onclick="add('Limpa Inox',12.8,'deoline-limpainox.png')">Adicionar</button>
 </div>
 
 </section>
 
-<!-- CARRINHO -->
-<div id="carrinhoLateral" class="carrinho-lateral">
+<div class="carrinho" id="carrinho">
+<div class="voltar" onclick="fecharCarrinho()">⬅ Voltar</div>
 
-<div class="carrinho-topo">
-<div class="voltar" onclick="fecharCarrinho()">⬅</div>
-<h2>Carrinho</h2>
-</div>
+<div id="lista"></div>
 
-<div id="listaCarrinho"></div>
+<h3>Total: R$ <span id="total">0</span></h3>
 
-<div class="total">Total: R$ <span id="total">0</span></div>
-
-<button class="finalizar" onclick="finalizarPedido()">Finalizar Pedido</button>
+<button onclick="finalizar()" style="width:100%;padding:10px;background:#0066ff;color:#fff;border:none;">
+Finalizar Pedido
+</button>
 
 </div>
 
@@ -231,9 +132,9 @@ import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12
 
 const firebaseConfig = {
   apiKey: "SUA_API",
-  authDomain: "SEU.firebaseapp.com",
-  databaseURL: "https://SEU.firebaseio.com",
-  projectId: "SEU_PROJECT",
+  authDomain: "vendedor-html.firebaseapp.com",
+  databaseURL: "https://vendedor-html-default-rtdb.firebaseio.com/",
+  projectId: "vendedor-html",
   appId: "SEU_APP"
 };
 
@@ -242,68 +143,61 @@ const db = getDatabase(app);
 
 let carrinho = [];
 
-window.adicionar = function(nome,preco,img){
+window.add = function(nome,preco,img){
 
 let item = carrinho.find(p=>p.nome===nome);
 
 if(item) item.qtd++;
-else carrinho.push({nome,preco,qtd:1,img});
+else carrinho.push({nome,preco,img,qtd:1});
 
-atualizar();
-abrirCarrinho();
+render();
 }
 
-function atualizar(){
+function render(){
 
-document.getElementById("contadorCarrinho").innerText =
-carrinho.reduce((t,i)=>t+i.qtd,0);
-
-let total=0,html="";
+let total=0;
+let html="";
 
 carrinho.forEach(i=>{
 total += i.preco*i.qtd;
 
 html += `
-<div class="item">
-<img src="${i.img}">
-<strong>${i.nome}</strong>
-<div>${i.qtd}x</div>
+<div>
+<img src="${i.img}" width="40">
+${i.nome} x${i.qtd}
 </div>`;
 });
 
-document.getElementById("listaCarrinho").innerHTML = html;
+document.getElementById("lista").innerHTML = html;
 document.getElementById("total").innerText = total.toFixed(2);
 }
 
-window.finalizarPedido = function(){
+window.finalizar = function(){
 
-if(carrinho.length===0) return;
+if(carrinho.length === 0) return;
 
 let pedido = {
 id: Date.now(),
-status:"Pendente",
-itens:carrinho,
-total:carrinho.reduce((t,i)=>t+i.preco*i.qtd,0)
+status: "Pendente",
+itens: carrinho,
+total: carrinho.reduce((t,i)=>t+i.preco*i.qtd,0)
 };
 
-// 🔥 ENVIA PARA O FIREBASE
-push(ref(db,"pedidos"),pedido);
+push(ref(db,"pedidos"), pedido);
 
 alert("Pedido enviado!");
 
-carrinho=[];
-atualizar();
+carrinho = [];
+render();
 }
 
-function abrirCarrinho(){
-document.getElementById("carrinhoLateral").classList.add("ativo");
+window.abrirCarrinho = function(){
+document.getElementById("carrinho").classList.add("ativo");
 }
 
-function fecharCarrinho(){
-document.getElementById("carrinhoLateral").classList.remove("ativo");
+window.fecharCarrinho = function(){
+document.getElementById("carrinho").classList.remove("ativo");
 }
-
-atualizar();
 
 </script>
 
