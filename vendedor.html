@@ -2,133 +2,113 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Painel do Vendedor</title>
+<title>Painel</title>
 
 <style>
-body{
-    font-family:Arial;
-    background:#f5f5f5;
-    padding:20px;
-}
-
-h1{
-    text-align:center;
-}
+body{font-family:Arial;background:#f5f5f5;padding:20px;}
 
 .pedido{
-    background:#fff;
-    padding:15px;
-    margin:10px 0;
-    border-radius:10px;
+background:#fff;
+padding:15px;
+margin:10px 0;
+border-radius:10px;
 }
 
 .item{
-    display:flex;
-    gap:10px;
-    align-items:center;
-    margin:8px 0;
+display:flex;
+gap:10px;
+align-items:center;
+margin:8px 0;
 }
 
 .item img{
-    width:60px;
-    height:60px;
-    object-fit:contain;
-    border-radius:6px;
-    background:#eee;
+width:60px;
+height:60px;
+object-fit:contain;
+background:#eee;
 }
 
 button{
-    padding:6px 10px;
-    margin:3px;
-    cursor:pointer;
+padding:6px;
+margin:3px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>📦 Painel de Pedidos</h1>
-
-<button onclick="render()">🔄 Atualizar</button>
-<button onclick="limpar()">🗑 Limpar Tudo</button>
+<h1>📦 Pedidos em Tempo Real</h1>
 
 <div id="pedidos"></div>
 
-<script>
+<script type="module">
 
-let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-function salvar(){
-    localStorage.setItem("pedidos", JSON.stringify(pedidos));
+const firebaseConfig = {
+  apiKey: "SUA_API",
+  authDomain: "SEU.firebaseapp.com",
+  databaseURL: "https://SEU.firebaseio.com",
+  projectId: "SEU_PROJECT",
+  appId: "SEU_APP"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+onValue(ref(db,"pedidos"),(snap)=>{
+
+let data = snap.val();
+
+if(!data){
+document.getElementById("pedidos").innerHTML="Sem pedidos";
+return;
 }
 
-function mudarStatus(id, status){
+let pedidos = Object.entries(data).map(([id,v])=>({idFirebase:id,...v}));
 
-    let pedido = pedidos.find(p => p.id === id);
+pedidos.sort((a,b)=>b.id-a.id);
 
-    if(!pedido) return;
+let html="";
 
-    pedido.status = status;
+pedidos.forEach(p=>{
 
-    salvar();
-    render();
+html+=`
+<div class="pedido">
+<h3>Pedido ${p.id}</h3>
+<strong>${p.status}</strong>
+
+<div>
+<button onclick="status('${p.idFirebase}','Pendente')">Pendente</button>
+<button onclick="status('${p.idFirebase}','Preparando')">Preparando</button>
+<button onclick="status('${p.idFirebase}','Enviado')">Enviado</button>
+<button onclick="status('${p.idFirebase}','Entregue')">Entregue</button>
+</div>
+
+<hr>
+
+${p.itens.map(i=>`
+<div class="item">
+<img src="${i.img}">
+<div>${i.nome} ${i.qtd}x</div>
+</div>
+`).join("")}
+
+<h4>Total: R$ ${p.total}</h4>
+</div>
+`;
+});
+
+document.getElementById("pedidos").innerHTML=html;
+
+});
+
+window.status=function(id,status){
+
+update(ref(db,"pedidos/"+id),{status});
+
 }
-
-function limpar(){
-    if(confirm("Apagar todos os pedidos?")){
-        localStorage.removeItem("pedidos");
-        pedidos = [];
-        render();
-    }
-}
-
-function render(){
-
-    pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
-
-    if(pedidos.length === 0){
-        document.getElementById("pedidos").innerHTML =
-        "<p>Nenhum pedido encontrado.</p>";
-        return;
-    }
-
-    let html = "";
-
-    pedidos.forEach(p=>{
-
-        html += `
-        <div class="pedido">
-            <h3>Pedido #${p.id}</h3>
-            <strong>Status: ${p.status || "Pendente"}</strong>
-
-            <div>
-                <button onclick="mudarStatus(${p.id},'Pendente')">Pendente</button>
-                <button onclick="mudarStatus(${p.id},'Preparando')">Preparando</button>
-                <button onclick="mudarStatus(${p.id},'Enviado')">Enviado</button>
-                <button onclick="mudarStatus(${p.id},'Entregue')">Entregue</button>
-            </div>
-
-            <hr>
-
-            ${(p.itens || []).map(i=>`
-                <div class="item">
-                    <img src="${i.img || ''}">
-                    <div>
-                        <strong>${i.nome}</strong><br>
-                        ${i.qtd}x R$ ${i.preco}
-                    </div>
-                </div>
-            `).join("")}
-
-            <h4>Total: R$ ${(p.total || 0).toFixed(2)}</h4>
-        </div>
-        `;
-    });
-
-    document.getElementById("pedidos").innerHTML = html;
-}
-
-render();
 
 </script>
 
