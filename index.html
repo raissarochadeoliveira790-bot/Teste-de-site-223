@@ -5,13 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial;
-}
-
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
 body{background:#f5f5f5;}
 
 /* HEADER */
@@ -22,7 +16,6 @@ body{background:#f5f5f5;}
     padding:10px 20px;
     background:#fff;
 }
-
 .topo img{width:130px;}
 
 .carrinho-icone{
@@ -46,7 +39,7 @@ body{background:#f5f5f5;}
     border-radius:50%;
 }
 
-/* GRID PRODUTOS */
+/* PRODUTOS */
 .produtos{
     max-width:1200px;
     margin:20px auto;
@@ -56,14 +49,15 @@ body{background:#f5f5f5;}
     gap:12px;
 }
 
-@media(max-width:1024px){.produtos{grid-template-columns:repeat(3,1fr);}}
-@media(max-width:768px){.produtos{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:768px){
+.produtos{grid-template-columns:repeat(2,1fr);}
+}
 
 .card{
     background:#fff;
     border-radius:10px;
-    overflow:hidden;
     box-shadow:0 3px 10px rgba(0,0,0,.1);
+    overflow:hidden;
 }
 
 .card img{
@@ -71,32 +65,18 @@ body{background:#f5f5f5;}
     height:150px;
     object-fit:contain;
     padding:8px;
-    cursor:pointer;
 }
 
 .info{padding:10px;}
-
-.info h2{
-    font-size:13px;
-    height:34px;
-    overflow:hidden;
-}
-
-.preco{
-    font-size:16px;
-    color:#0066ff;
-    font-weight:bold;
-    margin:8px 0;
-}
+.preco{color:#0066ff;font-weight:bold;}
 
 .btn{
     width:100%;
     padding:10px;
     background:#00a651;
-    border:none;
     color:#fff;
+    border:none;
     cursor:pointer;
-    border-radius:6px;
 }
 
 /* CARRINHO */
@@ -116,51 +96,33 @@ body{background:#f5f5f5;}
 
 .carrinho-lateral.ativo{right:0;}
 
+.carrinho-topo{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+.voltar{
+    font-size:20px;
+    background:#eee;
+    padding:5px 10px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
 .item{
     border-bottom:1px solid #eee;
     padding:10px 0;
 }
 
-.item-header{
-    display:flex;
-    gap:10px;
-    align-items:center;
-}
-
 .item img{
-    width:50px;
-    height:50px;
+    width:40px;
+    height:40px;
     object-fit:contain;
-    background:#eee;
-    border-radius:6px;
-}
-
-.qtd{
-    display:flex;
-    gap:8px;
-    align-items:center;
-    margin-top:6px;
-}
-
-.qtd button{
-    width:25px;
-    height:25px;
-    border:none;
-    background:#ddd;
-    cursor:pointer;
-}
-
-.remover{
-    background:red;
-    color:#fff;
-    border:none;
-    padding:4px 8px;
-    cursor:pointer;
-    border-radius:4px;
 }
 
 .total{
-    margin-top:15px;
     font-size:18px;
     font-weight:bold;
     color:#00a651;
@@ -172,7 +134,6 @@ body{background:#f5f5f5;}
     background:#0066ff;
     color:#fff;
     border:none;
-    margin-top:10px;
     cursor:pointer;
 }
 </style>
@@ -181,227 +142,165 @@ body{background:#f5f5f5;}
 <body>
 
 <header class="topo">
-    <img src="xareu-banner.png">
+<img src="xareu-banner.png">
 
-    <div class="carrinho-icone" onclick="abrirCarrinho()">
-        🛒 <span id="contadorCarrinho">0</span>
-    </div>
+<div class="carrinho-icone" onclick="abrirCarrinho()">
+🛒 <span id="contadorCarrinho">0</span>
+</div>
 </header>
 
 <!-- PRODUTOS -->
 <section class="produtos">
 
-    <div class="card">
-        <a href="produto.html?prod=lava-roupas">
-            <img src="deoline-lava-roupas-5l.jpg">
-        </a>
-        <div class="info">
-            <h2>Lava-Roupas 5L</h2>
-            <div class="preco">R$ 51,00</div>
-            <button class="btn" onclick="adicionar('Lava-Roupas 5L',51,'deoline-lava-roupas-5l.jpg')">
-                Adicionar
-            </button>
-        </div>
-    </div>
+<div class="card">
+<img src="deoline-lava-roupas-5l.jpg">
+<div class="info">
+<h2>Lava-Roupas 5L</h2>
+<div class="preco">R$ 51,00</div>
+<button class="btn" onclick="adicionar('Lava-Roupas 5L',51,'deoline-lava-roupas-5l.jpg')">Adicionar</button>
+</div>
+</div>
 
-    <div class="card">
-        <a href="produto.html?prod=lava-loucas">
-            <img src="deoline-lava-loucas-500ml.jpg">
-        </a>
-        <div class="info">
-            <h2>Lava-Louças 500ml</h2>
-            <div class="preco">R$ 3,00</div>
-            <button class="btn" onclick="adicionar('Lava-Louças 500ml',3,'deoline-lava-loucas-500ml.jpg')">
-                Adicionar
-            </button>
-        </div>
-    </div>
+<div class="card">
+<img src="deoline-lava-loucas-500ml.jpg">
+<div class="info">
+<h2>Lava-Louças 500ml</h2>
+<div class="preco">R$ 3,00</div>
+<button class="btn" onclick="adicionar('Lava-Louças 500ml',3,'deoline-lava-loucas-500ml.jpg')">Adicionar</button>
+</div>
+</div>
 
-    <div class="card">
-        <a href="produto.html?prod=alvejante">
-            <img src="alvejantedeoline.png">
-        </a>
-        <div class="info">
-            <h2>Alvejante 5L</h2>
-            <div class="preco">R$ 40,00</div>
-            <button class="btn" onclick="adicionar('Alvejante 5L',40,'alvejantedeoline.png')">
-                Adicionar
-            </button>
-        </div>
-    </div>
+<div class="card">
+<img src="alvejantedeoline.png">
+<div class="info">
+<h2>Alvejante</h2>
+<div class="preco">R$ 40,00</div>
+<button class="btn" onclick="adicionar('Alvejante',40,'alvejantedeoline.png')">Adicionar</button>
+</div>
+</div>
 
-    <div class="card">
-        <a href="produto.html?prod=limpa-inox">
-            <img src="deoline-limpainox.png">
-        </a>
-        <div class="info">
-            <h2>Limpa Inox 750ml</h2>
-            <div class="preco">R$ 12,80</div>
-            <button class="btn" onclick="adicionar('Limpa Inox 750ml',12.8,'deoline-limpainox.png')">
-                Adicionar
-            </button>
-        </div>
-    </div>
+<div class="card">
+<img src="deoline-limpainox.png">
+<div class="info">
+<h2>Limpa Inox</h2>
+<div class="preco">R$ 12,80</div>
+<button class="btn" onclick="adicionar('Limpa Inox',12.8,'deoline-limpainox.png')">Adicionar</button>
+</div>
+</div>
 
-    <div class="card">
-        <a href="produto.html?prod=limpa-aluminio">
-            <img src="deoline-limpaaluminio.png">
-        </a>
-        <div class="info">
-            <h2>Limpa Alumínio</h2>
-            <div class="preco">R$ 8,00</div>
-            <button class="btn" onclick="adicionar('Limpa Alumínio',8,'deoline-limpaaluminio.png')">
-                Adicionar
-            </button>
-        </div>
-    </div>
+<div class="card">
+<img src="deoline-limpaaluminio.png">
+<div class="info">
+<h2>Limpa Alumínio</h2>
+<div class="preco">R$ 8,00</div>
+<button class="btn" onclick="adicionar('Limpa Alumínio',8,'deoline-limpaaluminio.png')">Adicionar</button>
+</div>
+</div>
 
-    <div class="card">
-        <a href="produto.html?prod=limpa-rejunte">
-            <img src="limparejunte.png">
-        </a>
-        <div class="info">
-            <h2>Limpa Rejunte</h2>
-            <div class="preco">R$ 11,85</div>
-            <button class="btn" onclick="adicionar('Limpa Rejunte',11.85,'limparejunte.png')">
-                Adicionar
-            </button>
-        </div>
-    </div>
+<div class="card">
+<img src="limparejunte.png">
+<div class="info">
+<h2>Limpa Rejunte</h2>
+<div class="preco">R$ 11,85</div>
+<button class="btn" onclick="adicionar('Limpa Rejunte',11.85,'limparejunte.png')">Adicionar</button>
+</div>
+</div>
 
 </section>
 
 <!-- CARRINHO -->
 <div id="carrinhoLateral" class="carrinho-lateral">
 
-<h2>🛒 Carrinho</h2>
+<div class="carrinho-topo">
+<div class="voltar" onclick="fecharCarrinho()">⬅</div>
+<h2>Carrinho</h2>
+</div>
 
 <div id="listaCarrinho"></div>
 
 <div class="total">Total: R$ <span id="total">0</span></div>
 
-<button class="finalizar" onclick="finalizarPedido()">
-Finalizar Pedido
-</button>
+<button class="finalizar" onclick="finalizarPedido()">Finalizar Pedido</button>
 
 </div>
 
-<script>
+<script type="module">
 
-let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-function salvar(){
-    localStorage.setItem("carrinho",JSON.stringify(carrinho));
-}
+const firebaseConfig = {
+  apiKey: "SUA_API",
+  authDomain: "SEU.firebaseapp.com",
+  databaseURL: "https://SEU.firebaseio.com",
+  projectId: "SEU_PROJECT",
+  appId: "SEU_APP"
+};
 
-function adicionar(nome,preco,img){
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-    let item = carrinho.find(p=>p.nome===nome);
+let carrinho = [];
 
-    if(item){
-        item.qtd++;
-    }else{
-        carrinho.push({nome,preco,qtd:1,img});
-    }
+window.adicionar = function(nome,preco,img){
 
-    atualizar();
-    abrirCarrinho();
-}
+let item = carrinho.find(p=>p.nome===nome);
 
-function aumentar(nome){
-    let item = carrinho.find(p=>p.nome===nome);
-    if(!item) return;
-    item.qtd++;
-    atualizar();
-}
+if(item) item.qtd++;
+else carrinho.push({nome,preco,qtd:1,img});
 
-function diminuir(nome){
-    let item = carrinho.find(p=>p.nome===nome);
-    if(!item) return;
-    item.qtd--;
-    if(item.qtd<=0){
-        carrinho = carrinho.filter(p=>p.nome!==nome);
-    }
-    atualizar();
-}
-
-function remover(nome){
-    carrinho = carrinho.filter(p=>p.nome!==nome);
-    atualizar();
+atualizar();
+abrirCarrinho();
 }
 
 function atualizar(){
 
-    salvar();
+document.getElementById("contadorCarrinho").innerText =
+carrinho.reduce((t,i)=>t+i.qtd,0);
 
-    document.getElementById("contadorCarrinho").innerText =
-    carrinho.reduce((t,i)=>t+i.qtd,0);
+let total=0,html="";
 
-    let total=0,html="";
+carrinho.forEach(i=>{
+total += i.preco*i.qtd;
 
-    carrinho.forEach(item=>{
-        total += item.preco*item.qtd;
+html += `
+<div class="item">
+<img src="${i.img}">
+<strong>${i.nome}</strong>
+<div>${i.qtd}x</div>
+</div>`;
+});
 
-        html += `
-        <div class="item">
+document.getElementById("listaCarrinho").innerHTML = html;
+document.getElementById("total").innerText = total.toFixed(2);
+}
 
-            <div class="item-header">
-                <img src="${item.img}">
-                <div>
-                    <strong>${item.nome}</strong><br>
-                    R$ ${item.preco.toFixed(2)}
-                </div>
-            </div>
+window.finalizarPedido = function(){
 
-            <div class="qtd">
-                <button onclick="diminuir('${item.nome}')">-</button>
-                <span>${item.qtd}</span>
-                <button onclick="aumentar('${item.nome}')">+</button>
-                <button class="remover" onclick="remover('${item.nome}')">X</button>
-            </div>
+if(carrinho.length===0) return;
 
-            <div>Subtotal: R$ ${(item.preco*item.qtd).toFixed(2)}</div>
-        </div>`;
-    });
+let pedido = {
+id: Date.now(),
+status:"Pendente",
+itens:carrinho,
+total:carrinho.reduce((t,i)=>t+i.preco*i.qtd,0)
+};
 
-    document.getElementById("listaCarrinho").innerHTML = html;
-    document.getElementById("total").innerText = total.toFixed(2);
+// 🔥 ENVIA PARA O FIREBASE
+push(ref(db,"pedidos"),pedido);
+
+alert("Pedido enviado!");
+
+carrinho=[];
+atualizar();
 }
 
 function abrirCarrinho(){
-    document.getElementById("carrinhoLateral").classList.add("ativo");
+document.getElementById("carrinhoLateral").classList.add("ativo");
 }
 
-function finalizarPedido(){
-
-    if(carrinho.length===0){
-        alert("Carrinho vazio!");
-        return;
-    }
-
-    let pedido = {
-        id: Date.now(),
-        status: "Pendente",
-        itens: carrinho.map(i=>({...i})),
-        total: carrinho.reduce((t,i)=>t+i.preco*i.qtd,0)
-    };
-
-    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
-    pedidos.push(pedido);
-    localStorage.setItem("pedidos",JSON.stringify(pedidos));
-
-    let msg="🛒 NOVO PEDIDO\n\n";
-
-    pedido.itens.forEach(i=>{
-        msg += `• ${i.nome} x${i.qtd} - R$ ${(i.preco*i.qtd).toFixed(2)}\n`;
-    });
-
-    msg += `\nTOTAL: R$ ${pedido.total.toFixed(2)}`;
-
-    window.open(`https://wa.me/5544998092717?text=${encodeURIComponent(msg)}`);
-
-    carrinho=[];
-    atualizar();
+function fecharCarrinho(){
+document.getElementById("carrinhoLateral").classList.remove("ativo");
 }
 
 atualizar();
