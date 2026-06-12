@@ -21,15 +21,15 @@ body{
     width:100%;
     background:#fff;
     display:flex;
-    justify-content:center;
-    padding:20px 0;
+    justify-content:flex-start;
+    align-items:center;
+    padding:10px 20px;
 }
 
 .topo img{
-    width:100%;
-    height:300px;
-    object-fit:cover;
-    display:block;
+    width:160px;
+    height:auto;
+    object-fit:contain;
 }
 
 /* PRODUTOS */
@@ -58,6 +58,11 @@ body{
 
 .info{
     padding:20px;
+}
+
+.info h2{
+    font-size:16px;
+    margin-bottom:8px;
 }
 
 .descricao{
@@ -151,57 +156,62 @@ footer{
     color:#666;
 }
 
-/* ===== RESPONSIVO MOBILE ===== */
+/* ===================== */
+/* 📱 MOBILE SHOPEE STYLE */
+/* ===================== */
 @media (max-width: 768px){
 
-    body{
+    .produtos{
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
         padding:10px;
+        gap:10px;
     }
 
-    .produtos{
-        grid-template-columns: 1fr;
-        padding:10px;
-        gap:15px;
+    .card{
+        border-radius:10px;
     }
 
     .card img{
-        height:220px;
-    }
-
-    .preco{
-        font-size:24px;
+        height:140px;
+        padding:8px;
+        object-fit:contain;
     }
 
     .info{
-        padding:12px;
+        padding:10px;
+    }
+
+    .info h2{
+        font-size:13px;
+        line-height:1.2;
+        height:34px;
+        overflow:hidden;
+    }
+
+    .descricao,
+    .beneficios{
+        display:none;
+    }
+
+    .preco{
+        font-size:16px;
+        margin:8px 0;
+    }
+
+    .btn{
+        padding:10px;
+        font-size:12px;
+        border-radius:6px;
     }
 
     .topo img{
-        height:180px;
+        width:110px;
     }
 
     .carrinho{
-        margin:20px 10px;
+        margin:15px;
         padding:15px;
     }
-
-    .item{
-        flex-direction:column;
-        align-items:flex-start;
-        gap:5px;
-    }
-
-    .finalizar{
-        font-size:16px;
-    }
-
-    input, select{
-        font-size:16px;
-    }
-}
-
-img{
-    max-width:100%;
 }
 </style>
 </head>
@@ -218,147 +228,55 @@ img{
 
     <div class="card">
         <img src="deoline-lava-roupas-5l.jpg">
-
         <div class="info">
-            <h2>Deoline Lava-Roupas Líquido Concentrado 5L</h2>
-
-            <p class="descricao">
-                Alto poder de remoção de sujeira. Não agride os tecidos e possui fórmula concentrada.
-            </p>
-
-            <ul class="beneficios">
-                <li>✅ Alto poder de remoção de sujeira</li>
-                <li>✅ Não agride os tecidos</li>
-                <li>✅ Fórmula concentrada</li>
-                <li>✅ Embalagem 5L</li>
-            </ul>
-
+            <h2>Deoline Lava-Roupas 5L</h2>
             <div class="preco">R$ 51,00</div>
-
-            <button class="btn" onclick="adicionar('Deoline Lava-Roupas 5L', 51)">
-                Adicionar ao Carrinho
-            </button>
+            <button class="btn" onclick="adicionar('Deoline Lava-Roupas 5L', 51)">Adicionar</button>
         </div>
     </div>
 
     <div class="card">
         <img src="deoline-lava-loucas-500ml.jpg">
-
         <div class="info">
-            <h2>Deoline Lava-Louças Glicerinado Neutro 500ml</h2>
-
-            <p class="descricao">
-                Formulação balanceada com glicerina para remover cuidadosamente as gorduras.
-            </p>
-
-            <ul class="beneficios">
-                <li>✅ Remove cuidadosamente as gorduras</li>
-                <li>✅ Fragrâncias variadas</li>
-                <li>✅ Balanceado com glicerina</li>
-            </ul>
-
+            <h2>Lava-Louças 500ml</h2>
             <div class="preco">R$ 3,00</div>
-
-            <button class="btn" onclick="adicionar('Deoline Lava-Louças 500ml', 3)">
-                Adicionar ao Carrinho
-            </button>
+            <button class="btn" onclick="adicionar('Lava-Louças 500ml', 3)">Adicionar</button>
         </div>
     </div>
 
     <div class="card">
         <img src="alvejantedeoline.png">
-
         <div class="info">
-            <h2>Alvejante sem cloro 5L</h2>
-
-            <p class="descricao">
-                Remove sujeiras sem danificar tecidos e cores.
-            </p>
-
-            <ul class="beneficios">
-                <li>✅ Biodegradável</li>
-                <li>✅ Não danifica tecidos</li>
-                <li>✅ Fórmula concentrada</li>
-                <li>✅ Roupas mais brancas</li>
-            </ul>
-
+            <h2>Alvejante 5L</h2>
             <div class="preco">R$ 40,00</div>
-
-            <button class="btn" onclick="adicionar('Deoline Alvejante 5L', 40)">
-                Adicionar ao Carrinho
-            </button>
+            <button class="btn" onclick="adicionar('Alvejante 5L', 40)">Adicionar</button>
         </div>
     </div>
 
     <div class="card">
         <img src="deoline-limpainox.png">
-
         <div class="info">
-            <h2>Limpa inox 750ml</h2>
-
-            <p class="descricao">
-                Ideal para limpeza de superfícies em inox.
-            </p>
-
-            <ul class="beneficios">
-                <li>✅ Limpeza eficiente</li>
-                <li>✅ Ação desincrustante</li>
-                <li>✅ Poder abrilhantador</li>
-            </ul>
-
+            <h2>Limpa Inox 750ml</h2>
             <div class="preco">R$ 12,80</div>
-
-            <button class="btn" onclick="adicionar('Limpa inox 750ml', 12.80)">
-                Adicionar ao Carrinho
-            </button>
+            <button class="btn" onclick="adicionar('Limpa Inox 750ml', 12.80)">Adicionar</button>
         </div>
     </div>
 
     <div class="card">
         <img src="deoline-limpaaluminio.png">
-
         <div class="info">
-            <h2>Limpa alumínio 750ml</h2>
-
-            <p class="descricao">
-                Ideal para superfícies de alumínio.
-            </p>
-
-            <ul class="beneficios">
-                <li>✅ Brilho e durabilidade</li>
-                <li>✅ Limpeza profunda</li>
-                <li>✅ Abrilhantador</li>
-            </ul>
-
+            <h2>Limpa Alumínio 750ml</h2>
             <div class="preco">R$ 8,00</div>
-
-            <button class="btn" onclick="adicionar('Limpa alumínio 750ml', 8)">
-                Adicionar ao Carrinho
-            </button>
+            <button class="btn" onclick="adicionar('Limpa Alumínio 750ml', 8)">Adicionar</button>
         </div>
     </div>
 
     <div class="card">
         <img src="limparejunte.png">
-
         <div class="info">
-            <h2>Limpa rejunte 500ml</h2>
-
-            <p class="descricao">
-                Remove mofos e gorduras sem danificar superfícies.
-            </p>
-
-            <ul class="beneficios">
-                <li>✅ Fácil aplicação</li>
-                <li>✅ Remove mofos e gorduras</li>
-                <li>✅ Uso doméstico</li>
-            </ul>
-
+            <h2>Limpa Rejunte 500ml</h2>
             <div class="preco">R$ 11,85</div>
-
-            <button class="btn" onclick="adicionar('Limpa rejunte 500ml', 11.85)">
-                Adicionar ao Carrinho
-            </button>
+            <button class="btn" onclick="adicionar('Limpa Rejunte 500ml', 11.85)">Adicionar</button>
         </div>
     </div>
 
@@ -386,9 +304,7 @@ img{
             <option>Boleto</option>
         </select>
 
-        <button class="finalizar" onclick="finalizarPedido()">
-            Finalizar Pedido
-        </button>
+        <button class="finalizar" onclick="finalizarPedido()">Finalizar Pedido</button>
     </div>
 
 </section>
@@ -400,13 +316,7 @@ img{
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-
-import {
-getDatabase,
-ref,
-push
-}
-from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
 
 const firebaseConfig = {
  apiKey: "AIzaSyDVDnZ-GWHE8_4gLd4zRPTJGuwIMsyIK0Q",
@@ -428,7 +338,6 @@ window.adicionar = function(nome, preco){
 }
 
 function atualizar(){
-
     let total = 0;
     let html = '';
 
