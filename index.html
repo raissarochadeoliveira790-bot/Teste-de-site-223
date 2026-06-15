@@ -212,23 +212,70 @@ document.getElementById("total").innerText=total.toFixed(2);
 }
 
 window.finalizar = function(){
-if(carrinho.length===0) return alert("Carrinho vazio");
 
-const pedido = {
-id: Date.now(),
-nome: nome.value,
-telefone: telefone.value,
-cep: cep.value,
-endereco: endereco.value,
-pagamento: pagamento.value,
-status:"Pendente",
-itens:carrinho,
-total:carrinho.reduce((t,i)=>t+i.preco*i.qtd,0)
-};
+    if(carrinho.length === 0){
+        alert("Carrinho vazio!");
+        return;
+    }
 
-push(ref(db,"pedidos"),pedido)
-.then(()=>alert("Pedido enviado!"))
-.catch(e=>alert("Erro: "+e));
+    if(!nome.value.trim()){
+        alert("Preencha o nome.");
+        return;
+    }
+
+    if(!telefone.value.trim()){
+        alert("Preencha o telefone.");
+        return;
+    }
+
+    if(!cep.value.trim()){
+        alert("Preencha o CEP.");
+        return;
+    }
+
+    if(!endereco.value.trim()){
+        alert("Preencha o endereço.");
+        return;
+    }
+
+    if(!pagamento.value){
+        alert("Selecione a forma de pagamento.");
+        return;
+    }
+
+    const pedido = {
+        id: Date.now(),
+        nome: nome.value,
+        telefone: telefone.value,
+        cep: cep.value,
+        endereco: endereco.value,
+        pagamento: pagamento.value,
+        status: "Pendente",
+        itens: carrinho,
+        total: carrinho.reduce((t,i)=>t+i.preco*i.qtd,0)
+    };
+
+    push(ref(db,"pedidos"), pedido)
+    .then(()=>{
+
+        alert("Pedido enviado com sucesso!");
+
+        carrinho = [];
+        render();
+
+        nome.value = "";
+        telefone.value = "";
+        cep.value = "";
+        endereco.value = "";
+        pagamento.value = "";
+
+        fecharCarrinho();
+
+    })
+    .catch((erro)=>{
+        alert("Erro ao enviar pedido: " + erro);
+    });
+
 }
 
 window.abrirCarrinho=()=>document.getElementById("carrinho").classList.add("ativo");
