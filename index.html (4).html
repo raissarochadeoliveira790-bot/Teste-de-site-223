@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xaréu Embalagens</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#f5f5f5}
+
+.topo{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:10px 20px;
+background:#fff;
+}
+
+.carrinho-icone{
+font-size:24px;
+cursor:pointer;
+}
+
+.produtos{
+max-width:1200px;
+margin:20px auto;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+padding:10px;
+}
+
+@media(max-width:768px){
+.produtos{grid-template-columns:repeat(2,1fr);}
+}
+
+.card{
+background:#fff;
+border-radius:10px;
+padding:10px;
+}
+
+.card img{
+width:100%;
+height:140px;
+object-fit:contain;
+cursor:pointer;
+}
+
+.btn{
+width:100%;
+padding:10px;
+background:#00a651;
+color:#fff;
+border:none;
+cursor:pointer;
+border-radius:5px;
+}
+
+.carrinho{
+position:fixed;
+right:-100%;
+top:0;
+width:350px;
+height:100%;
+background:#fff;
+transition:.3s;
+padding:10px;
+overflow:auto;
+z-index:1000;
+}
+
+.carrinho.ativo{right:0;}
+
+.voltar{
+font-size:20px;
+cursor:pointer;
+margin-bottom:10px;
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin-bottom:10px;
+}
+</style>
+</head>
+<body>
+
+<header class="topo">
+<img src="xareu-banner.png" width="120">
+<div class="carrinho-icone" onclick="abrirCarrinho()">🛒</div>
+</header>
+
+<section class="produtos">
+
+<div class="card">
+<img src="deoline-lava-roupas-5l.jpg" onclick="descricao('Lava-Roupas 5L','Lava roupas de alta eficiência.','deoline-lava-roupas-5l.jpg')">
+<h3>Lava-Roupas 5L</h3>
+<p>R$ 51,00</p>
+<button class="btn" onclick="add('Lava-Roupas 5L',51,'deoline-lava-roupas-5l.jpg')">Adicionar</button>
+</div>
+
+<div class="card">
+<img src="deoline-lava-loucas-500ml.jpg" onclick="descricao('Lava-Louças 500ml','Remove gorduras e sujeiras.','deoline-lava-loucas-500ml.jpg')">
+<h3>Lava-Louças 500ml</h3>
+<p>R$ 3,00</p>
+<button class="btn" onclick="add('Lava-Louças 500ml',3,'deoline-lava-loucas-500ml.jpg')">Adicionar</button>
+</div>
+
+<div class="card">
+<img src="alvejantedeoline.png" onclick="descricao('Alvejante 5L','Alvejante para limpeza pesada.','alvejantedeoline.png')">
+<h3>Alvejante 5L</h3>
+<p>R$ 40,00</p>
+<button class="btn" onclick="add('Alvejante 5L',40,'alvejantedeoline.png')">Adicionar</button>
+</div>
+
+<div class="card">
+<img src="deoline-limpainox.png" onclick="descricao('Limpa Inox 750ml','Limpeza e brilho para inox.','deoline-limpainox.png')">
+<h3>Limpa Inox 750ml</h3>
+<p>R$ 12,80</p>
+<button class="btn" onclick="add('Limpa Inox 750ml',12.8,'deoline-limpainox.png')">Adicionar</button>
+</div>
+
+<div class="card">
+<img src="deoline-limpaaluminio.png" onclick="descricao('Limpa Alumínio','Remove sujeiras e devolve o brilho.','deoline-limpaaluminio.png')">
+<h3>Limpa Alumínio</h3>
+<p>R$ 8,00</p>
+<button class="btn" onclick="add('Limpa Alumínio',8,'deoline-limpaaluminio.png')">Adicionar</button>
+</div>
+
+<div class="card">
+<img src="limparejunte.png" onclick="descricao('Limpa Rejunte','Remove sujeiras profundas dos rejuntes.','limparejunte.png')">
+<h3>Limpa Rejunte</h3>
+<p>R$ 11,85</p>
+<button class="btn" onclick="add('Limpa Rejunte',11.85,'limparejunte.png')">Adicionar</button>
+</div>
+
+</section>
+
+<div class="carrinho" id="carrinho">
+<div class="voltar" onclick="fecharCarrinho()">⬅ Voltar</div>
+
+<div id="lista"></div>
+
+<h3>Total: R$ <span id="total">0.00</span></h3>
+
+<hr><br>
+
+<input type="text" id="nome" placeholder="Nome Completo">
+<input type="text" id="telefone" placeholder="Telefone">
+<input type="text" id="cep" placeholder="CEP">
+<input type="text" id="endereco" placeholder="Endereço">
+
+<select id="pagamento">
+<option value="">Forma de Pagamento</option>
+<option>Pix</option>
+<option>Dinheiro</option>
+<option>Cartão Débito</option>
+<option>Cartão Crédito</option>
+<option>Boleto</option>
+</select>
+
+<button onclick="finalizar()" class="btn" style="background:#0066ff">Finalizar Pedido</button>
+</div>
+
+<div id="modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);justify-content:center;align-items:center;z-index:2000;">
+<div style="background:#fff;padding:20px;border-radius:10px;max-width:500px;width:90%;">
+<h2 id="tituloProduto"></h2>
+<img id="imgProduto" style="width:100%;max-height:250px;object-fit:contain;">
+<p id="textoProduto"></p>
+<button class="btn" onclick="fecharModal()">Fechar</button>
+</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "SUA_API",
+  authDomain: "vendedor-html.firebaseapp.com",
+  databaseURL: "https://vendedor-html-default-rtdb.firebaseio.com/",
+  projectId: "vendedor-html",
+  appId: "SEU_APP"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+let carrinho = [];
+
+window.add = function(nome,preco,img){
+let item = carrinho.find(p=>p.nome===nome);
+if(item) item.qtd++;
+else carrinho.push({nome,preco,img,qtd:1});
+render();
+}
+
+function render(){
+let total=0, html="";
+carrinho.forEach(i=>{
+total += i.preco*i.qtd;
+html += `<div><img src="${i.img}" width="40"> ${i.nome} x${i.qtd}</div>`;
+});
+document.getElementById("lista").innerHTML=html;
+document.getElementById("total").innerText=total.toFixed(2);
+}
+
+window.finalizar = function(){
+if(carrinho.length===0) return alert("Carrinho vazio");
+
+const pedido = {
+id: Date.now(),
+nome: nome.value,
+telefone: telefone.value,
+cep: cep.value,
+endereco: endereco.value,
+pagamento: pagamento.value,
+status:"Pendente",
+itens:carrinho,
+total:carrinho.reduce((t,i)=>t+i.preco*i.qtd,0)
+};
+
+push(ref(db,"pedidos"),pedido)
+.then(()=>alert("Pedido enviado!"))
+.catch(e=>alert("Erro: "+e));
+}
+
+window.abrirCarrinho=()=>document.getElementById("carrinho").classList.add("ativo");
+window.fecharCarrinho=()=>document.getElementById("carrinho").classList.remove("ativo");
+
+window.descricao=function(nome,texto,img){
+tituloProduto.innerText=nome;
+textoProduto.innerText=texto;
+imgProduto.src=img;
+modal.style.display="flex";
+}
+
+window.fecharModal=function(){
+modal.style.display="none";
+}
+</script>
+</body>
+</html>
