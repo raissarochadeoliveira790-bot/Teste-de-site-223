@@ -15,11 +15,28 @@ justify-content:space-between;
 align-items:center;
 padding:10px 20px;
 background:#fff;
+position:relative;
 }
 
 .carrinho-icone{
 font-size:24px;
 cursor:pointer;
+position:relative;
+}
+
+#badgeCarrinho{
+position:absolute;
+top:-5px;
+right:-10px;
+background:red;
+color:#fff;
+font-size:12px;
+width:18px;
+height:18px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
 }
 
 .produtos{
@@ -79,6 +96,28 @@ cursor:pointer;
 margin-bottom:10px;
 }
 
+.item-carrinho{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:8px 0;
+gap:10px;
+}
+
+.item-carrinho img{
+width:40px;
+height:40px;
+object-fit:contain;
+}
+
+.qtd-btn{
+padding:3px 8px;
+border:none;
+cursor:pointer;
+background:#ddd;
+border-radius:5px;
+}
+
 input,select{
 width:100%;
 padding:10px;
@@ -86,52 +125,57 @@ margin-bottom:10px;
 }
 </style>
 </head>
+
 <body>
 
 <header class="topo">
 <img src="xareu-banner.png" width="120">
-<div class="carrinho-icone" onclick="abrirCarrinho()">🛒</div>
+
+<div class="carrinho-icone" onclick="abrirCarrinho()">
+🛒
+<span id="badgeCarrinho">0</span>
+</div>
 </header>
 
 <section class="produtos">
 
 <div class="card">
-<img src="deoline-lava-roupas-5l.jpg" onclick="descricao('Lava-Roupas 5L','Lava roupas de alta eficiência.','deoline-lava-roupas-5l.jpg')">
+<img src="deoline-lava-roupas-5l.jpg">
 <h3>Lava-Roupas 5L</h3>
 <p>R$ 51,00</p>
 <button class="btn" onclick="add('Lava-Roupas 5L',51,'deoline-lava-roupas-5l.jpg')">Adicionar</button>
 </div>
 
 <div class="card">
-<img src="deoline-lava-loucas-500ml.jpg" onclick="descricao('Lava-Louças 500ml','Remove gorduras e sujeiras.','deoline-lava-loucas-500ml.jpg')">
+<img src="deoline-lava-loucas-500ml.jpg">
 <h3>Lava-Louças 500ml</h3>
 <p>R$ 3,00</p>
 <button class="btn" onclick="add('Lava-Louças 500ml',3,'deoline-lava-loucas-500ml.jpg')">Adicionar</button>
 </div>
 
 <div class="card">
-<img src="alvejantedeoline.png" onclick="descricao('Alvejante 5L','Alvejante para limpeza pesada.','alvejantedeoline.png')">
+<img src="alvejantedeoline.png">
 <h3>Alvejante 5L</h3>
 <p>R$ 40,00</p>
 <button class="btn" onclick="add('Alvejante 5L',40,'alvejantedeoline.png')">Adicionar</button>
 </div>
 
 <div class="card">
-<img src="deoline-limpainox.png" onclick="descricao('Limpa Inox 750ml','Limpeza e brilho para inox.','deoline-limpainox.png')">
+<img src="deoline-limpainox.png">
 <h3>Limpa Inox 750ml</h3>
 <p>R$ 12,80</p>
 <button class="btn" onclick="add('Limpa Inox 750ml',12.8,'deoline-limpainox.png')">Adicionar</button>
 </div>
 
 <div class="card">
-<img src="deoline-limpaaluminio.png" onclick="descricao('Limpa Alumínio','Remove sujeiras e devolve o brilho.','deoline-limpaaluminio.png')">
+<img src="deoline-limpaaluminio.png">
 <h3>Limpa Alumínio</h3>
 <p>R$ 8,00</p>
 <button class="btn" onclick="add('Limpa Alumínio',8,'deoline-limpaaluminio.png')">Adicionar</button>
 </div>
 
 <div class="card">
-<img src="limparejunte.png" onclick="descricao('Limpa Rejunte','Remove sujeiras profundas dos rejuntes.','limparejunte.png')">
+<img src="limparejunte.png">
 <h3>Limpa Rejunte</h3>
 <p>R$ 11,85</p>
 <button class="btn" onclick="add('Limpa Rejunte',11.85,'limparejunte.png')">Adicionar</button>
@@ -165,15 +209,6 @@ margin-bottom:10px;
 <button onclick="finalizar()" class="btn" style="background:#0066ff">Finalizar Pedido</button>
 </div>
 
-<div id="modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);justify-content:center;align-items:center;z-index:2000;">
-<div style="background:#fff;padding:20px;border-radius:10px;max-width:500px;width:90%;">
-<h2 id="tituloProduto"></h2>
-<img id="imgProduto" style="width:100%;max-height:250px;object-fit:contain;">
-<p id="textoProduto"></p>
-<button class="btn" onclick="fecharModal()">Fechar</button>
-</div>
-</div>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
@@ -186,7 +221,6 @@ const firebaseConfig = {
   storageBucket: "vendedor-html.firebasestorage.app",
   messagingSenderId: "649120787576",
   appId: "1:649120787576:web:7967250e4f0175b5d9518d",
-  measurementId: "G-R3BQKGNRQ6"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -201,96 +235,82 @@ else carrinho.push({nome,preco,img,qtd:1});
 render();
 }
 
+window.remover = function(nome){
+let item = carrinho.find(p=>p.nome===nome);
+if(!item) return;
+
+item.qtd--;
+if(item.qtd<=0){
+carrinho = carrinho.filter(p=>p.nome!==nome);
+}
+
+render();
+}
+
 function render(){
-let total=0, html="";
+
+let total = 0;
+let quantidadeTotal = 0;
+let html = "";
+
 carrinho.forEach(i=>{
-total += i.preco*i.qtd;
-html += `<div><img src="${i.img}" width="40"> ${i.nome} x${i.qtd}</div>`;
+total += i.preco * i.qtd;
+quantidadeTotal += i.qtd;
+
+html += `
+<div class="item-carrinho">
+<img src="${i.img}">
+<div style="flex:1">
+<strong>${i.nome}</strong><br>
+R$ ${i.preco}
+</div>
+
+<button class="qtd-btn" onclick="remover('${i.nome}')">-</button>
+<strong>${i.qtd}</strong>
+<button class="qtd-btn" onclick="add('${i.nome}',${i.preco},'${i.img}')">+</button>
+
+</div>
+`;
 });
-document.getElementById("lista").innerHTML=html;
-document.getElementById("total").innerText=total.toFixed(2);
+
+document.getElementById("lista").innerHTML = html;
+document.getElementById("total").innerText = total.toFixed(2);
+document.getElementById("badgeCarrinho").innerText = quantidadeTotal;
 }
 
 window.finalizar = function(){
 
-    if(carrinho.length === 0){
-        alert("Carrinho vazio!");
-        return;
-    }
+if(carrinho.length === 0){
+alert("Carrinho vazio!");
+return;
+}
 
-    if(!nome.value.trim()){
-        alert("Preencha o nome.");
-        return;
-    }
+const pedido = {
+id: Date.now(),
+nome: nome.value,
+telefone: telefone.value,
+cep: cep.value,
+endereco: endereco.value,
+pagamento: pagamento.value,
+status: "Pendente",
+itens: carrinho,
+total: carrinho.reduce((t,i)=>t+i.preco*i.qtd,0)
+};
 
-    if(!telefone.value.trim()){
-        alert("Preencha o telefone.");
-        return;
-    }
-
-    if(!cep.value.trim()){
-        alert("Preencha o CEP.");
-        return;
-    }
-
-    if(!endereco.value.trim()){
-        alert("Preencha o endereço.");
-        return;
-    }
-
-    if(!pagamento.value){
-        alert("Selecione a forma de pagamento.");
-        return;
-    }
-
-    const pedido = {
-        id: Date.now(),
-        nome: nome.value,
-        telefone: telefone.value,
-        cep: cep.value,
-        endereco: endereco.value,
-        pagamento: pagamento.value,
-        status: "Pendente",
-        itens: carrinho,
-        total: carrinho.reduce((t,i)=>t+i.preco*i.qtd,0)
-    };
-
-    push(ref(db,"pedidos"), pedido)
-    .then(()=>{
-
-        alert("Pedido enviado com sucesso!");
-
-        carrinho = [];
-        render();
-
-        nome.value = "";
-        telefone.value = "";
-        cep.value = "";
-        endereco.value = "";
-        pagamento.value = "";
-
-        fecharCarrinho();
-
-    })
-    .catch((erro)=>{
-        alert("Erro ao enviar pedido: " + erro);
-    });
+push(ref(db,"pedidos"), pedido)
+.then(()=>{
+alert("Pedido enviado!");
+carrinho = [];
+render();
+})
+.catch(e=>alert(e));
 
 }
 
-window.abrirCarrinho=()=>document.getElementById("carrinho").classList.add("ativo");
-window.fecharCarrinho=()=>document.getElementById("carrinho").classList.remove("ativo");
+window.abrirCarrinho = ()=>document.getElementById("carrinho").classList.add("ativo");
+window.fecharCarrinho = ()=>document.getElementById("carrinho").classList.remove("ativo");
 
-window.descricao=function(nome,texto,img){
-tituloProduto.innerText=nome;
-textoProduto.innerText=texto;
-imgProduto.src=img;
-modal.style.display="flex";
-}
-
-window.fecharModal=function(){
-modal.style.display="none";
-}
 </script>
+
 </body>
 </html>
