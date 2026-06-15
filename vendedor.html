@@ -136,25 +136,25 @@ ${p.status}
 
 <button
 style="background:#ffc107;border:none;border-radius:5px;color:#000;"
-onclick="status('${p.idFirebase}','Pendente')">
+onclick="alterarStatus('${p.idFirebase}','Pendente')"
 Pendente
 </button>
 
 <button
 style="background:#17a2b8;border:none;border-radius:5px;color:#fff;"
-onclick="status('${p.idFirebase}','Preparando')">
+onclick="alterarStatus('${p.idFirebase}','Preparando')"
 Preparando
 </button>
 
 <button
 style="background:#007bff;border:none;border-radius:5px;color:#fff;"
-onclick="status('${p.idFirebase}','Enviado')">
+onclick="alterarStatus('${p.idFirebase}','Enviado')"
 Enviado
 </button>
 
 <button
 style="background:#28a745;border:none;border-radius:5px;color:#fff;"
-onclick="status('${p.idFirebase}','Entregue')">
+onclick="alterarStatus('${p.idFirebase}','Entregue')"
 Entregue
 </button>
 
@@ -184,8 +184,10 @@ document.getElementById("pedidos").innerHTML = html;
 
 });
 
-window.status = function(id,status){
-update(ref(db,"pedidos/"+id),{status});
+  window.alterarStatus = function(id, novoStatus){
+  update(ref(db, "pedidos/" + id), {
+    status: novoStatus
+  });
 }
 
 </script>
