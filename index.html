@@ -9,13 +9,13 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#f5f5f5}
 
+/* TOPO */
 .topo{
 display:flex;
 justify-content:space-between;
 align-items:center;
 padding:10px 20px;
 background:#fff;
-position:relative;
 }
 
 .carrinho-icone{
@@ -39,6 +39,7 @@ justify-content:center;
 border-radius:50%;
 }
 
+/* PRODUTOS */
 .produtos{
 max-width:1200px;
 margin:20px auto;
@@ -54,8 +55,8 @@ padding:10px;
 
 .card{
 background:#fff;
-border-radius:10px;
 padding:10px;
+border-radius:10px;
 text-align:center;
 }
 
@@ -72,8 +73,8 @@ padding:10px;
 background:#00a651;
 color:#fff;
 border:none;
-cursor:pointer;
 border-radius:5px;
+cursor:pointer;
 margin-top:10px;
 }
 
@@ -97,6 +98,7 @@ width:40px;
 text-align:center;
 }
 
+/* CARRINHO */
 .carrinho{
 position:fixed;
 right:-100%;
@@ -118,7 +120,7 @@ cursor:pointer;
 margin-bottom:10px;
 }
 
-.item-carrinho{
+.item{
 display:flex;
 justify-content:space-between;
 align-items:center;
@@ -126,31 +128,54 @@ margin:8px 0;
 gap:10px;
 }
 
-.item-carrinho img{
+.item img{
 width:40px;
 height:40px;
 object-fit:contain;
 }
 
-.qtd-mini{
-display:flex;
-align-items:center;
-gap:5px;
+.qtd-mini button{
+padding:3px 8px;
+border:none;
+background:#ddd;
+cursor:pointer;
 }
 
 .remove{
 background:red;
 color:#fff;
 border:none;
-padding:3px 6px;
+padding:4px 6px;
 border-radius:5px;
 cursor:pointer;
 }
 
+/* FORM */
 input,select{
 width:100%;
 padding:10px;
 margin-bottom:10px;
+}
+
+/* MODAL */
+#modal{
+display:none;
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,.8);
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#modal div{
+background:#fff;
+padding:20px;
+border-radius:10px;
+max-width:500px;
+width:90%;
+text-align:center;
 }
 </style>
 </head>
@@ -168,25 +193,83 @@ margin-bottom:10px;
 <section class="produtos">
 
 <!-- PRODUTOS -->
-<!-- (mesmos 6 produtos com quantidade antes de adicionar) -->
-
 <div class="card">
 <img src="deoline-lava-roupas-5l.jpg"
-onclick="descricao('Lava-Roupas 5L','Alta eficiência.','deoline-lava-roupas-5l.jpg')">
-
+onclick="descricao('Lava-Roupas 5L','Limpeza eficiente.','deoline-lava-roupas-5l.jpg')">
 <h3>Lava-Roupas 5L</h3>
 <p>R$ 51,00</p>
-
 <div class="qtd-box">
 <button onclick="menosQtd('q1')" class="qtd-btn">-</button>
 <input id="q1" class="qtd" value="1">
 <button onclick="maisQtd('q1')" class="qtd-btn">+</button>
 </div>
-
 <button class="btn" onclick="add('Lava-Roupas 5L',51,'deoline-lava-roupas-5l.jpg','q1')">Adicionar</button>
 </div>
 
-<!-- (repita padrão para os outros 5 produtos - mantive simples aqui pra não estourar tamanho) -->
+<div class="card">
+<img src="deoline-lava-loucas-500ml.jpg"
+onclick="descricao('Lava-Louças 500ml','Remove gordura.','deoline-lava-loucas-500ml.jpg')">
+<h3>Lava-Louças 500ml</h3>
+<p>R$ 3,00</p>
+<div class="qtd-box">
+<button onclick="menosQtd('q2')" class="qtd-btn">-</button>
+<input id="q2" class="qtd" value="1">
+<button onclick="maisQtd('q2')" class="qtd-btn">+</button>
+</div>
+<button class="btn" onclick="add('Lava-Louças 500ml',3,'deoline-lava-loucas-500ml.jpg','q2')">Adicionar</button>
+</div>
+
+<div class="card">
+<img src="alvejantedeoline.png"
+onclick="descricao('Alvejante 5L','Limpeza pesada.','alvejantedeoline.png')">
+<h3>Alvejante 5L</h3>
+<p>R$ 40,00</p>
+<div class="qtd-box">
+<button onclick="menosQtd('q3')" class="qtd-btn">-</button>
+<input id="q3" class="qtd" value="1">
+<button onclick="maisQtd('q3')" class="qtd-btn">+</button>
+</div>
+<button class="btn" onclick="add('Alvejante 5L',40,'alvejantedeoline.png','q3')">Adicionar</button>
+</div>
+
+<div class="card">
+<img src="deoline-limpainox.png"
+onclick="descricao('Limpa Inox','Brilho inox.','deoline-limpainox.png')">
+<h3>Limpa Inox</h3>
+<p>R$ 12,80</p>
+<div class="qtd-box">
+<button onclick="menosQtd('q4')" class="qtd-btn">-</button>
+<input id="q4" class="qtd" value="1">
+<button onclick="maisQtd('q4')" class="qtd-btn">+</button>
+</div>
+<button class="btn" onclick="add('Limpa Inox',12.8,'deoline-limpainox.png','q4')">Adicionar</button>
+</div>
+
+<div class="card">
+<img src="deoline-limpaaluminio.png"
+onclick="descricao('Limpa Alumínio','Remove sujeira.','deoline-limpaaluminio.png')">
+<h3>Limpa Alumínio</h3>
+<p>R$ 8,00</p>
+<div class="qtd-box">
+<button onclick="menosQtd('q5')" class="qtd-btn">-</button>
+<input id="q5" class="qtd" value="1">
+<button onclick="maisQtd('q5')" class="qtd-btn">+</button>
+</div>
+<button class="btn" onclick="add('Limpa Alumínio',8,'deoline-limpaaluminio.png','q5')">Adicionar</button>
+</div>
+
+<div class="card">
+<img src="limparejunte.png"
+onclick="descricao('Limpa Rejunte','Limpeza profunda.','limparejunte.png')">
+<h3>Limpa Rejunte</h3>
+<p>R$ 11,85</p>
+<div class="qtd-box">
+<button onclick="menosQtd('q6')" class="qtd-btn">-</button>
+<input id="q6" class="qtd" value="1">
+<button onclick="maisQtd('q6')" class="qtd-btn">+</button>
+</div>
+<button class="btn" onclick="add('Limpa Rejunte',11.85,'limparejunte.png','q6')">Adicionar</button>
+</div>
 
 </section>
 
@@ -201,7 +284,6 @@ onclick="descricao('Lava-Roupas 5L','Alta eficiência.','deoline-lava-roupas-5l.
 <hr>
 
 <h3>Dados do Cliente</h3>
-
 <input id="nome" placeholder="Nome">
 <input id="telefone" placeholder="Telefone">
 <input id="cep" placeholder="CEP">
@@ -222,12 +304,13 @@ Finalizar Pedido
 </div>
 
 <!-- MODAL -->
-<div id="modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);justify-content:center;align-items:center;z-index:9999;">
-<div style="background:#fff;padding:20px;border-radius:10px;max-width:500px;width:90%;text-align:center;">
+<div id="modal">
+<div>
 <h2 id="tituloProduto"></h2>
 <img id="imgProduto" style="width:100%;max-height:250px;object-fit:contain;">
 <p id="textoProduto"></p>
-<button onclick="fecharModal()" class="btn">Fechar</button>
+<br>
+<button class="btn" onclick="fecharModal()">Fechar</button>
 </div>
 </div>
 
@@ -236,29 +319,24 @@ Finalizar Pedido
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-const firebaseConfig = {
-apiKey:"AIzaSyDVNdZ",
-authDomain:"vendedor-html.firebaseapp.com",
+const app = initializeApp({
+apiKey:"x",
+authDomain:"x",
 databaseURL:"https://vendedor-html-default-rtdb.firebaseio.com",
 projectId:"vendedor-html"
-};
+});
 
-const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 let carrinho = [];
 
 window.add = function(nome,preco,img,id){
-
 let qtd = parseInt(document.getElementById(id).value);
 
 let item = carrinho.find(p=>p.nome===nome);
 
-if(item){
-item.qtd += qtd;
-}else{
-carrinho.push({nome,preco,img,qtd});
-}
+if(item) item.qtd += qtd;
+else carrinho.push({nome,preco,img,qtd});
 
 render();
 }
@@ -270,21 +348,21 @@ let el = document.getElementById(id);
 if(el.value > 1) el.value--;
 }
 
-window.remover = function(nome){
+window.remover = nome => {
 carrinho = carrinho.filter(p=>p.nome!==nome);
 render();
 }
 
-window.aumentarCarrinho = function(nome){
-let item = carrinho.find(p=>p.nome===nome);
-item.qtd++;
+window.aumentar = nome => {
+let i = carrinho.find(p=>p.nome===nome);
+i.qtd++;
 render();
 }
 
-window.diminuirCarrinho = function(nome){
-let item = carrinho.find(p=>p.nome===nome);
-item.qtd--;
-if(item.qtd<=0) carrinho = carrinho.filter(p=>p.nome!==nome);
+window.diminuir = nome => {
+let i = carrinho.find(p=>p.nome===nome);
+i.qtd--;
+if(i.qtd<=0) carrinho = carrinho.filter(p=>p.nome!==nome);
 render();
 }
 
@@ -297,23 +375,20 @@ total += i.preco*i.qtd;
 qtd += i.qtd;
 
 html += `
-<div class="item-carrinho">
-
+<div class="item">
 <img src="${i.img}">
-
 <div style="flex:1">
 <strong>${i.nome}</strong><br>
 R$ ${i.preco}
 </div>
 
 <div class="qtd-mini">
-<button onclick="diminuirCarrinho('${i.nome}')">-</button>
+<button onclick="diminuir('${i.nome}')">-</button>
 <strong>${i.qtd}</strong>
-<button onclick="aumentarCarrinho('${i.nome}')">+</button>
+<button onclick="aumentar('${i.nome}')">+</button>
 </div>
 
 <button class="remove" onclick="remover('${i.nome}')">X</button>
-
 </div>
 `;
 });
@@ -325,7 +400,7 @@ document.getElementById("badgeCarrinho").innerText = qtd;
 
 window.finalizar = function(){
 
-const pedido = {
+let pedido = {
 id:Date.now(),
 nome:nome.value,
 telefone:telefone.value,
@@ -345,18 +420,17 @@ render();
 });
 }
 
-// MODAL
-window.descricao=function(n,t,i){
+window.descricao = function(n,t,i){
 tituloProduto.innerText=n;
 textoProduto.innerText=t;
 imgProduto.src=i;
 modal.style.display="flex";
 }
 
-window.fecharModal=()=>modal.style.display="none";
+window.fecharModal = ()=>modal.style.display="none";
 
-window.abrirCarrinho=()=>carrinho.classList.add("ativo");
-window.fecharCarrinho=()=>carrinho.classList.remove("ativo");
+window.abrirCarrinho = ()=>document.getElementById("carrinho").classList.add("ativo");
+window.fecharCarrinho = ()=>document.getElementById("carrinho").classList.remove("ativo");
 
 </script>
 
