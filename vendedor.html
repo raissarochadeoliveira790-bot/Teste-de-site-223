@@ -130,10 +130,31 @@ ${p.status}
 <p><strong>Pagamento:</strong> ${p.pagamento || "Não informado"}</p>
 
 <div>
-<button onclick="status('${p.idFirebase}','Pendente')">Pendente</button>
-<button onclick="status('${p.idFirebase}','Preparando')">Preparando</button>
-<button onclick="status('${p.idFirebase}','Enviado')">Enviado</button>
-<button onclick="status('${p.idFirebase}','Entregue')">Entregue</button>
+
+<button
+style="background:#ffc107;border:none;border-radius:5px;color:#000;"
+onclick="status('${p.idFirebase}','Pendente')">
+Pendente
+</button>
+
+<button
+style="background:#17a2b8;border:none;border-radius:5px;color:#fff;"
+onclick="status('${p.idFirebase}','Preparando')">
+Preparando
+</button>
+
+<button
+style="background:#007bff;border:none;border-radius:5px;color:#fff;"
+onclick="status('${p.idFirebase}','Enviado')">
+Enviado
+</button>
+
+<button
+style="background:#28a745;border:none;border-radius:5px;color:#fff;"
+onclick="status('${p.idFirebase}','Entregue')">
+Entregue
+</button>
+
 </div>
 
 <hr>
