@@ -132,50 +132,55 @@ margin-bottom:10px;
 <img src="xareu-banner.png" width="120">
 
 <div class="carrinho-icone" onclick="abrirCarrinho()">
-🛒
-<span id="badgeCarrinho">0</span>
+🛒 <span id="badgeCarrinho">0</span>
 </div>
 </header>
 
 <section class="produtos">
 
 <div class="card">
-<img src="deoline-lava-roupas-5l.jpg">
+<img src="deoline-lava-roupas-5l.jpg"
+onclick="descricao('Lava-Roupas 5L','Lava roupas de alta eficiência.','deoline-lava-roupas-5l.jpg')">
 <h3>Lava-Roupas 5L</h3>
 <p>R$ 51,00</p>
 <button class="btn" onclick="add('Lava-Roupas 5L',51,'deoline-lava-roupas-5l.jpg')">Adicionar</button>
 </div>
 
 <div class="card">
-<img src="deoline-lava-loucas-500ml.jpg">
+<img src="deoline-lava-loucas-500ml.jpg"
+onclick="descricao('Lava-Louças 500ml','Remove gorduras e sujeiras.','deoline-lava-loucas-500ml.jpg')">
 <h3>Lava-Louças 500ml</h3>
 <p>R$ 3,00</p>
 <button class="btn" onclick="add('Lava-Louças 500ml',3,'deoline-lava-loucas-500ml.jpg')">Adicionar</button>
 </div>
 
 <div class="card">
-<img src="alvejantedeoline.png">
+<img src="alvejantedeoline.png"
+onclick="descricao('Alvejante 5L','Alvejante para limpeza pesada.','alvejantedeoline.png')">
 <h3>Alvejante 5L</h3>
 <p>R$ 40,00</p>
 <button class="btn" onclick="add('Alvejante 5L',40,'alvejantedeoline.png')">Adicionar</button>
 </div>
 
 <div class="card">
-<img src="deoline-limpainox.png">
+<img src="deoline-limpainox.png"
+onclick="descricao('Limpa Inox 750ml','Limpeza e brilho para inox.','deoline-limpainox.png')">
 <h3>Limpa Inox 750ml</h3>
 <p>R$ 12,80</p>
 <button class="btn" onclick="add('Limpa Inox 750ml',12.8,'deoline-limpainox.png')">Adicionar</button>
 </div>
 
 <div class="card">
-<img src="deoline-limpaaluminio.png">
+<img src="deoline-limpaaluminio.png"
+onclick="descricao('Limpa Alumínio','Remove sujeiras e devolve o brilho.','deoline-limpaaluminio.png')">
 <h3>Limpa Alumínio</h3>
 <p>R$ 8,00</p>
 <button class="btn" onclick="add('Limpa Alumínio',8,'deoline-limpaaluminio.png')">Adicionar</button>
 </div>
 
 <div class="card">
-<img src="limparejunte.png">
+<img src="limparejunte.png"
+onclick="descricao('Limpa Rejunte','Remove sujeiras profundas dos rejuntes.','limparejunte.png')">
 <h3>Limpa Rejunte</h3>
 <p>R$ 11,85</p>
 <button class="btn" onclick="add('Limpa Rejunte',11.85,'limparejunte.png')">Adicionar</button>
@@ -183,6 +188,7 @@ margin-bottom:10px;
 
 </section>
 
+<!-- CARRINHO -->
 <div class="carrinho" id="carrinho">
 <div class="voltar" onclick="fecharCarrinho()">⬅ Voltar</div>
 
@@ -209,6 +215,25 @@ margin-bottom:10px;
 <button onclick="finalizar()" class="btn" style="background:#0066ff">Finalizar Pedido</button>
 </div>
 
+<!-- MODAL -->
+<div id="modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);justify-content:center;align-items:center;z-index:9999;">
+<div style="background:#fff;padding:20px;border-radius:10px;max-width:500px;width:90%;text-align:center;">
+
+<h2 id="tituloProduto"></h2>
+
+<img id="imgProduto" style="width:100%;max-height:250px;object-fit:contain;">
+
+<p id="textoProduto"></p>
+
+<br>
+
+<button onclick="fecharModal()" style="padding:10px;background:#00a651;color:#fff;border:none;border-radius:5px;cursor:pointer;">
+Fechar
+</button>
+
+</div>
+</div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
@@ -218,9 +243,6 @@ const firebaseConfig = {
   authDomain: "vendedor-html.firebaseapp.com",
   databaseURL: "https://vendedor-html-default-rtdb.firebaseio.com",
   projectId: "vendedor-html",
-  storageBucket: "vendedor-html.firebasestorage.app",
-  messagingSenderId: "649120787576",
-  appId: "1:649120787576:web:7967250e4f0175b5d9518d",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -250,12 +272,12 @@ render();
 function render(){
 
 let total = 0;
-let quantidadeTotal = 0;
+let qtdTotal = 0;
 let html = "";
 
 carrinho.forEach(i=>{
 total += i.preco * i.qtd;
-quantidadeTotal += i.qtd;
+qtdTotal += i.qtd;
 
 html += `
 <div class="item-carrinho">
@@ -275,15 +297,10 @@ R$ ${i.preco}
 
 document.getElementById("lista").innerHTML = html;
 document.getElementById("total").innerText = total.toFixed(2);
-document.getElementById("badgeCarrinho").innerText = quantidadeTotal;
+document.getElementById("badgeCarrinho").innerText = qtdTotal;
 }
 
 window.finalizar = function(){
-
-if(carrinho.length === 0){
-alert("Carrinho vazio!");
-return;
-}
 
 const pedido = {
 id: Date.now(),
@@ -304,12 +321,28 @@ carrinho = [];
 render();
 })
 .catch(e=>alert(e));
-
 }
 
-window.abrirCarrinho = ()=>document.getElementById("carrinho").classList.add("ativo");
-window.fecharCarrinho = ()=>document.getElementById("carrinho").classList.remove("ativo");
-  
+// CARRINHO
+window.abrirCarrinho=()=>carrinhoEl().classList.add("ativo");
+window.fecharCarrinho=()=>carrinhoEl().classList.remove("ativo");
+
+function carrinhoEl(){
+return document.getElementById("carrinho");
+}
+
+// MODAL
+window.descricao = function(nome,texto,img){
+document.getElementById("tituloProduto").innerText = nome;
+document.getElementById("textoProduto").innerText = texto;
+document.getElementById("imgProduto").src = img;
+document.getElementById("modal").style.display = "flex";
+}
+
+window.fecharModal = function(){
+document.getElementById("modal").style.display = "none";
+}
+
 </script>
 
 </body>
