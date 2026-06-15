@@ -56,6 +56,7 @@ padding:10px;
 background:#fff;
 border-radius:10px;
 padding:10px;
+text-align:center;
 }
 
 .card img{
@@ -73,6 +74,29 @@ color:#fff;
 border:none;
 cursor:pointer;
 border-radius:5px;
+margin-top:10px;
+}
+
+.qtd-box{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:5px;
+margin-top:8px;
+}
+
+.qtd-btn{
+padding:5px 10px;
+border:none;
+cursor:pointer;
+background:#ddd;
+border-radius:5px;
+}
+
+input.qtd{
+width:40px;
+text-align:center;
+padding:5px;
 }
 
 .carrinho{
@@ -110,14 +134,6 @@ height:40px;
 object-fit:contain;
 }
 
-.qtd-btn{
-padding:3px 8px;
-border:none;
-cursor:pointer;
-background:#ddd;
-border-radius:5px;
-}
-
 input,select{
 width:100%;
 padding:10px;
@@ -138,52 +154,106 @@ margin-bottom:10px;
 
 <section class="produtos">
 
+<!-- PRODUTO 1 -->
 <div class="card">
 <img src="deoline-lava-roupas-5l.jpg"
 onclick="descricao('Lava-Roupas 5L','Lava roupas de alta eficiência.','deoline-lava-roupas-5l.jpg')">
+
 <h3>Lava-Roupas 5L</h3>
 <p>R$ 51,00</p>
-<button class="btn" onclick="add('Lava-Roupas 5L',51,'deoline-lava-roupas-5l.jpg')">Adicionar</button>
+
+<div class="qtd-box">
+<button class="qtd-btn" onclick="menosQtd('q1')">-</button>
+<input id="q1" class="qtd" value="1">
+<button class="qtd-btn" onclick="maisQtd('q1')">+</button>
 </div>
 
+<button class="btn" onclick="add('Lava-Roupas 5L',51,'deoline-lava-roupas-5l.jpg','q1')">Adicionar</button>
+</div>
+
+<!-- PRODUTO 2 -->
 <div class="card">
 <img src="deoline-lava-loucas-500ml.jpg"
 onclick="descricao('Lava-Louças 500ml','Remove gorduras e sujeiras.','deoline-lava-loucas-500ml.jpg')">
+
 <h3>Lava-Louças 500ml</h3>
 <p>R$ 3,00</p>
-<button class="btn" onclick="add('Lava-Louças 500ml',3,'deoline-lava-loucas-500ml.jpg')">Adicionar</button>
+
+<div class="qtd-box">
+<button class="qtd-btn" onclick="menosQtd('q2')">-</button>
+<input id="q2" class="qtd" value="1">
+<button class="qtd-btn" onclick="maisQtd('q2')">+</button>
 </div>
 
+<button class="btn" onclick="add('Lava-Louças 500ml',3,'deoline-lava-loucas-500ml.jpg','q2')">Adicionar</button>
+</div>
+
+<!-- PRODUTO 3 -->
 <div class="card">
 <img src="alvejantedeoline.png"
 onclick="descricao('Alvejante 5L','Alvejante para limpeza pesada.','alvejantedeoline.png')">
+
 <h3>Alvejante 5L</h3>
 <p>R$ 40,00</p>
-<button class="btn" onclick="add('Alvejante 5L',40,'alvejantedeoline.png')">Adicionar</button>
+
+<div class="qtd-box">
+<button class="qtd-btn" onclick="menosQtd('q3')">-</button>
+<input id="q3" class="qtd" value="1">
+<button class="qtd-btn" onclick="maisQtd('q3')">+</button>
 </div>
 
+<button class="btn" onclick="add('Alvejante 5L',40,'alvejantedeoline.png','q3')">Adicionar</button>
+</div>
+
+<!-- PRODUTO 4 -->
 <div class="card">
 <img src="deoline-limpainox.png"
-onclick="descricao('Limpa Inox 750ml','Limpeza e brilho para inox.','deoline-limpainox.png')">
+onclick="descricao('Limpa Inox 750ml','Brilho para inox.','deoline-limpainox.png')">
+
 <h3>Limpa Inox 750ml</h3>
 <p>R$ 12,80</p>
-<button class="btn" onclick="add('Limpa Inox 750ml',12.8,'deoline-limpainox.png')">Adicionar</button>
+
+<div class="qtd-box">
+<button class="qtd-btn" onclick="menosQtd('q4')">-</button>
+<input id="q4" class="qtd" value="1">
+<button class="qtd-btn" onclick="maisQtd('q4')">+</button>
 </div>
 
+<button class="btn" onclick="add('Limpa Inox 750ml',12.8,'deoline-limpainox.png','q4')">Adicionar</button>
+</div>
+
+<!-- PRODUTO 5 -->
 <div class="card">
 <img src="deoline-limpaaluminio.png"
-onclick="descricao('Limpa Alumínio','Remove sujeiras e devolve o brilho.','deoline-limpaaluminio.png')">
+onclick="descricao('Limpa Alumínio','Remove sujeiras.','deoline-limpaaluminio.png')">
+
 <h3>Limpa Alumínio</h3>
 <p>R$ 8,00</p>
-<button class="btn" onclick="add('Limpa Alumínio',8,'deoline-limpaaluminio.png')">Adicionar</button>
+
+<div class="qtd-box">
+<button class="qtd-btn" onclick="menosQtd('q5')">-</button>
+<input id="q5" class="qtd" value="1">
+<button class="qtd-btn" onclick="maisQtd('q5')">+</button>
 </div>
 
+<button class="btn" onclick="add('Limpa Alumínio',8,'deoline-limpaaluminio.png','q5')">Adicionar</button>
+</div>
+
+<!-- PRODUTO 6 -->
 <div class="card">
 <img src="limparejunte.png"
-onclick="descricao('Limpa Rejunte','Remove sujeiras profundas dos rejuntes.','limparejunte.png')">
+onclick="descricao('Limpa Rejunte','Limpeza pesada.','limparejunte.png')">
+
 <h3>Limpa Rejunte</h3>
 <p>R$ 11,85</p>
-<button class="btn" onclick="add('Limpa Rejunte',11.85,'limparejunte.png')">Adicionar</button>
+
+<div class="qtd-box">
+<button class="qtd-btn" onclick="menosQtd('q6')">-</button>
+<input id="q6" class="qtd" value="1">
+<button class="qtd-btn" onclick="maisQtd('q6')">+</button>
+</div>
+
+<button class="btn" onclick="add('Limpa Rejunte',11.85,'limparejunte.png','q6')">Adicionar</button>
 </div>
 
 </section>
@@ -196,77 +266,44 @@ onclick="descricao('Limpa Rejunte','Remove sujeiras profundas dos rejuntes.','li
 
 <h3>Total: R$ <span id="total">0.00</span></h3>
 
-<hr><br>
-
-<input type="text" id="nome" placeholder="Nome Completo">
-<input type="text" id="telefone" placeholder="Telefone">
-<input type="text" id="cep" placeholder="CEP">
-<input type="text" id="endereco" placeholder="Endereço">
-
-<select id="pagamento">
-<option value="">Forma de Pagamento</option>
-<option>Pix</option>
-<option>Dinheiro</option>
-<option>Cartão Débito</option>
-<option>Cartão Crédito</option>
-<option>Boleto</option>
-</select>
-
-<button onclick="finalizar()" class="btn" style="background:#0066ff">Finalizar Pedido</button>
 </div>
 
 <!-- MODAL -->
 <div id="modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);justify-content:center;align-items:center;z-index:9999;">
 <div style="background:#fff;padding:20px;border-radius:10px;max-width:500px;width:90%;text-align:center;">
-
 <h2 id="tituloProduto"></h2>
-
 <img id="imgProduto" style="width:100%;max-height:250px;object-fit:contain;">
-
 <p id="textoProduto"></p>
-
-<br>
-
-<button onclick="fecharModal()" style="padding:10px;background:#00a651;color:#fff;border:none;border-radius:5px;cursor:pointer;">
-Fechar
-</button>
-
+<button onclick="fecharModal()" class="btn">Fechar</button>
 </div>
 </div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDVNdZ-GWHE8_4gLd4zRPTJGuwIMsyIK0Q",
-  authDomain: "vendedor-html.firebaseapp.com",
-  databaseURL: "https://vendedor-html-default-rtdb.firebaseio.com",
-  projectId: "vendedor-html",
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
 
 let carrinho = [];
 
-window.add = function(nome,preco,img){
-let item = carrinho.find(p=>p.nome===nome);
-if(item) item.qtd++;
-else carrinho.push({nome,preco,img,qtd:1});
-render();
-}
+window.add = function(nome,preco,img,id){
 
-window.remover = function(nome){
-let item = carrinho.find(p=>p.nome===nome);
-if(!item) return;
+let qtd = parseInt(document.getElementById(id).value);
 
-item.qtd--;
-if(item.qtd<=0){
-carrinho = carrinho.filter(p=>p.nome!==nome);
+let item = carrinho.find(p=>p.nome===nome);
+
+if(item){
+item.qtd += qtd;
+}else{
+carrinho.push({nome,preco,img,qtd:qtd});
 }
 
 render();
+}
+
+window.maisQtd = function(id){
+document.getElementById(id).value++;
+}
+
+window.menosQtd = function(id){
+let el = document.getElementById(id);
+if(el.value > 1) el.value--;
 }
 
 function render(){
@@ -286,11 +323,7 @@ html += `
 <strong>${i.nome}</strong><br>
 R$ ${i.preco}
 </div>
-
-<button class="qtd-btn" onclick="remover('${i.nome}')">-</button>
 <strong>${i.qtd}</strong>
-<button class="qtd-btn" onclick="add('${i.nome}',${i.preco},'${i.img}')">+</button>
-
 </div>
 `;
 });
@@ -300,38 +333,9 @@ document.getElementById("total").innerText = total.toFixed(2);
 document.getElementById("badgeCarrinho").innerText = qtdTotal;
 }
 
-window.finalizar = function(){
+window.abrirCarrinho=()=>document.getElementById("carrinho").classList.add("ativo");
+window.fecharCarrinho=()=>document.getElementById("carrinho").classList.remove("ativo");
 
-const pedido = {
-id: Date.now(),
-nome: nome.value,
-telefone: telefone.value,
-cep: cep.value,
-endereco: endereco.value,
-pagamento: pagamento.value,
-status: "Pendente",
-itens: carrinho,
-total: carrinho.reduce((t,i)=>t+i.preco*i.qtd,0)
-};
-
-push(ref(db,"pedidos"), pedido)
-.then(()=>{
-alert("Pedido enviado!");
-carrinho = [];
-render();
-})
-.catch(e=>alert(e));
-}
-
-// CARRINHO
-window.abrirCarrinho=()=>carrinhoEl().classList.add("ativo");
-window.fecharCarrinho=()=>carrinhoEl().classList.remove("ativo");
-
-function carrinhoEl(){
-return document.getElementById("carrinho");
-}
-
-// MODAL
 window.descricao = function(nome,texto,img){
 document.getElementById("tituloProduto").innerText = nome;
 document.getElementById("textoProduto").innerText = texto;
