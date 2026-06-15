@@ -136,25 +136,25 @@ ${p.status}
 
 <button
 style="background:#ffc107;border:none;border-radius:5px;color:#000;"
-onclick="alterarStatus('${p.idFirebase}','Pendente')"
+onclick="alterarStatus('${p.idFirebase}','Pendente')">
 Pendente
 </button>
 
 <button
 style="background:#17a2b8;border:none;border-radius:5px;color:#fff;"
-onclick="alterarStatus('${p.idFirebase}','Preparando')"
+onclick="alterarStatus('${p.idFirebase}','Preparando')">
 Preparando
 </button>
 
 <button
 style="background:#007bff;border:none;border-radius:5px;color:#fff;"
-onclick="alterarStatus('${p.idFirebase}','Enviado')"
+onclick="alterarStatus('${p.idFirebase}','Enviado')">
 Enviado
 </button>
 
 <button
 style="background:#28a745;border:none;border-radius:5px;color:#fff;"
-onclick="alterarStatus('${p.idFirebase}','Entregue')"
+onclick="alterarStatus('${p.idFirebase}','Entregue')">
 Entregue
 </button>
 
@@ -184,12 +184,19 @@ document.getElementById("pedidos").innerHTML = html;
 
 });
 
-  window.alterarStatus = function(id, novoStatus){
+function alterarStatus(id, novoStatus){
   update(ref(db, "pedidos/" + id), {
     status: novoStatus
+  })
+  .then(() => {
+    console.log("Status atualizado para:", novoStatus);
+  })
+  .catch((erro) => {
+    console.error("Erro ao atualizar status:", erro);
   });
 }
 
+window.alterarStatus = alterarStatus;
 </script>
 
 </body>
