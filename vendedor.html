@@ -22,29 +22,20 @@ overflow-x:auto;
 
 .coluna{
 background:#e9e9e9;
-min-width:250px;
+min-width:300px;
 padding:10px;
 border-radius:10px;
 height:80vh;
 overflow-y:auto;
 }
 
-.coluna h2{
-text-align:center;
-}
+.coluna h2{text-align:center;}
 
 .pedido{
 background:#fff;
 padding:10px;
 margin:10px 0;
 border-radius:8px;
-font-size:14px;
-}
-
-button{
-margin:3px;
-padding:5px;
-cursor:pointer;
 font-size:12px;
 }
 
@@ -52,6 +43,27 @@ font-size:12px;
 .preparando{border-left:8px solid #17a2b8;}
 .enviado{border-left:8px solid #007bff;}
 .entregue{border-left:8px solid #28a745;}
+
+.item{
+display:flex;
+gap:8px;
+align-items:center;
+margin:5px 0;
+}
+
+.item img{
+width:40px;
+height:40px;
+object-fit:cover;
+border-radius:5px;
+}
+
+button{
+margin:3px;
+padding:5px;
+cursor:pointer;
+font-size:11px;
+}
 
 .entregues-area{
 margin-top:40px;
@@ -68,21 +80,10 @@ border-radius:10px;
 
 <div class="board">
 
-<div class="coluna" id="pendente">
-<h2>🟡 Pendente</h2>
-</div>
-
-<div class="coluna" id="preparando">
-<h2>🔵 Preparando</h2>
-</div>
-
-<div class="coluna" id="enviado">
-<h2>🔵 Enviado</h2>
-</div>
-
-<div class="coluna" id="entregue">
-<h2>🟢 Entregue</h2>
-</div>
+<div class="coluna" id="pendente"><h2>🟡 Pendente</h2></div>
+<div class="coluna" id="preparando"><h2>🔵 Preparando</h2></div>
+<div class="coluna" id="enviado"><h2>🔵 Enviado</h2></div>
+<div class="coluna" id="entregue"><h2>🟢 Entregue</h2></div>
 
 </div>
 
@@ -112,16 +113,13 @@ const db = getDatabase(app);
 onValue(ref(db,"pedidos"), (snap)=>{
 
 let data = snap.val();
-if(!data){
-return;
-}
+if(!data) return;
 
 let pedidos = Object.entries(data)
 .map(([id,v])=>({idFirebase:id,...v}));
 
-// limpar colunas
 ["pendente","preparando","enviado","entregue"].forEach(id=>{
-document.getElementById(id).innerHTML = `<h2>${document.querySelector('#'+id+' h2')?.innerText || ''}</h2>`;
+document.getElementById(id).innerHTML = `<h2>${document.querySelector('#'+id+' h2')?.innerText}</h2>`;
 });
 
 let entreguesPorData = {};
@@ -130,12 +128,40 @@ pedidos.forEach(p=>{
 
 let status = (p.status || "Pendente").toLowerCase();
 
+let itensHTML = (p.itens || []).map(i=>`
+<div class="item">
+<img src="${i.img}">
+<div>
+<strong>${i.nome}</strong><br>
+Qtd: ${i.qtd}
+</div>
+</div>
+`).join("");
+
+let clienteHTML = `
+<strong>Cliente:</strong> ${p.nome || "Não informado"}<br>
+<strong>Telefone:</strong> ${p.telefone || "Não informado"}<br>
+<strong>CEP:</strong> ${p.cep || "Não informado"}<br>
+<strong>Endereço:</strong> ${p.endereco || "Não informado"}<br>
+<strong>Pagamento:</strong> ${p.pagamento || "Não informado"}<br>
+`;
+
 let html = `
 <div class="pedido ${status}">
 
 <strong>Pedido ${p.id || ""}</strong><br>
-Cliente: ${p.nome || "Não informado"}<br>
-Total: R$ ${Number(p.total||0).toFixed(2)}<br>
+
+<hr>
+
+${clienteHTML}
+
+<hr>
+
+${itensHTML}
+
+<hr>
+
+<strong>Total:</strong> R$ ${Number(p.total||0).toFixed(2)}<br>
 
 <div>
 
@@ -166,7 +192,6 @@ document.getElementById(status).innerHTML += html;
 
 });
 
-// histórico entregues
 let hist = "";
 
 Object.keys(entreguesPorData)
@@ -192,29 +217,29 @@ deliveredAt: status==="Entregue" ? Date.now() : null
 function imprimir(btn){
 let pedido = btn.closest(".pedido");
 
-let janela = window.open("", "_blank");
+let w = window.open("", "_blank");
 
-janela.document.write(`
+w.document.write(`
 <html>
 <head>
 <title>Imprimir Pedido</title>
 <style>
 body{font-family:Arial;padding:20px;}
 .pedido{border:1px solid #000;padding:15px;border-radius:10px;}
+.item{display:flex;gap:10px;margin:5px 0;}
+.item img{width:50px;height:50px;object-fit:cover;}
 </style>
 </head>
 
 <body onload="window.print(); window.close();">
-
 <div class="pedido">
 ${pedido.innerHTML}
 </div>
-
 </body>
 </html>
 `);
 
-janela.document.close();
+w.document.close();
 }
 
 window.mudar = mudar;
