@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Painel Vendas Xaréu </title>
+<title>Painel Kanban Pedidos</title>
 
 <style>
 body{
@@ -71,12 +71,25 @@ background:#fff;
 padding:15px;
 border-radius:10px;
 }
+
+/* filtro */
+.filtro{
+margin-bottom:15px;
+}
 </style>
 </head>
 
 <body>
 
 <h1>📦 Painel Kanban de Pedidos</h1>
+
+<!-- FILTRO -->
+<div class="filtro">
+<label>Filtrar por data:</label>
+<input type="date" id="filtroData">
+<button onclick="filtrar()">Filtrar</button>
+<button onclick="limparFiltro()">Limpar</button>
+</div>
 
 <div class="board">
 
@@ -110,13 +123,22 @@ appId: "1:649120787576:web:7967250e4f0175b5d9518d"
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+let cachePedidos = [];
+
 onValue(ref(db,"pedidos"), (snap)=>{
 
 let data = snap.val();
 if(!data) return;
 
-let pedidos = Object.entries(data)
+cachePedidos = Object.entries(data)
 .map(([id,v])=>({idFirebase:id,...v}));
+
+render(cachePedidos);
+
+});
+
+// ================= RENDER =================
+function render(lista){
 
 ["pendente","preparando","enviado","entregue"].forEach(id=>{
 document.getElementById(id).innerHTML = `<h2>${document.querySelector('#'+id+' h2')?.innerText}</h2>`;
@@ -124,11 +146,19 @@ document.getElementById(id).innerHTML = `<h2>${document.querySelector('#'+id+' h
 
 let entreguesPorData = {};
 
-pedidos.forEach(p=>{
+lista.forEach(p=>{
 
 let status = (p.status || "Pendente").toLowerCase();
 
-let itensHTML = (p.itens || []).map(i=>`
+let cliente = `
+<strong>Cliente:</strong> ${p.nome || "Não informado"}<br>
+<strong>Telefone:</strong> ${p.telefone || "Não informado"}<br>
+<strong>CEP:</strong> ${p.cep || "Não informado"}<br>
+<strong>Endereço:</strong> ${p.endereco || "Não informado"}<br>
+<strong>Pagamento:</strong> ${p.pagamento || "Não informado"}<br>
+`;
+
+let itens = (p.itens || []).map(i=>`
 <div class="item">
 <img src="${i.img}">
 <div>
@@ -138,27 +168,15 @@ Qtd: ${i.qtd}
 </div>
 `).join("");
 
-let clienteHTML = `
-<strong>Cliente:</strong> ${p.nome || "Não informado"}<br>
-<strong>Telefone:</strong> ${p.telefone || "Não informado"}<br>
-<strong>CEP:</strong> ${p.cep || "Não informado"}<br>
-<strong>Endereço:</strong> ${p.endereco || "Não informado"}<br>
-<strong>Pagamento:</strong> ${p.pagamento || "Não informado"}<br>
-`;
-
 let html = `
 <div class="pedido ${status}">
 
 <strong>Pedido ${p.id || ""}</strong><br>
 
 <hr>
-
-${clienteHTML}
-
+${cliente}
 <hr>
-
-${itensHTML}
-
+${itens}
 <hr>
 
 <strong>Total:</strong> R$ ${Number(p.total||0).toFixed(2)}<br>
@@ -192,6 +210,7 @@ document.getElementById(status).innerHTML += html;
 
 });
 
+// histórico entregues
 let hist = "";
 
 Object.keys(entreguesPorData)
@@ -205,8 +224,9 @@ hist += p;
 
 document.getElementById("historico").innerHTML = hist;
 
-});
+}
 
+// ================= STATUS =================
 function mudar(id,status){
 update(ref(db,"pedidos/"+id),{
 status:status,
@@ -214,8 +234,11 @@ deliveredAt: status==="Entregue" ? Date.now() : null
 });
 }
 
+// ================= IMPRESSÃO 2 VIAS =================
 function imprimir(btn){
 let pedido = btn.closest(".pedido");
+
+let conteudo = pedido.innerHTML;
 
 let w = window.open("", "_blank");
 
@@ -225,16 +248,38 @@ w.document.write(`
 <title>Imprimir Pedido</title>
 <style>
 body{font-family:Arial;padding:20px;}
-.pedido{border:1px solid #000;padding:15px;border-radius:10px;}
+
+.via{
+border:2px dashed #000;
+padding:10px;
+margin-bottom:20px;
+}
+
+.titulo{
+text-align:center;
+font-weight:bold;
+margin-bottom:10px;
+}
+
 .item{display:flex;gap:10px;margin:5px 0;}
-.item img{width:50px;height:50px;object-fit:cover;}
+.item img{width:40px;height:40px;object-fit:cover;}
+
+hr{margin:10px 0;}
 </style>
 </head>
 
 <body onload="window.print(); window.close();">
-<div class="pedido">
-${pedido.innerHTML}
+
+<div class="via">
+<div class="titulo">🧾 VIA DO CLIENTE</div>
+${conteudo}
 </div>
+
+<div class="via">
+<div class="titulo">🏪 VIA DA LOJA</div>
+${conteudo}
+</div>
+
 </body>
 </html>
 `);
@@ -242,8 +287,34 @@ ${pedido.innerHTML}
 w.document.close();
 }
 
+// ================= FILTRO DATA =================
+function filtrar(){
+let dataFiltro = document.getElementById("filtroData").value;
+
+if(!dataFiltro){
+render(cachePedidos);
+return;
+}
+
+let filtrados = cachePedidos.filter(p=>{
+if(!p.createdAt) return false;
+
+let d = new Date(p.createdAt).toISOString().split("T")[0];
+return d === dataFiltro;
+});
+
+render(filtrados);
+}
+
+function limparFiltro(){
+document.getElementById("filtroData").value = "";
+render(cachePedidos);
+}
+
 window.mudar = mudar;
 window.imprimir = imprimir;
+window.filtrar = filtrar;
+window.limparFiltro = limparFiltro;
 
 </script>
 
