@@ -2,85 +2,108 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Painel Vendedor</title>
+<title>Painel Kanban Pedidos</title>
 
 <style>
-body{font-family:Arial;background:#f5f5f5;padding:20px;}
+body{
+font-family:Arial;
+background:#f5f5f5;
+margin:0;
+padding:20px;
+}
 
-h2{margin-top:30px;}
+h1{text-align:center;}
+
+.board{
+display:flex;
+gap:10px;
+overflow-x:auto;
+}
+
+.coluna{
+background:#e9e9e9;
+min-width:250px;
+padding:10px;
+border-radius:10px;
+height:80vh;
+overflow-y:auto;
+}
+
+.coluna h2{
+text-align:center;
+}
 
 .pedido{
 background:#fff;
-padding:15px;
+padding:10px;
 margin:10px 0;
-border-radius:10px;
-}
-
-.pendente{border-left:10px solid #ffc107;}
-.preparando{border-left:10px solid #17a2b8;}
-.enviado{border-left:10px solid #007bff;}
-.entregue{border-left:10px solid #28a745;}
-
-.item{
-display:flex;
-gap:10px;
-align-items:center;
-margin:5px 0;
-}
-
-.item img{
-width:50px;
-height:50px;
-object-fit:contain;
+border-radius:8px;
+font-size:14px;
 }
 
 button{
 margin:3px;
-padding:6px;
+padding:5px;
 cursor:pointer;
+font-size:12px;
 }
 
-.acoes{
-margin-top:10px;
-display:flex;
-flex-wrap:wrap;
-gap:5px;
-}
+.pendente{border-left:8px solid #ffc107;}
+.preparando{border-left:8px solid #17a2b8;}
+.enviado{border-left:8px solid #007bff;}
+.entregue{border-left:8px solid #28a745;}
 
-.secao{
-margin-bottom:40px;
+.entregues-area{
+margin-top:40px;
+background:#fff;
+padding:15px;
+border-radius:10px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>📦 Painel de Pedidos</h1>
+<h1>📦 Painel Kanban de Pedidos</h1>
 
-<div class="secao">
-<h2>🟡 Pedidos Ativos</h2>
-<div id="ativos"></div>
+<div class="board">
+
+<div class="coluna" id="pendente">
+<h2>🟡 Pendente</h2>
 </div>
 
-<div class="secao">
-<h2>📁 Entregues (por data)</h2>
-<div id="entregues"></div>
+<div class="coluna" id="preparando">
+<h2>🔵 Preparando</h2>
+</div>
+
+<div class="coluna" id="enviado">
+<h2>🔵 Enviado</h2>
+</div>
+
+<div class="coluna" id="entregue">
+<h2>🟢 Entregue</h2>
+</div>
+
+</div>
+
+<div class="entregues-area">
+<h2>📁 Entregues por Data</h2>
+<div id="historico"></div>
 </div>
 
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDVNdZ-GWHE8_4gLd4zRPTJGuwIMsyIK0Q",
-  authDomain: "vendedor-html.firebaseapp.com",
-  databaseURL: "https://vendedor-html-default-rtdb.firebaseio.com",
-  projectId: "vendedor-html",
-  storageBucket: "vendedor-html.firebasestorage.app",
-  messagingSenderId: "649120787576",
-  appId: "1:649120787576:web:7967250e4f0175b5d9518d",
-  measurementId: "G-R3BQKGNRQ6"
+apiKey: "AIzaSyDVNdZ-GWHE8_4gLd4zRPTJGuwIMsyIK0Q",
+authDomain: "vendedor-html.firebaseapp.com",
+databaseURL: "https://vendedor-html-default-rtdb.firebaseio.com",
+projectId: "vendedor-html",
+storageBucket: "vendedor-html.firebasestorage.app",
+messagingSenderId: "649120787576",
+appId: "1:649120787576:web:7967250e4f0175b5d9518d"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -89,134 +112,113 @@ const db = getDatabase(app);
 onValue(ref(db,"pedidos"), (snap)=>{
 
 let data = snap.val();
-
 if(!data){
-document.getElementById("ativos").innerHTML = "Sem pedidos";
-document.getElementById("entregues").innerHTML = "Sem entregues";
 return;
 }
 
 let pedidos = Object.entries(data)
-.map(([id,v])=>({idFirebase:id,...v}))
-.reverse();
+.map(([id,v])=>({idFirebase:id,...v}));
 
-let ativosHTML = "";
-let entregues = {};
+// limpar colunas
+["pendente","preparando","enviado","entregue"].forEach(id=>{
+document.getElementById(id).innerHTML = `<h2>${document.querySelector('#'+id+' h2')?.innerText || ''}</h2>`;
+});
+
+let entreguesPorData = {};
 
 pedidos.forEach(p=>{
 
-// ----------------- ENTREGUE -----------------
-if(p.status === "Entregue"){
+let status = (p.status || "Pendente").toLowerCase();
 
-let data = new Date(p.createdAt || Date.now());
-let dia = data.toLocaleDateString("pt-BR");
+let html = `
+<div class="pedido ${status}">
 
-if(!entregues[dia]) entregues[dia] = [];
+<strong>Pedido ${p.id || ""}</strong><br>
+Cliente: ${p.nome || "Não informado"}<br>
+Total: R$ ${Number(p.total||0).toFixed(2)}<br>
 
-entregues[dia].push(p);
-
-return;
-}
-
-// ----------------- ATIVOS -----------------
-let classe = p.status?.toLowerCase() || "pendente";
-
-ativosHTML += `
-<div class="pedido ${classe}">
-
-<h3>Pedido ${p.id || ""}</h3>
-
-<h3 style="
-display:inline-block;
-padding:8px 12px;
-border-radius:6px;
-color:white;
-background:
-${p.status==='Pendente' ? '#ffc107' :
-p.status==='Preparando' ? '#17a2b8' :
-p.status==='Enviado' ? '#007bff' :
-'#28a745'};
-">
-${p.status || "Pendente"}
-</h3>
-
-<p><strong>Cliente:</strong> ${p.nome || "Não informado"}</p>
-<p><strong>Telefone:</strong> ${p.telefone || "Não informado"}</p>
-<p><strong>Endereço:</strong> ${p.endereco || "Não informado"}</p>
-
-<div class="acoes">
-
-<button onclick="alterarStatus('${p.idFirebase}','Pendente')">Pendente</button>
-<button onclick="alterarStatus('${p.idFirebase}','Preparando')">Preparando</button>
-<button onclick="alterarStatus('${p.idFirebase}','Enviado')">Enviado</button>
-<button onclick="alterarStatus('${p.idFirebase}','Entregue')">Entregue</button>
-
-<button onclick="excluirPedido('${p.idFirebase}')" style="background:red;color:#fff;">Excluir</button>
-
-</div>
-
-<hr>
-
-${(p.itens || []).map(i=>`
-<div class="item">
-<img src="${i.img}">
 <div>
-<strong>${i.nome}</strong><br>
-Qtd: ${i.qtd}
+
+<button onclick="mudar('${p.idFirebase}','Pendente')">Pendente</button>
+<button onclick="mudar('${p.idFirebase}','Preparando')">Preparando</button>
+<button onclick="mudar('${p.idFirebase}','Enviado')">Enviado</button>
+<button onclick="mudar('${p.idFirebase}','Entregue')">Entregue</button>
+
+<button onclick="imprimir(this)">🖨️ Imprimir</button>
+
 </div>
-</div>
-`).join("")}
-
-<h4>Total: R$ ${Number(p.total || 0).toFixed(2)}</h4>
-
-</div>
-`;
-});
-
-// ----------------- ENTREGUES POR DATA -----------------
-let entreguesHTML = "";
-
-Object.keys(entregues).sort((a,b)=> new Date(b) - new Date(a)).forEach(data=>{
-
-entreguesHTML += `<h3>📅 ${data}</h3>`;
-
-entregues[data].forEach(p=>{
-entreguesHTML += `
-<div class="pedido entregue">
-
-<h3>Pedido ${p.id || ""}</h3>
-
-<p><strong>Cliente:</strong> ${p.nome || "Não informado"}</p>
-<p><strong>Total:</strong> R$ ${Number(p.total || 0).toFixed(2)}</p>
-
-<button onclick="excluirPedido('${p.idFirebase}')" style="background:red;color:#fff;">Excluir</button>
 
 </div>
 `;
-});
 
-});
+if(status === "entregue"){
 
-document.getElementById("ativos").innerHTML = ativosHTML;
-document.getElementById("entregues").innerHTML = entreguesHTML;
+let d = new Date(p.createdAt || Date.now()).toLocaleDateString("pt-BR");
 
-});
+if(!entreguesPorData[d]) entreguesPorData[d] = [];
+entreguesPorData[d].push(html);
 
-function alterarStatus(id, status){
-  update(ref(db,"pedidos/"+id),{
-    status: status,
-    deliveredAt: status==="Entregue" ? Date.now() : null
-  });
+document.getElementById("entregue").innerHTML += html;
+
+}else{
+document.getElementById(status).innerHTML += html;
 }
 
-function excluirPedido(id){
-  if(confirm("Excluir pedido?")){
-    remove(ref(db,"pedidos/"+id));
-  }
+});
+
+// histórico entregues
+let hist = "";
+
+Object.keys(entreguesPorData)
+.sort((a,b)=>new Date(b)-new Date(a))
+.forEach(data=>{
+hist += `<h3>📅 ${data}</h3>`;
+entreguesPorData[data].forEach(p=>{
+hist += p;
+});
+});
+
+document.getElementById("historico").innerHTML = hist;
+
+});
+
+function mudar(id,status){
+update(ref(db,"pedidos/"+id),{
+status:status,
+deliveredAt: status==="Entregue" ? Date.now() : null
+});
 }
 
-window.alterarStatus = alterarStatus;
-window.excluirPedido = excluirPedido;
+function imprimir(btn){
+let pedido = btn.closest(".pedido");
+
+let janela = window.open("", "_blank");
+
+janela.document.write(`
+<html>
+<head>
+<title>Imprimir Pedido</title>
+<style>
+body{font-family:Arial;padding:20px;}
+.pedido{border:1px solid #000;padding:15px;border-radius:10px;}
+</style>
+</head>
+
+<body onload="window.print(); window.close();">
+
+<div class="pedido">
+${pedido.innerHTML}
+</div>
+
+</body>
+</html>
+`);
+
+janela.document.close();
+}
+
+window.mudar = mudar;
+window.imprimir = imprimir;
 
 </script>
 
