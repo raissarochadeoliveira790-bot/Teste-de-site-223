@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Painel Xaréu Pedidos</title>
+<title>Painel Kanban Pedidos</title>
 
 <style>
 body{
@@ -72,16 +72,17 @@ padding:15px;
 border-radius:10px;
 }
 
-/* filtro */
-.filtro{
-margin-bottom:15px;
+/* PRINT */
+@media print {
+button{display:none !important;}
+.filtro{display:none !important;}
 }
 </style>
 </head>
 
 <body>
 
-<h1>📦 Painel de pedidos Xaréu</h1>
+<h1>📦 Xaréu painel de vendas</h1>
 
 <!-- FILTRO -->
 <div class="filtro">
@@ -96,7 +97,6 @@ margin-bottom:15px;
 <div class="coluna" id="pendente"><h2>🟡 Pendente</h2></div>
 <div class="coluna" id="preparando"><h2>🔵 Preparando</h2></div>
 <div class="coluna" id="enviado"><h2>🔵 Enviado</h2></div>
-<div class="coluna" id="entregue"><h2>🟢 Entregue</h2></div>
 
 </div>
 
@@ -140,7 +140,7 @@ render(cachePedidos);
 // ================= RENDER =================
 function render(lista){
 
-["pendente","preparando","enviado","entregue"].forEach(id=>{
+["pendente","preparando","enviado"].forEach(id=>{
 document.getElementById(id).innerHTML = `<h2>${document.querySelector('#'+id+' h2')?.innerText}</h2>`;
 });
 
@@ -150,6 +150,25 @@ lista.forEach(p=>{
 
 let status = (p.status || "Pendente").toLowerCase();
 
+// 🚨 ENTREGUE NÃO ENTRA NAS COLUNAS
+if(status === "entregue"){
+
+let d = new Date(p.createdAt || Date.now()).toLocaleDateString("pt-BR");
+
+if(!entreguesPorData[d]) entreguesPorData[d] = [];
+
+entreguesPorData[d].push(`
+<div class="pedido entregue">
+<strong>Pedido ${p.id || ""}</strong><br>
+Cliente: ${p.nome || "Não informado"}<br>
+Total: R$ ${Number(p.total||0).toFixed(2)}<br>
+</div>
+`);
+
+return;
+}
+
+// CLIENTE
 let cliente = `
 <strong>Cliente:</strong> ${p.nome || "Não informado"}<br>
 <strong>Telefone:</strong> ${p.telefone || "Não informado"}<br>
@@ -158,6 +177,7 @@ let cliente = `
 <strong>Pagamento:</strong> ${p.pagamento || "Não informado"}<br>
 `;
 
+// ITENS
 let itens = (p.itens || []).map(i=>`
 <div class="item">
 <img src="${i.img}">
@@ -168,6 +188,7 @@ Qtd: ${i.qtd}
 </div>
 `).join("");
 
+// PEDIDO
 let html = `
 <div class="pedido ${status}">
 
@@ -195,22 +216,11 @@ ${itens}
 </div>
 `;
 
-if(status === "entregue"){
-
-let d = new Date(p.createdAt || Date.now()).toLocaleDateString("pt-BR");
-
-if(!entreguesPorData[d]) entreguesPorData[d] = [];
-entreguesPorData[d].push(html);
-
-document.getElementById("entregue").innerHTML += html;
-
-}else{
 document.getElementById(status).innerHTML += html;
-}
 
 });
 
-// histórico entregues
+// HISTÓRICO
 let hist = "";
 
 Object.keys(entreguesPorData)
@@ -234,7 +244,7 @@ deliveredAt: status==="Entregue" ? Date.now() : null
 });
 }
 
-// ================= IMPRESSÃO 2 VIAS =================
+// ================= IMPRESSÃO =================
 function imprimir(btn){
 let pedido = btn.closest(".pedido");
 
@@ -287,7 +297,7 @@ ${conteudo}
 w.document.close();
 }
 
-// ================= FILTRO DATA =================
+// ================= FILTRO =================
 function filtrar(){
 let dataFiltro = document.getElementById("filtroData").value;
 
