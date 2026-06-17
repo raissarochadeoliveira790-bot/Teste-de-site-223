@@ -7,27 +7,19 @@
 <style>
 body{font-family:Arial;background:#f5f5f5;padding:20px;}
 
+h2{margin-top:30px;}
+
 .pedido{
 background:#fff;
 padding:15px;
 margin:10px 0;
 border-radius:10px;
 }
-  .pendente{
-    border-left:10px solid #ffc107;
-}
 
-.preparando{
-    border-left:10px solid #17a2b8;
-}
-
-.enviado{
-    border-left:10px solid #007bff;
-}
-
-.entregue{
-    border-left:10px solid #28a745;
-}
+.pendente{border-left:10px solid #ffc107;}
+.preparando{border-left:10px solid #17a2b8;}
+.enviado{border-left:10px solid #007bff;}
+.entregue{border-left:10px solid #28a745;}
 
 .item{
 display:flex;
@@ -45,20 +37,40 @@ object-fit:contain;
 button{
 margin:3px;
 padding:6px;
+cursor:pointer;
+}
+
+.acoes{
+margin-top:10px;
+display:flex;
+flex-wrap:wrap;
+gap:5px;
+}
+
+.secao{
+margin-bottom:40px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>📦 Pedidos</h1>
+<h1>📦 Painel de Pedidos</h1>
 
-<div id="pedidos"></div>
+<div class="secao">
+<h2>🟡 Pedidos Ativos</h2>
+<div id="ativos"></div>
+</div>
+
+<div class="secao">
+<h2>📁 Entregues (por data)</h2>
+<div id="entregues"></div>
+</div>
 
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getDatabase, ref, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDVNdZ-GWHE8_4gLd4zRPTJGuwIMsyIK0Q",
@@ -79,7 +91,8 @@ onValue(ref(db,"pedidos"), (snap)=>{
 let data = snap.val();
 
 if(!data){
-document.getElementById("pedidos").innerHTML = "Sem pedidos";
+document.getElementById("ativos").innerHTML = "Sem pedidos";
+document.getElementById("entregues").innerHTML = "Sem entregues";
 return;
 }
 
@@ -87,26 +100,31 @@ let pedidos = Object.entries(data)
 .map(([id,v])=>({idFirebase:id,...v}))
 .reverse();
 
-let html="";
+let ativosHTML = "";
+let entregues = {};
 
 pedidos.forEach(p=>{
 
-let classe = "pendente";
+// ----------------- ENTREGUE -----------------
+if(p.status === "Entregue"){
 
-if(p.status === "Preparando"){
-    classe = "preparando";
-}
-else if(p.status === "Enviado"){
-    classe = "enviado";
-}
-else if(p.status === "Entregue"){
-    classe = "entregue";
+let data = new Date(p.createdAt || Date.now());
+let dia = data.toLocaleDateString("pt-BR");
+
+if(!entregues[dia]) entregues[dia] = [];
+
+entregues[dia].push(p);
+
+return;
 }
 
-html += `
+// ----------------- ATIVOS -----------------
+let classe = p.status?.toLowerCase() || "pendente";
+
+ativosHTML += `
 <div class="pedido ${classe}">
 
-<h3>Pedido ${p.id}</h3>
+<h3>Pedido ${p.id || ""}</h3>
 
 <h3 style="
 display:inline-block;
@@ -119,44 +137,21 @@ p.status==='Preparando' ? '#17a2b8' :
 p.status==='Enviado' ? '#007bff' :
 '#28a745'};
 ">
-${p.status}
+${p.status || "Pendente"}
 </h3>
 
 <p><strong>Cliente:</strong> ${p.nome || "Não informado"}</p>
-
 <p><strong>Telefone:</strong> ${p.telefone || "Não informado"}</p>
-
-<p><strong>CEP:</strong> ${p.cep || "Não informado"}</p>
-
 <p><strong>Endereço:</strong> ${p.endereco || "Não informado"}</p>
 
-<p><strong>Pagamento:</strong> ${p.pagamento || "Não informado"}</p>
+<div class="acoes">
 
-<div>
+<button onclick="alterarStatus('${p.idFirebase}','Pendente')">Pendente</button>
+<button onclick="alterarStatus('${p.idFirebase}','Preparando')">Preparando</button>
+<button onclick="alterarStatus('${p.idFirebase}','Enviado')">Enviado</button>
+<button onclick="alterarStatus('${p.idFirebase}','Entregue')">Entregue</button>
 
-<button
-style="background:#ffc107;border:none;border-radius:5px;color:#000;"
-onclick="alterarStatus('${p.idFirebase}','Pendente')">
-Pendente
-</button>
-
-<button
-style="background:#17a2b8;border:none;border-radius:5px;color:#fff;"
-onclick="alterarStatus('${p.idFirebase}','Preparando')">
-Preparando
-</button>
-
-<button
-style="background:#007bff;border:none;border-radius:5px;color:#fff;"
-onclick="alterarStatus('${p.idFirebase}','Enviado')">
-Enviado
-</button>
-
-<button
-style="background:#28a745;border:none;border-radius:5px;color:#fff;"
-onclick="alterarStatus('${p.idFirebase}','Entregue')">
-Entregue
-</button>
+<button onclick="excluirPedido('${p.idFirebase}')" style="background:red;color:#fff;">Excluir</button>
 
 </div>
 
@@ -167,12 +162,10 @@ ${(p.itens || []).map(i=>`
 <img src="${i.img}">
 <div>
 <strong>${i.nome}</strong><br>
-Quantidade: ${i.qtd}
+Qtd: ${i.qtd}
 </div>
 </div>
 `).join("")}
-
-<hr>
 
 <h4>Total: R$ ${Number(p.total || 0).toFixed(2)}</h4>
 
@@ -180,23 +173,51 @@ Quantidade: ${i.qtd}
 `;
 });
 
-document.getElementById("pedidos").innerHTML = html;
+// ----------------- ENTREGUES POR DATA -----------------
+let entreguesHTML = "";
+
+Object.keys(entregues).sort((a,b)=> new Date(b) - new Date(a)).forEach(data=>{
+
+entreguesHTML += `<h3>📅 ${data}</h3>`;
+
+entregues[data].forEach(p=>{
+entreguesHTML += `
+<div class="pedido entregue">
+
+<h3>Pedido ${p.id || ""}</h3>
+
+<p><strong>Cliente:</strong> ${p.nome || "Não informado"}</p>
+<p><strong>Total:</strong> R$ ${Number(p.total || 0).toFixed(2)}</p>
+
+<button onclick="excluirPedido('${p.idFirebase}')" style="background:red;color:#fff;">Excluir</button>
+
+</div>
+`;
+});
 
 });
 
-function alterarStatus(id, novoStatus){
-  update(ref(db, "pedidos/" + id), {
-    status: novoStatus
-  })
-  .then(() => {
-    console.log("Status atualizado para:", novoStatus);
-  })
-  .catch((erro) => {
-    console.error("Erro ao atualizar status:", erro);
+document.getElementById("ativos").innerHTML = ativosHTML;
+document.getElementById("entregues").innerHTML = entreguesHTML;
+
+});
+
+function alterarStatus(id, status){
+  update(ref(db,"pedidos/"+id),{
+    status: status,
+    deliveredAt: status==="Entregue" ? Date.now() : null
   });
 }
 
+function excluirPedido(id){
+  if(confirm("Excluir pedido?")){
+    remove(ref(db,"pedidos/"+id));
+  }
+}
+
 window.alterarStatus = alterarStatus;
+window.excluirPedido = excluirPedido;
+
 </script>
 
 </body>
