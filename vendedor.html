@@ -246,9 +246,13 @@ deliveredAt: status==="Entregue" ? Date.now() : null
 
 // ================= IMPRESSÃO =================
 function imprimir(btn){
-let pedido = btn.closest(".pedido");
+let p = btn.closest(".pedido");
 
-let conteudo = pedido.innerHTML;
+// pega dados sem botões
+let clone = p.cloneNode(true);
+
+// remove botões do clone
+clone.querySelectorAll("button").forEach(b => b.remove());
 
 let w = window.open("", "_blank");
 
@@ -271,8 +275,17 @@ font-weight:bold;
 margin-bottom:10px;
 }
 
-.item{display:flex;gap:10px;margin:5px 0;}
-.item img{width:40px;height:40px;object-fit:cover;}
+.item{
+display:flex;
+gap:10px;
+margin:5px 0;
+}
+
+.item img{
+width:40px;
+height:40px;
+object-fit:cover;
+}
 
 hr{margin:10px 0;}
 </style>
@@ -282,12 +295,12 @@ hr{margin:10px 0;}
 
 <div class="via">
 <div class="titulo">🧾 VIA DO CLIENTE</div>
-${conteudo}
+${clone.outerHTML}
 </div>
 
 <div class="via">
 <div class="titulo">🏪 VIA DA LOJA</div>
-${conteudo}
+${clone.outerHTML}
 </div>
 
 </body>
