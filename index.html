@@ -34,8 +34,8 @@ font-size:12px;
 width:18px;
 height:18px;
 display:flex;
-align-items:center;
 justify-content:center;
+align-items:center;
 border-radius:50%;
 }
 
@@ -76,6 +76,19 @@ border:none;
 border-radius:5px;
 cursor:pointer;
 margin-top:10px;
+}
+
+/* QTD */
+.qtd-box{
+display:flex;
+justify-content:center;
+gap:5px;
+margin-top:5px;
+}
+
+.qtd-box input{
+width:50px;
+text-align:center;
 }
 
 /* CARRINHO */
@@ -119,20 +132,6 @@ border:1px solid #ccc;
 border-radius:5px;
 }
 
-/* QTD */
-.qtd-box{
-display:flex;
-gap:5px;
-justify-content:center;
-align-items:center;
-margin-top:5px;
-}
-
-.qtd-box input{
-width:50px;
-text-align:center;
-}
-
 /* MODAL */
 #modal{
 display:none;
@@ -153,7 +152,12 @@ max-width:500px;
 width:100%;
 }
 
-#modal img{width:100%;height:200px;object-fit:contain;margin-bottom:10px}
+#modal img{
+width:100%;
+height:200px;
+object-fit:contain;
+margin-bottom:10px;
+}
 </style>
 </head>
 
@@ -264,7 +268,12 @@ width:100%;
 <!-- CARRINHO -->
 <div class="carrinho" id="carrinho">
 
+<!-- 🔙 SETA DE VOLTAR -->
+<div style="display:flex;justify-content:space-between;align-items:center;">
 <h3>Carrinho</h3>
+<button onclick="fecharCarrinho()" style="background:none;border:none;font-size:22px;cursor:pointer;">⬅</button>
+</div>
+
 <div id="lista"></div>
 
 <h3>Total: R$ <span id="total">0</span></h3>
@@ -320,9 +329,19 @@ appId: "1:649120787576:web:7967250e4f0175b5d9518d"
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+/* PRODUTOS */
+const produtos = [
+{nome:"Lava-Roupas 5L",desc:"✔ Limpeza profunda\n✔ Alto rendimento\n✔ Perfume agradável"},
+{nome:"Alvejante 5L",desc:"✔ Remove manchas\n✔ Uso profissional\n✔ Alta eficiência"},
+{nome:"Lava-Louças 500ml",desc:"✔ Remove gordura\n✔ Rende muito\n✔ Uso diário"},
+{nome:"Limpa Inox",desc:"✔ Brilho instantâneo\n✔ Protege superfícies"},
+{nome:"Limpa Alumínio",desc:"✔ Limpeza rápida\n✔ Remove sujeira pesada"},
+{nome:"Limpa Rejunte",desc:"✔ Remove encardido\n✔ Profundidade total"}
+];
+
 let carrinho = [];
 
-/* ADD COM QUANTIDADE */
+/* ADD */
 window.add = function(nome, preco, img, id){
 let qtd = parseInt(document.getElementById(id).value || 1);
 
@@ -334,7 +353,7 @@ else carrinho.push({nome, preco, img, qtd});
 render();
 }
 
-/* RENDER CARRINHO */
+/* RENDER */
 function render(){
 let html = "";
 let total = 0;
@@ -397,7 +416,7 @@ carrinho=[];
 render();
 }
 
-/* CEP VIA CEP */
+/* CEP */
 window.buscarCEP = async () => {
 let cepValue = cep.value.replace(/\D/g,'');
 
@@ -406,12 +425,12 @@ if(cepValue.length !== 8) return;
 let r = await fetch(`https://viacep.com.br/ws/${cepValue}/json/`);
 let d = await r.json();
 
-if(d.erro) return alert("CEP inválido");
-
+if(!d.erro){
 rua.value=d.logradouro;
 bairro.value=d.bairro;
 cidade.value=d.localidade;
 estado.value=d.uf;
+}
 }
 
 /* TROCO */
@@ -419,11 +438,26 @@ window.trocoCheck = () => {
 troco.style.display = pagamento.value==="Dinheiro" ? "block":"none";
 }
 
-/* ELEMENTOS */
+/* MODAL */
+window.abrirModal = (id) => {
+document.getElementById("titulo").innerText = produtos[id].nome;
+document.getElementById("desc").innerText = produtos[id].desc;
+document.getElementById("img").src = document.querySelectorAll(".card img")[id].src;
+document.getElementById("modal").style.display="flex";
+}
+
+window.fecharModal = () => document.getElementById("modal").style.display="none";
+
+/* CARRINHO */
+const carrinhoEl=document.getElementById("carrinho");
+
+window.abrirCarrinho=()=>carrinhoEl.classList.add("ativo");
+window.fecharCarrinho=()=>carrinhoEl.classList.remove("ativo");
+
 const lista=document.getElementById("lista");
 const totalEl=document.getElementById("total");
 const badgeCarrinho=document.getElementById("badgeCarrinho");
-const carrinhoEl=document.getElementById("carrinho");
+
 const nome=document.getElementById("nome");
 const telefone=document.getElementById("telefone");
 const cep=document.getElementById("cep");
@@ -434,9 +468,6 @@ const cidade=document.getElementById("cidade");
 const estado=document.getElementById("estado");
 const pagamento=document.getElementById("pagamento");
 const troco=document.getElementById("troco");
-
-/* ABRIR CARRINHO */
-window.abrirCarrinho=()=>carrinhoEl.classList.add("ativo");
 </script>
 
 </body>
