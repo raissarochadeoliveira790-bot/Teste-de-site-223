@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xaréu Embalagens</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#f5f5f5}
+
+/* TOPO */
+.topo{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:10px 20px;
+background:#fff;
+}
+
+.carrinho-icone{
+font-size:24px;
+cursor:pointer;
+position:relative;
+}
+
+#badgeCarrinho{
+position:absolute;
+top:-5px;
+right:-10px;
+background:red;
+color:#fff;
+font-size:12px;
+width:18px;
+height:18px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+}
+
+/* PRODUTOS */
+.produtos{
+max-width:1200px;
+margin:20px auto;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+padding:10px;
+}
+
+@media(max-width:768px){
+.produtos{grid-template-columns:repeat(2,1fr);}
+}
+
+.card{
+background:#fff;
+padding:10px;
+border-radius:10px;
+text-align:center;
+}
+
+.card img{
+width:100%;
+height:140px;
+object-fit:contain;
+cursor:pointer;
+}
+
+.btn{
+width:100%;
+padding:10px;
+background:#00a651;
+color:#fff;
+border:none;
+border-radius:5px;
+cursor:pointer;
+margin-top:10px;
+}
+
+.qtd-box{
+display:flex;
+justify-content:center;
+gap:5px;
+margin-top:5px;
+}
+
+.qtd-btn{
+padding:5px 10px;
+border:none;
+cursor:pointer;
+background:#ddd;
+border-radius:5px;
+}
+
+input.qtd{
+width:40px;
+text-align:center;
+}
+
+/* CARRINHO */
+.carrinho{
+position:fixed;
+right:-100%;
+top:0;
+width:350px;
+height:100%;
+background:#fff;
+transition:.3s;
+padding:10px;
+overflow:auto;
+z-index:1000;
+}
+
+.carrinho.ativo{right:0;}
+
+.voltar{
+font-size:20px;
+cursor:pointer;
+margin-bottom:10px;
+}
+
+.item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:8px 0;
+gap:10px;
+}
+
+.item img{
+width:40px;
+height:40px;
+object-fit:contain;
+}
+
+.qtd-mini button{
+padding:3px 8px;
+border:none;
+background:#ddd;
+cursor:pointer;
+}
+
+.remove{
+background:red;
+color:#fff;
+border:none;
+padding:4px 6px;
+border-radius:5px;
+cursor:pointer;
+}
+
+/* FORM */
+input,select{
+width:100%;
+padding:10px;
+margin-bottom:10px;
+}
+
+/* MODAL */
+#modal{
+display:none;
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,.8);
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#modal div{
+background:#fff;
+padding:20px;
+border-radius:10px;
+max-width:500px;
+width:90%;
+text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<header class="topo">
+<img src="xareu-banner.png" width="120">
+
+<div class="carrinho-icone" onclick="abrirCarrinho()">
+🛒 <span id="badgeCarrinho">0</span>
+</div>
+</header>
+
+<section class="produtos">
+
+<div class="card">
+<img src="deoline-lava-roupas-5l.jpg"
+onclick="descricao('Lava-Roupas 5L','<strong>Descrição</strong><br><br>Produto concentrado de limpeza pesada.<br><br><ul><li>Alto poder de remoção</li><li>Perfume duradouro</li></ul>','deoline-lava-roupas-5l.jpg')">
+
+<h3>Lava-Roupas 5L</h3>
+<p>R$ 51,00</p>
+
+<div class="qtd-box">
+<button onclick="menosQtd('q1')" class="qtd-btn">-</button>
+<input id="q1" class="qtd" value="1">
+<button onclick="maisQtd('q1')" class="qtd-btn">+</button>
+</div>
+
+<button class="btn" onclick="add('Lava-Roupas 5L',51,'deoline-lava-roupas-5l.jpg','q1')">Adicionar</button>
+</div>
+
+<div class="card">
+<img src="alvejantedeoline.png"
+onclick="descricao('Alvejante 5L','Limpeza pesada.','alvejantedeoline.png')">
+<h3>Alvejante 5L</h3>
+<p>R$ 40,00</p>
+<div class="qtd-box">
+<button onclick="menosQtd('q3')" class="qtd-btn">-</button>
+<input id="q3" class="qtd" value="1">
+<button onclick="maisQtd('q3')" class="qtd-btn">+</button>
+</div>
+<button class="btn" onclick="add('Alvejante 5L',40,'alvejantedeoline.png','q3')">Adicionar</button>
+</div>
+
+<div class="card">
+<img src="deoline-lava-loucas-500ml.jpg"
+onclick="descricao('Lava-Louças 500ml','Remove gordura.','deoline-lava-loucas-500ml.jpg')">
+<h3>Lava-Louças 500ml</h3>
+<p>R$ 3,00</p>
+<div class="qtd-box">
+<button onclick="menosQtd('q2')" class="qtd-btn">-</button>
+<input id="q2" class="qtd" value="1">
+<button onclick="maisQtd('q2')" class="qtd-btn">+</button>
+</div>
+<button class="btn" onclick="add('Lava-Louças 500ml',3,'deoline-lava-loucas-500ml.jpg','q2')">Adicionar</button>
+</div>
+
+<div class="card">
+<img src="deoline-limpainox.png"
+onclick="descricao('Limpa Inox','Brilho inox.','deoline-limpainox.png')">
+<h3>Limpa Inox</h3>
+<p>R$ 12,80</p>
+<div class="qtd-box">
+<button onclick="menosQtd('q4')" class="qtd-btn">-</button>
+<input id="q4" class="qtd" value="1">
+<button onclick="maisQtd('q4')" class="qtd-btn">+</button>
+</div>
+<button class="btn" onclick="add('Limpa Inox',12.8,'deoline-limpainox.png','q4')">Adicionar</button>
+</div>
+
+<div class="card">
+<img src="deoline-limpaaluminio.png"
+onclick="descricao('Limpa Alumínio','Remove sujeira.','deoline-limpaaluminio.png')">
+<h3>Limpa Alumínio</h3>
+<p>R$ 8,00</p>
+<div class="qtd-box">
+<button onclick="menosQtd('q5')" class="qtd-btn">-</button>
+<input id="q5" class="qtd" value="1">
+<button onclick="maisQtd('q5')" class="qtd-btn">+</button>
+</div>
+<button class="btn" onclick="add('Limpa Alumínio',8,'deoline-limpaaluminio.png','q5')">Adicionar</button>
+</div>
+
+<div class="card">
+<img src="limparejunte.png"
+onclick="descricao('Limpa Rejunte','Limpeza profunda.','limparejunte.png')">
+<h3>Limpa Rejunte</h3>
+<p>R$ 11,85</p>
+<div class="qtd-box">
+<button onclick="menosQtd('q6')" class="qtd-btn">-</button>
+<input id="q6" class="qtd" value="1">
+<button onclick="maisQtd('q6')" class="qtd-btn">+</button>
+</div>
+<button class="btn" onclick="add('Limpa Rejunte',11.85,'limparejunte.png','q6')">Adicionar</button>
+</div>
+
+</section>
+
+<div class="carrinho" id="carrinho">
+<div class="voltar" onclick="fecharCarrinho()">⬅ Voltar</div>
+
+<div id="lista"></div>
+
+<h3>Total: R$ <span id="total">0.00</span></h3>
+
+<hr>
+
+<h3>Dados do Cliente</h3>
+<input id="nome">
+<input id="telefone">
+<input id="cep">
+<input id="endereco">
+
+<select id="pagamento">
+<option value="">Forma de pagamento</option>
+<option>Pix</option>
+<option>Dinheiro</option>
+<option>Cartão</option>
+<option>Boleto</option>
+</select>
+
+<button class="btn" onclick="finalizar()" style="background:#0066ff">
+Finalizar Pedido
+</button>
+
+</div>
+
+<div id="modal">
+<div>
+<h2 id="tituloProduto"></h2>
+<img id="imgProduto" style="width:100%;max-height:250px;object-fit:contain;">
+<p id="textoProduto"></p>
+<br>
+<button class="btn" onclick="fecharModal()">Fechar</button>
+</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const app = initializeApp({
+apiKey:"x",
+authDomain:"x",
+databaseURL:"https://vendedor-html-default-rtdb.firebaseio.com",
+projectId:"vendedor-html"
+});
+
+const db = getDatabase(app);
+
+let carrinho = [];
+
+window.add = function(nome,preco,img,id){
+let qtd = parseInt(document.getElementById(id).value);
+let item = carrinho.find(p=>p.nome===nome);
+if(item) item.qtd += qtd;
+else carrinho.push({nome,preco,img,qtd});
+render();
+}
+
+window.maisQtd = id => document.getElementById(id).value++;
+window.menosQtd = id => {let el=document.getElementById(id); if(el.value>1) el.value--;};
+
+window.remover = nome => {
+carrinho = carrinho.filter(p=>p.nome!==nome);
+render();
+}
+
+window.aumentar = nome => {
+let i = carrinho.find(p=>p.nome===nome);
+i.qtd++;
+render();
+}
+
+window.diminuir = nome => {
+let i = carrinho.find(p=>p.nome===nome);
+i.qtd--;
+if(i.qtd<=0) carrinho = carrinho.filter(p=>p.nome!==nome);
+render();
+}
+
+function render(){
+let total=0,qtd=0,html="";
+carrinho.forEach(i=>{
+total += i.preco*i.qtd;
+qtd += i.qtd;
+html += `<div class="item">
+<img src="${i.img}">
+<div style="flex:1">
+<strong>${i.nome}</strong><br>
+R$ ${i.preco.toFixed(2)}
+</div>
+<div class="qtd-mini">
+<button onclick="diminuir('${i.nome}')">-</button>
+<strong>${i.qtd}</strong>
+<button onclick="aumentar('${i.nome}')">+</button>
+</div>
+<button class="remove" onclick="remover('${i.nome}')">X</button>
+</div>`;
+});
+document.getElementById("lista").innerHTML = html;
+document.getElementById("total").innerText = total.toFixed(2);
+document.getElementById("badgeCarrinho").innerText = qtd;
+}
+
+window.finalizar = function(){
+if(carrinho.length==0){alert("Carrinho vazio");return;}
+
+let pedido = {
+id:Date.now(),
+nome:nome.value,
+telefone:telefone.value,
+cep:cep.value,
+endereco:endereco.value,
+pagamento:pagamento.value,
+status:"Pendente",
+itens:carrinho,
+total:carrinho.reduce((t,i)=>t+i.preco*i.qtd,0)
+};
+
+push(ref(db,"pedidos"),pedido).then(()=>{
+alert("Pedido enviado!");
+carrinho=[];
+render();
+nome.value=telefone.value=cep.value=endereco.value=pagamento.value="";
+fecharCarrinho();
+});
+}
+
+window.descricao = function(n,t,i){
+tituloProduto.innerText=n;
+textoProduto.innerHTML=t;
+imgProduto.src=i;
+modal.style.display="flex";
+}
+
+window.fecharModal = ()=>modal.style.display="none";
+window.abrirCarrinho = ()=>document.getElementById("carrinho").classList.add("ativo");
+window.fecharCarrinho = ()=>document.getElementById("carrinho").classList.remove("ativo");
+</script>
+
+</body>
+</html>
