@@ -283,7 +283,7 @@ margin-bottom:10px;
 <input id="nome" placeholder="Nome completo">
 <input id="telefone" placeholder="Telefone">
 
-<input id="cep" placeholder="CEP" onblur="buscarCEP()">
+<input id="cep" placeholder="CEP" oninput="buscarCEP()">
 <input id="rua" placeholder="Rua">
 <input id="numero" placeholder="Número">
 <input id="bairro" placeholder="Bairro">
@@ -418,18 +418,32 @@ render();
 
 /* CEP */
 window.buscarCEP = async () => {
+
 let cepValue = cep.value.replace(/\D/g,'');
 
+// 🔥 só executa quando tiver 8 números
 if(cepValue.length !== 8) return;
 
+try {
 let r = await fetch(`https://viacep.com.br/ws/${cepValue}/json/`);
 let d = await r.json();
 
-if(!d.erro){
-rua.value=d.logradouro;
-bairro.value=d.bairro;
-cidade.value=d.localidade;
-estado.value=d.uf;
+if(d.erro) {
+alert("CEP inválido");
+return;
+}
+
+// ✔ auto preenchimento
+rua.value = d.logradouro || "";
+bairro.value = d.bairro || "";
+cidade.value = d.localidade || "";
+estado.value = d.uf || "";
+
+// (opcional) trava visual de confirmação
+console.log("CEP carregado:", d);
+
+} catch(err){
+alert("Erro ao buscar CEP");
 }
 }
 
