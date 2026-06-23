@@ -157,7 +157,7 @@ padding:10px;
 margin-bottom:10px;
 }
 
-/* MODAL */
+/* MODAL BONITO */
 #modal{
 display:none;
 position:fixed;
@@ -167,15 +167,56 @@ background:rgba(0,0,0,.8);
 justify-content:center;
 align-items:center;
 z-index:9999;
+padding:20px;
 }
 
 #modal div{
 background:#fff;
 padding:20px;
-border-radius:10px;
-max-width:500px;
-width:90%;
-text-align:center;
+border-radius:12px;
+max-width:520px;
+width:100%;
+max-height:80vh;
+overflow-y:auto;
+text-align:left;
+}
+
+#modal img{
+width:100%;
+max-height:250px;
+object-fit:contain;
+margin-bottom:10px;
+border-radius:8px;
+}
+
+/* DESCRIÇÃO BONITA */
+.desc-titulo{
+font-size:20px;
+font-weight:bold;
+margin-bottom:10px;
+color:#00a651;
+}
+
+.desc-sub{
+font-size:14px;
+color:#555;
+margin-bottom:15px;
+}
+
+.desc-bloco{
+margin-top:10px;
+padding:10px;
+background:#f7f7f7;
+border-radius:8px;
+}
+
+#textoProduto ul{
+margin-left:18px;
+margin-top:8px;
+}
+
+#textoProduto li{
+margin-bottom:5px;
 }
 </style>
 </head>
@@ -192,9 +233,26 @@ text-align:center;
 
 <section class="produtos">
 
+<!-- PRODUTO 1 -->
 <div class="card">
 <img src="deoline-lava-roupas-5l.jpg"
-onclick="descricao('Lava-Roupas 5L','<strong>Descrição</strong><br><br>O Deoline Lava-Roupas Líquido Concentrado tem um alto poder de remoção da sujeira em suas roupas..<br><br><ul><li>Especialmente desenvolvido para dar maior praticidade e economia na lavagem das roupas, seja à mão ou na máquina. Não agride os tecidos, deixando suas roupas limpas e agradavelmente perfumadas.</li><li>Para um limpeza perfeita e com muito mais perfume use-o associado ao Deoline Amaciante de sua preferência.</li><li> *Alto poder de remoção de sujeira</li></li><li> *Não agride os tecidos</li><li> *Fórmula concentrada</li></ul>','deoline-lava-roupas-5l.jpg')">
+onclick="descricao(
+'Lava-Roupas 5L',
+`
+<div class='desc-titulo'>🧼 Lava-Roupas 5L</div>
+<div class='desc-sub'>Limpeza profunda com alto rendimento.</div>
+
+<div class='desc-bloco'>
+<strong>✨ Benefícios:</strong>
+<ul>
+<li>Remove sujeiras difíceis</li>
+<li>Não agride tecidos</li>
+<li>Fórmula concentrada</li>
+</ul>
+</div>
+`,
+'deoline-lava-roupas-5l.jpg'
+)">
 
 <h3>Lava-Roupas 5L</h3>
 <p>R$ 51,00</p>
@@ -208,73 +266,130 @@ onclick="descricao('Lava-Roupas 5L','<strong>Descrição</strong><br><br>O Deoli
 <button class="btn" onclick="add('Lava-Roupas 5L',51,'deoline-lava-roupas-5l.jpg','q1')">Adicionar</button>
 </div>
 
+<!-- PRODUTO 2 -->
 <div class="card">
 <img src="alvejantedeoline.png"
-onclick="descricao('Alvejante 5L','Limpeza pesada.','alvejantedeoline.png')">
+onclick="descricao(
+'Alvejante 5L',
+`
+<div class='desc-titulo'>🧴 Alvejante 5L</div>
+<div class='desc-sub'>Limpeza pesada e eficiência máxima.</div>
+
+<div class='desc-bloco'>
+<strong>✨ Benefícios:</strong>
+<ul>
+<li>Remove manchas difíceis</li>
+<li>Alto poder de limpeza</li>
+<li>Uso doméstico e profissional</li>
+</ul>
+</div>
+`,
+'alvejantedeoline.png'
+)">
+
 <h3>Alvejante 5L</h3>
 <p>R$ 40,00</p>
-<div class="qtd-box">
-<button onclick="menosQtd('q3')" class="qtd-btn">-</button>
-<input id="q3" class="qtd" value="1">
-<button onclick="maisQtd('q3')" class="qtd-btn">+</button>
-</div>
-<button class="btn" onclick="add('Alvejante 5L',40,'alvejantedeoline.png','q3')">Adicionar</button>
 </div>
 
+<!-- PRODUTO 3 -->
 <div class="card">
 <img src="deoline-lava-loucas-500ml.jpg"
-onclick="descricao('Lava-Louças 500ml','Remove gordura.','deoline-lava-loucas-500ml.jpg')">
+onclick="descricao(
+'Lava-Louças 500ml',
+`
+<div class='desc-titulo'>🍽️ Lava-Louças 500ml</div>
+<div class='desc-sub'>Remove gordura com facilidade.</div>
+
+<div class='desc-bloco'>
+<strong>✨ Benefícios:</strong>
+<ul>
+<li>Alto poder desengordurante</li>
+<li>Rende bastante</li>
+</ul>
+</div>
+`,
+'deoline-lava-loucas-500ml.jpg'
+)">
+
 <h3>Lava-Louças 500ml</h3>
 <p>R$ 3,00</p>
-<div class="qtd-box">
-<button onclick="menosQtd('q2')" class="qtd-btn">-</button>
-<input id="q2" class="qtd" value="1">
-<button onclick="maisQtd('q2')" class="qtd-btn">+</button>
-</div>
-<button class="btn" onclick="add('Lava-Louças 500ml',3,'deoline-lava-loucas-500ml.jpg','q2')">Adicionar</button>
 </div>
 
+<!-- PRODUTO 4 -->
 <div class="card">
 <img src="deoline-limpainox.png"
-onclick="descricao('Limpa Inox','Brilho inox.','deoline-limpainox.png')">
+onclick="descricao(
+'Limpa Inox',
+`
+<div class='desc-titulo'>✨ Limpa Inox</div>
+<div class='desc-sub'>Brilho e proteção para inox.</div>
+
+<div class='desc-bloco'>
+<strong>✨ Benefícios:</strong>
+<ul>
+<li>Remove marcas e manchas</li>
+<li>Brilho instantâneo</li>
+</ul>
+</div>
+`,
+'deoline-limpainox.png'
+)">
+
 <h3>Limpa Inox</h3>
 <p>R$ 12,80</p>
-<div class="qtd-box">
-<button onclick="menosQtd('q4')" class="qtd-btn">-</button>
-<input id="q4" class="qtd" value="1">
-<button onclick="maisQtd('q4')" class="qtd-btn">+</button>
-</div>
-<button class="btn" onclick="add('Limpa Inox',12.8,'deoline-limpainox.png','q4')">Adicionar</button>
 </div>
 
+<!-- PRODUTO 5 -->
 <div class="card">
 <img src="deoline-limpaaluminio.png"
-onclick="descricao('Limpa Alumínio','Remove sujeira.','deoline-limpaaluminio.png')">
+onclick="descricao(
+'Limpa Alumínio',
+`
+<div class='desc-titulo'>🥘 Limpa Alumínio</div>
+<div class='desc-sub'>Limpeza profunda e rápida.</div>
+
+<div class='desc-bloco'>
+<strong>✨ Benefícios:</strong>
+<ul>
+<li>Remove gordura pesada</li>
+<li>Brilho imediato</li>
+</ul>
+</div>
+`,
+'deoline-limpaaluminio.png'
+)">
+
 <h3>Limpa Alumínio</h3>
 <p>R$ 8,00</p>
-<div class="qtd-box">
-<button onclick="menosQtd('q5')" class="qtd-btn">-</button>
-<input id="q5" class="qtd" value="1">
-<button onclick="maisQtd('q5')" class="qtd-btn">+</button>
-</div>
-<button class="btn" onclick="add('Limpa Alumínio',8,'deoline-limpaaluminio.png','q5')">Adicionar</button>
 </div>
 
+<!-- PRODUTO 6 -->
 <div class="card">
 <img src="limparejunte.png"
-onclick="descricao('Limpa Rejunte','Limpeza profunda.','limparejunte.png')">
+onclick="descricao(
+'Limpa Rejunte',
+`
+<div class='desc-titulo'>🧽 Limpa Rejunte</div>
+<div class='desc-sub'>Limpeza profunda de rejuntes.</div>
+
+<div class='desc-bloco'>
+<strong>✨ Benefícios:</strong>
+<ul>
+<li>Remove sujeiras impregnadas</li>
+<li>Recupera cor original</li>
+</ul>
+</div>
+`,
+'limparejunte.png'
+)">
+
 <h3>Limpa Rejunte</h3>
 <p>R$ 11,85</p>
-<div class="qtd-box">
-<button onclick="menosQtd('q6')" class="qtd-btn">-</button>
-<input id="q6" class="qtd" value="1">
-<button onclick="maisQtd('q6')" class="qtd-btn">+</button>
-</div>
-<button class="btn" onclick="add('Limpa Rejunte',11.85,'limparejunte.png','q6')">Adicionar</button>
 </div>
 
 </section>
 
+<!-- CARRINHO -->
 <div class="carrinho" id="carrinho">
 <div class="voltar" onclick="fecharCarrinho()">⬅ Voltar</div>
 
@@ -301,13 +416,13 @@ onclick="descricao('Limpa Rejunte','Limpeza profunda.','limparejunte.png')">
 <button class="btn" onclick="finalizar()" style="background:#0066ff">
 Finalizar Pedido
 </button>
-
 </div>
 
-<div id="modal">
-<div>
+<!-- MODAL -->
+<div id="modal" onclick="fecharModal()">
+<div onclick="event.stopPropagation()">
 <h2 id="tituloProduto"></h2>
-<img id="imgProduto" style="width:100%;max-height:250px;object-fit:contain;">
+<img id="imgProduto">
 <p id="textoProduto"></p>
 <br>
 <button class="btn" onclick="fecharModal()">Fechar</button>
