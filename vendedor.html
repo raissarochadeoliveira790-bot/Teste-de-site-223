@@ -173,7 +173,10 @@ let cliente = `
 <strong>Cliente:</strong> ${p.nome || "Não informado"}<br>
 <strong>Telefone:</strong> ${p.telefone || "Não informado"}<br>
 <strong>CEP:</strong> ${p.cep || "Não informado"}<br>
-<strong>Endereço:</strong> ${p.endereco || "Não informado"}<br>
+<strong>Endereço:</strong><br>
+${p.rua || ""}, ${p.numero || ""}<br>
+${p.bairro || ""}<br>
+${p.cidade || ""} - ${p.estado || ""}<br>
 <strong>Pagamento:</strong> ${p.pagamento || "Não informado"}<br>
 `;
 
