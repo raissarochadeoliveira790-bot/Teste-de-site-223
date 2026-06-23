@@ -6,7 +6,7 @@
 <title>Xaréu Embalagens</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
 body{background:#f5f5f5}
 
 /* TOPO */
@@ -78,36 +78,16 @@ cursor:pointer;
 margin-top:10px;
 }
 
-.qtd-box{
-display:flex;
-justify-content:center;
-gap:5px;
-margin-top:5px;
-}
-
-.qtd-box button{
-padding:5px 10px;
-border:none;
-cursor:pointer;
-background:#ddd;
-border-radius:5px;
-}
-
-input.qtd{
-width:40px;
-text-align:center;
-}
-
 /* CARRINHO */
 .carrinho{
 position:fixed;
 right:-100%;
 top:0;
-width:350px;
+width:380px;
 height:100%;
 background:#fff;
 transition:.3s;
-padding:10px;
+padding:15px;
 overflow:auto;
 z-index:1000;
 }
@@ -118,14 +98,25 @@ z-index:1000;
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin:8px 0;
+margin:10px 0;
 gap:10px;
 }
 
-.item img{
-width:40px;
-height:40px;
-object-fit:contain;
+.item img{width:40px;height:40px}
+
+.qty-btn{
+padding:2px 6px;
+border:none;
+cursor:pointer;
+}
+
+/* FORM */
+input, select{
+width:100%;
+padding:8px;
+margin:5px 0;
+border:1px solid #ccc;
+border-radius:5px;
 }
 
 /* MODAL */
@@ -137,152 +128,111 @@ width:100%;height:100%;
 background:rgba(0,0,0,.8);
 justify-content:center;
 align-items:center;
-z-index:9999;
 padding:20px;
 }
 
 #modal div{
 background:#fff;
 padding:20px;
-border-radius:12px;
-max-width:520px;
+border-radius:10px;
+max-width:500px;
 width:100%;
-text-align:left;
 }
 
-#modal img{
-width:100%;
-max-height:250px;
-object-fit:contain;
-margin-bottom:10px;
-}
+#modal img{width:100%;height:200px;object-fit:contain;margin-bottom:10px}
 </style>
 </head>
 
 <body>
 
 <header class="topo">
-<img src="xareu-banner.png" width="120">
+<h2>Xaréu Embalagens</h2>
 <div class="carrinho-icone" onclick="abrirCarrinho()">
 🛒 <span id="badgeCarrinho">0</span>
 </div>
 </header>
 
+<!-- PRODUTOS -->
 <section class="produtos">
 
-<!-- PRODUTO 1 -->
+<!-- 1 -->
 <div class="card">
-<img src="deoline-lava-roupas-5l.jpg"
-onclick="abrirModal('Lava-Roupas 5L','Limpeza profunda com alto rendimento','deoline-lava-roupas-5l.jpg')">
-
+<img src="deoline-lava-roupas-5l.jpg" onclick="abrirModal(0)">
 <h3>Lava-Roupas 5L</h3>
 <p>R$ 51,00</p>
-
-<div class="qtd-box">
-<button onclick="menos('q1')">-</button>
-<input id="q1" class="qtd" value="1">
-<button onclick="mais('q1')">+</button>
+<button class="btn" onclick="add('Lava-Roupas 5L',51,'deoline-lava-roupas-5l.jpg')">Adicionar</button>
 </div>
 
-<button class="btn" onclick="add('Lava-Roupas 5L',51,'deoline-lava-roupas-5l.jpg','q1')">Adicionar</button>
-</div>
-
-<!-- PRODUTO 2 -->
+<!-- 2 -->
 <div class="card">
-<img src="alvejantedeoline.png"
-onclick="abrirModal('Alvejante 5L','Limpeza pesada e eficiente','alvejantedeoline.png')">
-
+<img src="alvejantedeoline.png" onclick="abrirModal(1)">
 <h3>Alvejante 5L</h3>
 <p>R$ 40,00</p>
-
-<div class="qtd-box">
-<button onclick="menos('q2')">-</button>
-<input id="q2" class="qtd" value="1">
-<button onclick="mais('q2')">+</button>
+<button class="btn" onclick="add('Alvejante 5L',40,'alvejantedeoline.png')">Adicionar</button>
 </div>
 
-<button class="btn" onclick="add('Alvejante 5L',40,'alvejantedeoline.png','q2')">Adicionar</button>
-</div>
-
-<!-- PRODUTO 3 -->
+<!-- 3 -->
 <div class="card">
-<img src="deoline-lava-loucas-500ml.jpg"
-onclick="abrirModal('Lava-Louças 500ml','Remove gordura facilmente','deoline-lava-loucas-500ml.jpg')">
-
+<img src="deoline-lava-loucas-500ml.jpg" onclick="abrirModal(2)">
 <h3>Lava-Louças 500ml</h3>
 <p>R$ 3,00</p>
-
-<div class="qtd-box">
-<button onclick="menos('q3')">-</button>
-<input id="q3" class="qtd" value="1">
-<button onclick="mais('q3')">+</button>
+<button class="btn" onclick="add('Lava-Louças 500ml',3,'deoline-lava-loucas-500ml.jpg')">Adicionar</button>
 </div>
 
-<button class="btn" onclick="add('Lava-Louças 500ml',3,'deoline-lava-loucas-500ml.jpg','q3')">Adicionar</button>
-</div>
-
-<!-- PRODUTO 4 -->
+<!-- 4 -->
 <div class="card">
-<img src="deoline-limpainox.png"
-onclick="abrirModal('Limpa Inox','Brilho instantâneo','deoline-limpainox.png')">
-
+<img src="deoline-limpainox.png" onclick="abrirModal(3)">
 <h3>Limpa Inox</h3>
 <p>R$ 12,80</p>
-
-<div class="qtd-box">
-<button onclick="menos('q4')">-</button>
-<input id="q4" class="qtd" value="1">
-<button onclick="mais('q4')">+</button>
+<button class="btn" onclick="add('Limpa Inox',12.8,'deoline-limpainox.png')">Adicionar</button>
 </div>
 
-<button class="btn" onclick="add('Limpa Inox',12.8,'deoline-limpainox.png','q4')">Adicionar</button>
-</div>
-
-<!-- PRODUTO 5 -->
+<!-- 5 -->
 <div class="card">
-<img src="deoline-limpaaluminio.png"
-onclick="abrirModal('Limpa Alumínio','Limpeza rápida e eficaz','deoline-limpaaluminio.png')">
-
+<img src="deoline-limpaaluminio.png" onclick="abrirModal(4)">
 <h3>Limpa Alumínio</h3>
 <p>R$ 8,00</p>
-
-<div class="qtd-box">
-<button onclick="menos('q5')">-</button>
-<input id="q5" class="qtd" value="1">
-<button onclick="mais('q5')">+</button>
+<button class="btn" onclick="add('Limpa Alumínio',8,'deoline-limpaaluminio.png')">Adicionar</button>
 </div>
 
-<button class="btn" onclick="add('Limpa Alumínio',8,'deoline-limpaaluminio.png','q5')">Adicionar</button>
-</div>
-
-<!-- PRODUTO 6 -->
+<!-- 6 -->
 <div class="card">
-<img src="limparejunte.png"
-onclick="abrirModal('Limpa Rejunte','Remove sujeiras profundas','limparejunte.png')">
-
+<img src="limparejunte.png" onclick="abrirModal(5)">
 <h3>Limpa Rejunte</h3>
 <p>R$ 11,85</p>
-
-<div class="qtd-box">
-<button onclick="menos('q6')">-</button>
-<input id="q6" class="qtd" value="1">
-<button onclick="mais('q6')">+</button>
-</div>
-
-<button class="btn" onclick="add('Limpa Rejunte',11.85,'limparejunte.png','q6')">Adicionar</button>
+<button class="btn" onclick="add('Limpa Rejunte',11.85,'limparejunte.png')">Adicionar</button>
 </div>
 
 </section>
 
 <!-- CARRINHO -->
 <div class="carrinho" id="carrinho">
+
 <h3>Carrinho</h3>
 <div id="lista"></div>
-<h3>Total: R$ <span id="total">0.00</span></h3>
 
-<h3>Cliente</h3>
-<input id="nome" placeholder="Nome">
+<h3>Total: R$ <span id="total">0</span></h3>
+
+<h3>Dados do Cliente</h3>
+<input id="nome" placeholder="Nome completo">
 <input id="telefone" placeholder="Telefone">
+
+<input id="cep" placeholder="CEP" onblur="buscarCEP()">
+<input id="rua" placeholder="Rua">
+<input id="numero" placeholder="Número">
+<input id="bairro" placeholder="Bairro">
+<input id="cidade" placeholder="Cidade">
+<input id="estado" placeholder="Estado">
+
+<h3>Pagamento</h3>
+<select id="pagamento" onchange="trocoCheck()">
+<option>PIX</option>
+<option>Dinheiro</option>
+<option>Cartão de Débito</option>
+<option>Cartão de Crédito</option>
+</select>
+
+<input id="troco" placeholder="Troco para" style="display:none">
 
 <button class="btn" onclick="finalizar()">Finalizar Pedido</button>
 </div>
@@ -290,10 +240,9 @@ onclick="abrirModal('Limpa Rejunte','Remove sujeiras profundas','limparejunte.pn
 <!-- MODAL -->
 <div id="modal" onclick="fecharModal()">
 <div onclick="event.stopPropagation()">
-<h2 id="titulo"></h2>
+<h3 id="titulo"></h3>
 <img id="img">
-<p id="texto"></p>
-<button class="btn" onclick="fecharModal()">Fechar</button>
+<p id="desc"></p>
 </div>
 </div>
 
@@ -308,85 +257,150 @@ databaseURL: "https://vendedor-html-default-rtdb.firebaseio.com",
 projectId: "vendedor-html",
 storageBucket: "vendedor-html.appspot.com",
 messagingSenderId: "649120787576",
-appId: "1:649120787576:web:7967250e4f0175b5d9518d",
-measurementId: "G-R3BQKGNRQ6"
+appId: "1:649120787576:web:7967250e4f0175b5d9518d"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+/* PRODUTOS DESCRIÇÃO */
+const produtos = [
+{
+nome:"Lava-Roupas 5L",
+desc:"✔ Limpeza profunda\n✔ Alto rendimento\n✔ Perfume agradável"
+},
+{
+nome:"Alvejante 5L",
+desc:"✔ Remove manchas\n✔ Uso profissional\n✔ Alta eficiência"
+},
+{
+nome:"Lava-Louças 500ml",
+desc:"✔ Remove gordura\n✔ Rende muito\n✔ Uso diário"
+},
+{
+nome:"Limpa Inox",
+desc:"✔ Brilho instantâneo\n✔ Protege superfícies"
+},
+{
+nome:"Limpa Alumínio",
+desc:"✔ Limpeza rápida\n✔ Remove sujeira pesada"
+},
+{
+nome:"Limpa Rejunte",
+desc:"✔ Remove encardido\n✔ Profundidade total"
+}
+];
+
 let carrinho = [];
 
-window.add = function(nome, preco, img, id){
-let qtd = parseInt(document.getElementById(id).value);
-
-let item = carrinho.find(i => i.nome === nome);
-if(item) item.qtd += qtd;
-else carrinho.push({nome, preco, img, qtd});
-
+window.add = (nome, preco, img) => {
+let item = carrinho.find(i=>i.nome===nome);
+if(item) item.qtd++;
+else carrinho.push({nome, preco, img, qtd:1});
 render();
 }
 
 function render(){
 let html = "";
 let total = 0;
-let qtdTotal = 0;
+let qtd = 0;
 
-carrinho.forEach(i=>{
-total += i.preco * i.qtd;
-qtdTotal += i.qtd;
+carrinho.forEach((i,index)=>{
+total += i.preco*i.qtd;
+qtd += i.qtd;
 
 html += `
 <div class="item">
 <img src="${i.img}">
 <div style="flex:1">${i.nome}</div>
-<div>${i.qtd}</div>
+
+<button class="qty-btn" onclick="menos(${index})">-</button>
+${i.qtd}
+<button class="qty-btn" onclick="mais(${index})">+</button>
+
+<button onclick="remover(${index})">🗑</button>
 </div>`;
 });
 
-document.getElementById("lista").innerHTML = html;
-document.getElementById("total").innerText = total.toFixed(2);
-document.getElementById("badgeCarrinho").innerText = qtdTotal;
+lista.innerHTML = html;
+totalEl.innerText = total.toFixed(2);
+badgeCarrinho.innerText = qtd;
 }
 
-window.finalizar = function(){
-if(carrinho.length === 0) return alert("Carrinho vazio");
+window.mais = i => {carrinho[i].qtd++;render();}
+window.menos = i => {if(carrinho[i].qtd>1)carrinho[i].qtd--;render();}
+window.remover = i => {carrinho.splice(i,1);render();}
+
+window.finalizar = async () => {
+if(carrinho.length===0) return alert("Carrinho vazio");
 
 let pedido = {
-id: Date.now(),
-nome: nome.value,
-telefone: telefone.value,
-itens: carrinho,
-total: carrinho.reduce((t,i)=>t+i.preco*i.qtd,0),
-status: "Pendente"
+nome:nome.value,
+telefone:telefone.value,
+cep:cep.value,
+rua:rua.value,
+numero:numero.value,
+bairro:bairro.value,
+cidade:cidade.value,
+estado:estado.value,
+pagamento:pagamento.value,
+troco:troco.value,
+itens:carrinho,
+total:carrinho.reduce((t,i)=>t+i.preco*i.qtd,0),
+status:"Pendente"
 };
 
-push(ref(db,"pedidos"), pedido)
-.then(()=>{
+await push(ref(db,"pedidos"),pedido);
+
 alert("Pedido enviado!");
-carrinho = [];
+carrinho=[];
 render();
-});
 }
 
-window.mais = id => document.getElementById(id).value++;
-window.menos = id => {
-let el = document.getElementById(id);
-if(el.value > 1) el.value--;
+window.buscarCEP = async () => {
+let r = await fetch(`https://viacep.com.br/ws/${cep.value}/json/`);
+let d = await r.json();
+
+rua.value=d.logradouro;
+bairro.value=d.bairro;
+cidade.value=d.localidade;
+estado.value=d.uf;
 }
 
-window.abrirCarrinho = () => document.getElementById("carrinho").classList.add("ativo");
-
-window.abrirModal = (t,txt,img) => {
-document.getElementById("titulo").innerText = t;
-document.getElementById("texto").innerText = txt;
-document.getElementById("img").src = img;
-document.getElementById("modal").style.display = "flex";
+window.trocoCheck = () => {
+troco.style.display = pagamento.value==="Dinheiro" ? "block":"none";
 }
 
-window.fecharModal = () => {
-document.getElementById("modal").style.display = "none";
+/* MODAL */
+window.abrirModal = (id) => {
+titulo.innerText = produtos[id].nome;
+desc.innerText = produtos[id].desc;
+img.src = document.querySelectorAll(".card img")[id].src;
+modal.style.display="flex";
 }
+
+window.fecharModal = () => modal.style.display="none";
+
+/* ELEMENTOS */
+const lista=document.getElementById("lista");
+const totalEl=document.getElementById("total");
+const badgeCarrinho=document.getElementById("badgeCarrinho");
+const carrinhoEl=document.getElementById("carrinho");
+const modal=document.getElementById("modal");
+const nome=document.getElementById("nome");
+const telefone=document.getElementById("telefone");
+const cep=document.getElementById("cep");
+const rua=document.getElementById("rua");
+const numero=document.getElementById("numero");
+const bairro=document.getElementById("bairro");
+const cidade=document.getElementById("cidade");
+const estado=document.getElementById("estado");
+const pagamento=document.getElementById("pagamento");
+const troco=document.getElementById("troco");
+const titulo=document.getElementById("titulo");
+const img=document.getElementById("img");
+
+window.abrirCarrinho=()=>carrinhoEl.classList.add("ativo");
 </script>
 
 </body>
