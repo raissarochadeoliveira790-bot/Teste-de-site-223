@@ -150,14 +150,7 @@ border-radius:5px;
 cursor:pointer;
 }
 
-/* FORM */
-input,select{
-width:100%;
-padding:10px;
-margin-bottom:10px;
-}
-
-/* MODAL BONITO */
+/* MODAL */
 #modal{
 display:none;
 position:fixed;
@@ -189,35 +182,9 @@ margin-bottom:10px;
 border-radius:8px;
 }
 
-/* DESCRIÇÃO BONITA */
-.desc-titulo{
-font-size:20px;
-font-weight:bold;
-margin-bottom:10px;
-color:#00a651;
-}
-
-.desc-sub{
-font-size:14px;
-color:#555;
-margin-bottom:15px;
-}
-
-.desc-bloco{
-margin-top:10px;
-padding:10px;
-background:#f7f7f7;
-border-radius:8px;
-}
-
-#textoProduto ul{
-margin-left:18px;
-margin-top:8px;
-}
-
-#textoProduto li{
-margin-bottom:5px;
-}
+.desc-titulo{font-size:20px;font-weight:bold;margin-bottom:10px;color:#00a651}
+.desc-sub{font-size:14px;color:#555;margin-bottom:15px}
+.desc-bloco{margin-top:10px;padding:10px;background:#f7f7f7;border-radius:8px}
 </style>
 </head>
 
@@ -225,7 +192,6 @@ margin-bottom:5px;
 
 <header class="topo">
 <img src="xareu-banner.png" width="120">
-
 <div class="carrinho-icone" onclick="abrirCarrinho()">
 🛒 <span id="badgeCarrinho">0</span>
 </div>
@@ -236,12 +202,9 @@ margin-bottom:5px;
 <!-- PRODUTO 1 -->
 <div class="card">
 <img src="deoline-lava-roupas-5l.jpg"
-onclick="descricao(
-'Lava-Roupas 5L',
-`
-<div class='desc-titulo'>🧼 Lava-Roupas 5L</div>
+onclick="descricao('Lava-Roupas 5L',
+`<div class='desc-titulo'>🧼 Lava-Roupas 5L</div>
 <div class='desc-sub'>Limpeza profunda com alto rendimento.</div>
-
 <div class='desc-bloco'>
 <strong>✨ Benefícios:</strong>
 <ul>
@@ -249,18 +212,16 @@ onclick="descricao(
 <li>Não agride tecidos</li>
 <li>Fórmula concentrada</li>
 </ul>
-</div>
-`,
-'deoline-lava-roupas-5l.jpg'
-)">
+</div>`,
+'deoline-lava-roupas-5l.jpg')">
 
 <h3>Lava-Roupas 5L</h3>
 <p>R$ 51,00</p>
 
 <div class="qtd-box">
-<button onclick="menosQtd('q1')" class="qtd-btn">-</button>
+<button onclick="menosQtd('q1')">-</button>
 <input id="q1" class="qtd" value="1">
-<button onclick="maisQtd('q1')" class="qtd-btn">+</button>
+<button onclick="maisQtd('q1')">+</button>
 </div>
 
 <button class="btn" onclick="add('Lava-Roupas 5L',51,'deoline-lava-roupas-5l.jpg','q1')">Adicionar</button>
@@ -269,12 +230,9 @@ onclick="descricao(
 <!-- PRODUTO 2 -->
 <div class="card">
 <img src="alvejantedeoline.png"
-onclick="descricao(
-'Alvejante 5L',
-`
-<div class='desc-titulo'>🧴 Alvejante 5L</div>
+onclick="descricao('Alvejante 5L',
+`<div class='desc-titulo'>🧴 Alvejante 5L</div>
 <div class='desc-sub'>Limpeza pesada e eficiência máxima.</div>
-
 <div class='desc-bloco'>
 <strong>✨ Benefícios:</strong>
 <ul>
@@ -282,157 +240,129 @@ onclick="descricao(
 <li>Alto poder de limpeza</li>
 <li>Uso doméstico e profissional</li>
 </ul>
-</div>
-`,
-'alvejantedeoline.png'
-)">
+</div>`,
+'alvejantedeoline.png')">
 
 <h3>Alvejante 5L</h3>
 <p>R$ 40,00</p>
-</div>
 
 <div class="qtd-box">
-<button onclick="menosQtd('q1')" class="qtd-btn">-</button>
-<input id="q1" class="qtd" value="1">
-<button onclick="maisQtd('q1')" class="qtd-btn">+</button>
+<button onclick="menosQtd('q2')">-</button>
+<input id="q2" class="qtd" value="1">
+<button onclick="maisQtd('q2')">+</button>
 </div>
 
-<button class="btn" onclick="add('Alvejante 5L',40,'alvejantedeoline.png','q1')">Adicionar</button>
-</div> 
-  
+<button class="btn" onclick="add('Alvejante 5L',40,'alvejantedeoline.png','q2')">Adicionar</button>
+</div>
+
 <!-- PRODUTO 3 -->
 <div class="card">
 <img src="deoline-lava-loucas-500ml.jpg"
-onclick="descricao(
-'Lava-Louças 500ml',
-`
-<div class='desc-titulo'>🍽️ Lava-Louças 500ml</div>
+onclick="descricao('Lava-Louças 500ml',
+`<div class='desc-titulo'>🍽️ Lava-Louças 500ml</div>
 <div class='desc-sub'>Remove gordura com facilidade.</div>
-
 <div class='desc-bloco'>
 <strong>✨ Benefícios:</strong>
 <ul>
 <li>Alto poder desengordurante</li>
 <li>Rende bastante</li>
 </ul>
-</div>
-`,
-'deoline-lava-loucas-500ml.jpg'
-)">
+</div>`,
+'deoline-lava-loucas-500ml.jpg')">
 
 <h3>Lava-Louças 500ml</h3>
 <p>R$ 3,00</p>
-</div>
 
 <div class="qtd-box">
-<button onclick="menosQtd('q1')" class="qtd-btn">-</button>
-<input id="q1" class="qtd" value="1">
-<button onclick="maisQtd('q1')" class="qtd-btn">+</button>
+<button onclick="menosQtd('q3')">-</button>
+<input id="q3" class="qtd" value="1">
+<button onclick="maisQtd('q3')">+</button>
 </div>
 
-<button class="btn" onclick="add('Lava-Louças 500ml',3,'deoline-lava-loucas-500ml.jpg','q1')">Adicionar</button>
-</div>  
-  
+<button class="btn" onclick="add('Lava-Louças 500ml',3,'deoline-lava-loucas-500ml.jpg','q3')">Adicionar</button>
+</div>
+
 <!-- PRODUTO 4 -->
 <div class="card">
 <img src="deoline-limpainox.png"
-onclick="descricao(
-'Limpa Inox',
-`
-<div class='desc-titulo'>✨ Limpa Inox</div>
+onclick="descricao('Limpa Inox',
+`<div class='desc-titulo'>✨ Limpa Inox</div>
 <div class='desc-sub'>Brilho e proteção para inox.</div>
-
 <div class='desc-bloco'>
 <strong>✨ Benefícios:</strong>
 <ul>
 <li>Remove marcas e manchas</li>
 <li>Brilho instantâneo</li>
 </ul>
-</div>
-`,
-'deoline-limpainox.png'
-)">
+</div>`,
+'deoline-limpainox.png')">
 
 <h3>Limpa Inox</h3>
 <p>R$ 12,80</p>
-</div>
 
 <div class="qtd-box">
-<button onclick="menosQtd('q1')" class="qtd-btn">-</button>
-<input id="q1" class="qtd" value="1">
-<button onclick="maisQtd('q1')" class="qtd-btn">+</button>
+<button onclick="menosQtd('q4')">-</button>
+<input id="q4" class="qtd" value="1">
+<button onclick="maisQtd('q4')">+</button>
 </div>
 
-<button class="btn" onclick="add('Limpa Inox',12.8,'deoline-limpainox.png','q1')">Adicionar</button>
-</div>   
-  
+<button class="btn" onclick="add('Limpa Inox',12.8,'deoline-limpainox.png','q4')">Adicionar</button>
+</div>
+
 <!-- PRODUTO 5 -->
 <div class="card">
 <img src="deoline-limpaaluminio.png"
-onclick="descricao(
-'Limpa Alumínio',
-`
-<div class='desc-titulo'>🥘 Limpa Alumínio</div>
+onclick="descricao('Limpa Alumínio',
+`<div class='desc-titulo'>🥘 Limpa Alumínio</div>
 <div class='desc-sub'>Limpeza profunda e rápida.</div>
-
 <div class='desc-bloco'>
 <strong>✨ Benefícios:</strong>
 <ul>
 <li>Remove gordura pesada</li>
 <li>Brilho imediato</li>
 </ul>
-</div>
-`,
-'deoline-limpaaluminio.png'
-)">
+</div>`,
+'deoline-limpaaluminio.png')">
 
 <h3>Limpa Alumínio</h3>
 <p>R$ 8,00</p>
-</div>
 
 <div class="qtd-box">
-<button onclick="menosQtd('q1')" class="qtd-btn">-</button>
-<input id="q1" class="qtd" value="1">
-<button onclick="maisQtd('q1')" class="qtd-btn">+</button>
+<button onclick="menosQtd('q5')">-</button>
+<input id="q5" class="qtd" value="1">
+<button onclick="maisQtd('q5')">+</button>
 </div>
 
-<button class="btn" onclick="add('Limpa Alumínio',8,'deoline-limpaaluminio.png','q1')">Adicionar</button>
-</div>   
-  
-  
+<button class="btn" onclick="add('Limpa Alumínio',8,'deoline-limpaaluminio.png','q5')">Adicionar</button>
+</div>
+
 <!-- PRODUTO 6 -->
 <div class="card">
 <img src="limparejunte.png"
-onclick="descricao(
-'Limpa Rejunte',
-`
-<div class='desc-titulo'>🧽 Limpa Rejunte</div>
+onclick="descricao('Limpa Rejunte',
+`<div class='desc-titulo'>🧽 Limpa Rejunte</div>
 <div class='desc-sub'>Limpeza profunda de rejuntes.</div>
-
 <div class='desc-bloco'>
 <strong>✨ Benefícios:</strong>
 <ul>
 <li>Remove sujeiras impregnadas</li>
 <li>Recupera cor original</li>
 </ul>
-</div>
-`,
-'limparejunte.png'
-)">
+</div>`,
+'limparejunte.png')">
 
 <h3>Limpa Rejunte</h3>
 <p>R$ 11,85</p>
-</div>
 
 <div class="qtd-box">
-<button onclick="menosQtd('q1')" class="qtd-btn">-</button>
-<input id="q1" class="qtd" value="1">
-<button onclick="maisQtd('q1')" class="qtd-btn">+</button>
+<button onclick="menosQtd('q6')">-</button>
+<input id="q6" class="qtd" value="1">
+<button onclick="maisQtd('q6')">+</button>
 </div>
 
-<button class="btn" onclick="add('Limpa Rejunte',11.85,'limparejunte.png','q1')">Adicionar</button>
-</div>   
-  
+<button class="btn" onclick="add('Limpa Rejunte',11.85,'limparejunte.png','q6')">Adicionar</button>
+</div>
+
 </section>
 
 <!-- CARRINHO -->
@@ -440,28 +370,7 @@ onclick="descricao(
 <div class="voltar" onclick="fecharCarrinho()">⬅ Voltar</div>
 
 <div id="lista"></div>
-
 <h3>Total: R$ <span id="total">0.00</span></h3>
-
-<hr>
-
-<h3>Dados do Cliente</h3>
-<input id="nome">
-<input id="telefone">
-<input id="cep">
-<input id="endereco">
-
-<select id="pagamento">
-<option value="">Forma de pagamento</option>
-<option>Pix</option>
-<option>Dinheiro</option>
-<option>Cartão</option>
-<option>Boleto</option>
-</select>
-
-<button class="btn" onclick="finalizar()" style="background:#0066ff">
-Finalizar Pedido
-</button>
 </div>
 
 <!-- MODAL -->
@@ -470,113 +379,51 @@ Finalizar Pedido
 <h2 id="tituloProduto"></h2>
 <img id="imgProduto">
 <p id="textoProduto"></p>
-<br>
 <button class="btn" onclick="fecharModal()">Fechar</button>
 </div>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+<script>
+let carrinho=[];
 
-const app = initializeApp({
-apiKey:"x",
-authDomain:"x",
-databaseURL:"https://vendedor-html-default-rtdb.firebaseio.com",
-projectId:"vendedor-html"
-});
-
-const db = getDatabase(app);
-
-let carrinho = [];
-
-window.add = function(nome,preco,img,id){
-let qtd = parseInt(document.getElementById(id).value);
-let item = carrinho.find(p=>p.nome===nome);
-if(item) item.qtd += qtd;
+window.add=function(nome,preco,img,id){
+let qtd=parseInt(document.getElementById(id).value);
+let item=carrinho.find(p=>p.nome===nome);
+if(item)item.qtd+=qtd;
 else carrinho.push({nome,preco,img,qtd});
 render();
 }
 
-window.maisQtd = id => document.getElementById(id).value++;
-window.menosQtd = id => {let el=document.getElementById(id); if(el.value>1) el.value--;};
-
-window.remover = nome => {
-carrinho = carrinho.filter(p=>p.nome!==nome);
-render();
-}
-
-window.aumentar = nome => {
-let i = carrinho.find(p=>p.nome===nome);
-i.qtd++;
-render();
-}
-
-window.diminuir = nome => {
-let i = carrinho.find(p=>p.nome===nome);
-i.qtd--;
-if(i.qtd<=0) carrinho = carrinho.filter(p=>p.nome!==nome);
-render();
+window.maisQtd=id=>document.getElementById(id).value++;
+window.menosQtd=id=>{
+let el=document.getElementById(id);
+if(el.value>1)el.value--;
 }
 
 function render(){
-let total=0,qtd=0,html="";
+let total=0,html="";
 carrinho.forEach(i=>{
-total += i.preco*i.qtd;
-qtd += i.qtd;
-html += `<div class="item">
+total+=i.preco*i.qtd;
+html+=`<div class="item">
 <img src="${i.img}">
-<div style="flex:1">
-<strong>${i.nome}</strong><br>
-R$ ${i.preco.toFixed(2)}
-</div>
-<div class="qtd-mini">
-<button onclick="diminuir('${i.nome}')">-</button>
-<strong>${i.qtd}</strong>
-<button onclick="aumentar('${i.nome}')">+</button>
-</div>
-<button class="remove" onclick="remover('${i.nome}')">X</button>
+<strong>${i.nome}</strong>
+<div>${i.qtd}</div>
 </div>`;
 });
-document.getElementById("lista").innerHTML = html;
-document.getElementById("total").innerText = total.toFixed(2);
-document.getElementById("badgeCarrinho").innerText = qtd;
+lista.innerHTML=html;
+total.innerText=total.toFixed(2);
 }
 
-window.finalizar = function(){
-if(carrinho.length==0){alert("Carrinho vazio");return;}
-
-let pedido = {
-id:Date.now(),
-nome:nome.value,
-telefone:telefone.value,
-cep:cep.value,
-endereco:endereco.value,
-pagamento:pagamento.value,
-status:"Pendente",
-itens:carrinho,
-total:carrinho.reduce((t,i)=>t+i.preco*i.qtd,0)
-};
-
-push(ref(db,"pedidos"),pedido).then(()=>{
-alert("Pedido enviado!");
-carrinho=[];
-render();
-nome.value=telefone.value=cep.value=endereco.value=pagamento.value="";
-fecharCarrinho();
-});
-}
-
-window.descricao = function(n,t,i){
-tituloProduto.innerText=n;
-textoProduto.innerHTML=t;
-imgProduto.src=i;
+window.descricao=(t,txt,img)=>{
+tituloProduto.innerText=t;
+textoProduto.innerHTML=txt;
+imgProduto.src=img;
 modal.style.display="flex";
 }
 
-window.fecharModal = ()=>modal.style.display="none";
-window.abrirCarrinho = ()=>document.getElementById("carrinho").classList.add("ativo");
-window.fecharCarrinho = ()=>document.getElementById("carrinho").classList.remove("ativo");
+window.fecharModal=()=>modal.style.display="none";
+window.abrirCarrinho=()=>carrinho.classList.add("ativo");
+window.fecharCarrinho=()=>carrinho.classList.remove("ativo");
 </script>
 
 </body>
